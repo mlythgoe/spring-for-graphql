@@ -17,7 +17,7 @@ public class ProductRepository {
     }
 
     public Product findOne(Integer id) {
-        return products.stream().filter(product -> product.getId() == id).findFirst().orElse(null);
+        return products.stream().filter(product -> product.id() == id).findFirst().orElse(null);
     }
 
     public void addProduct(Product product) {
