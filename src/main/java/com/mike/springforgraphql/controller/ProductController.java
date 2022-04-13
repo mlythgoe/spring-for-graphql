@@ -34,7 +34,7 @@ public class ProductController {
         return productRepository.findOne(id);
     }
 
-    @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct2") - it uses the method name as the value
+    @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
     public Product addProduct(@Argument ProductInput productInput) {
         Product newProduct = new Product(ThreadLocalRandom.current().nextInt(1, 9999), productInput.title(), productInput.desc());
         productRepository.addProduct(newProduct);
