@@ -23,9 +23,8 @@ public class ProductController {
     }
 
 
-    @SchemaMapping(typeName = "Query", value = "allProducts")
-    // Define typeName as Query or Mutation, value should map to a query on the GraphQL schema
-    public List<Product> findAllProducts() {
+    @QueryMapping
+    public List<Product> allProducts() {
         return productRepository.findAll();
     }
 
