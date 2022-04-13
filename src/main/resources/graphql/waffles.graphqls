@@ -1,3 +1,8 @@
+input ProductInput {
+    title: String
+    desc: String
+}
+
 type Product {
     id: ID!
     title: String
@@ -5,7 +10,7 @@ type Product {
 }
 
 type Mutation {
-    addProduct(product: Product!): Product
+    addProduct(productInput: ProductInput!): Product
 }
 
 type Query {

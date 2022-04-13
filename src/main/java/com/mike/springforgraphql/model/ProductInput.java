@@ -1,4 +1,4 @@
 package com.mike.springforgraphql.model;
 
-public class ProductInput {
+public record ProductInput(String title, String desc) {
 }

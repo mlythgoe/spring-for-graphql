@@ -25,3 +25,12 @@ query {
     }
 }
 
+
+{
+    allProducts{
+        id
+        title
+        desc
+    }
+}
+
