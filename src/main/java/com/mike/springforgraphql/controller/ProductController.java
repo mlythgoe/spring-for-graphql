@@ -1,6 +1,7 @@
 package com.mike.springforgraphql.controller;
 
 import com.mike.springforgraphql.model.Product;
+import com.mike.springforgraphql.model.ProductInput;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -9,6 +10,8 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class ProductController {
@@ -32,7 +35,9 @@ public class ProductController {
     }
 
     @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
-    public void addProduct(Product product) {
-        productRepository.addProduct(product);
+    public Product addProduct(@Argument String title, @Argument String desc) {
+        Product newProduct = new Product(ThreadLocalRandom.current().nextInt(1, 9999), title, desc);
+        productRepository.addProduct(newProduct);
+        return newProduct;
     }
 }

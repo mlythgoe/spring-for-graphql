@@ -1,6 +1,6 @@
 input ProductInput {
-    title: String
-    desc: String
+    title: String!
+    desc: String!
 }
 
 type Product {
@@ -10,7 +10,7 @@ type Product {
 }
 
 type Mutation {
-    addProduct(productInput: ProductInput!): Product
+    addProduct(title: String, desc: String): Product
 }
 
 type Query {
