@@ -6,11 +6,9 @@ import com.mike.springforgraphql.repository.ProductRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
@@ -22,13 +20,14 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    // @QueryMapping(value="getAllProducts") - this can be used if the GraphQL schema operations and Java methods have different names
 
-    @QueryMapping
+    @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the method name as the value
     public List<Product> allProducts() {
         return productRepository.findAll();
     }
 
-    @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the method name as the value
+    @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "getProduct") - it uses the method name as the value
     public Product getProduct(@Argument Integer id) {
         return productRepository.findOne(id);
     }
