@@ -14,13 +14,14 @@ import java.util.concurrent.ThreadLocalRandom;
 @Controller
 public class ProductController {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    // @QueryMapping(value="getAllProducts") - this can be used if the GraphQL schema operations and Java methods have different names
+    // @QueryMapping(value="allProducts") - value property should match the GraphQL Schema query or mutation,
+    // and can be used if the GraphQL schema operations and Java methods have different names
 
     @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the method name as the value
     public List<Product> allProducts() {

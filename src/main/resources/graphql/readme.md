@@ -1,6 +1,6 @@
-https://www.youtube.com/watch?v=6WfxWfIwoAU
+https://www.youtube.com/watch?v=6WfxWfIwoAU - Video this code is based on
 
-http://localhost:8080/graphiql?path=/graphql
+http://localhost:8080/graphiql?path=/graphql - GraphiQL url
 
 query GetProduct($productId:ID){
     getProduct(id:$productId){
@@ -24,13 +24,3 @@ query {
         desc
     }
 }
-
-
-{
-    allProducts{
-        id
-        title
-        desc
-    }
-}
-
