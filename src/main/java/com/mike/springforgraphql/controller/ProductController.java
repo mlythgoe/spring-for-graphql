@@ -3,6 +3,8 @@ package com.mike.springforgraphql.controller;
 import com.mike.springforgraphql.model.Product;
 import com.mike.springforgraphql.model.ProductInput;
 import com.mike.springforgraphql.repository.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -14,6 +16,9 @@ import java.util.concurrent.ThreadLocalRandom;
 @Controller
 public class ProductController {
 
+    Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+
     private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
@@ -22,6 +27,8 @@ public class ProductController {
 
     @QueryMapping(value="allProducts")  // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the value instead of the method name
     public List<Product> findAllProducts() {
+        logger.debug("A DEBUG Message");
+
         return productRepository.findAll();
     }
 
