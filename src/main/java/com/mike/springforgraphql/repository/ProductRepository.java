@@ -6,18 +6,19 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class ProductRepository {
 
-    private List<Product> products = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
     public List<Product> findAll() {
         return products;
     }
 
     public Product findOne(Integer id) {
-        return products.stream().filter(product -> product.id() == id).findFirst().orElse(null);
+        return products.stream().filter(product -> Objects.equals(product.id(), id)).findFirst().orElse(null);
     }
 
     public void addProduct(Product product) {
