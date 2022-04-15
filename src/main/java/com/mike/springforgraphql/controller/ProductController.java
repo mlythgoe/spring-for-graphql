@@ -20,11 +20,8 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
-    // @QueryMapping(value="allProducts") - value property should match the GraphQL Schema query or mutation,
-    // and can be used if the GraphQL schema operations and Java methods have different names
-
-    @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the method name as the value
-    public List<Product> allProducts() {
+    @QueryMapping(value="allProducts")  // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the value instead of the method name
+    public List<Product> findAllProducts() {
         return productRepository.findAll();
     }
 
