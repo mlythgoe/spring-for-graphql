@@ -21,7 +21,14 @@ public class ProductRepository {
         return products.stream().filter(product -> Objects.equals(product.id(), id)).findFirst().orElse(null);
     }
 
-    public void addProduct(Product product) {
+    public void save(Product product) {
+
+       for  (int i = 0; i < products.size(); i++) {
+           if (products.get(i).id() == product.id()) {
+               products.set(i,product);
+               return;
+           }
+       }
         products.add(product);
     }
 

@@ -18,7 +18,6 @@ public class ProductController {
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-
     private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
@@ -40,7 +39,7 @@ public class ProductController {
     @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
     public Product addProduct(@Argument ProductInput productInput) {
         Product newProduct = new Product(ThreadLocalRandom.current().nextInt(1, 9999), productInput.title(), productInput.desc());
-        productRepository.addProduct(newProduct);
+        productRepository.save(newProduct);
         return newProduct;
     }
 }
