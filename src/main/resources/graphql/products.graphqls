@@ -1,4 +1,10 @@
 input ProductInput {
+    """
+    'id' is optional in the ProductInput -
+    If it's a new product, the id will be created and returned by the back end
+    For an update, it is assumed the id will be supplied.
+    """
+    id: ID
     title: String!
     desc: String!
 }
