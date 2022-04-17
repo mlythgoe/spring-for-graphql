@@ -24,7 +24,7 @@ public class ProductRepository {
     public void save(Product product) {
 
        for  (int i = 0; i < products.size(); i++) {
-           if (products.get(i).id() == product.id()) {
+           if (products.get(i).id().equals(product.id())) {
                products.set(i,product);
                return;
            }

@@ -1,7 +1,10 @@
+"""
+ProductInput is the inout type for passing in details of a new product, or a product to be updated.
+"""
 input ProductInput {
     """
-    'id' is optional in the ProductInput -
-    If it's a new product, the id will be created and returned by the back end
+    'id' is optional in the ProductInput.
+    If it's a new product, the id will be created and returned by the back end and so should not be passed in the request
     For an update, it is assumed the id will be supplied.
     """
     id: ID
@@ -9,6 +12,9 @@ input ProductInput {
     desc: String!
 }
 
+"""
+Product is the response object, i.e. it has been persisted, and so will always have an Id
+"""
 type Product {
     id: ID!
     title: String
@@ -16,11 +22,14 @@ type Product {
 }
 
 type Mutation {
+    """ Add a Product """
     addProduct(productInput: ProductInput): Product
 }
 
 type Query {
+    """ Get All Products """
     allProducts: [Product]
+    """ Get a Product for a Specific Id """
     getProduct(id: ID): Product
 }
 
