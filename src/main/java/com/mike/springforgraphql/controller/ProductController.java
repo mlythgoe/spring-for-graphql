@@ -1,7 +1,8 @@
 package com.mike.springforgraphql.controller;
 
-import com.mike.springforgraphql.model.Product;
-import com.mike.springforgraphql.model.ProductInput;
+import com.mike.springforgraphql.model.api.Product;
+import com.mike.springforgraphql.model.persistence.ProductEntity;
+import com.mike.springforgraphql.model.api.ProductInput;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class ProductController {
@@ -22,29 +23,48 @@ public class ProductController {
 
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
+
     }
 
-    @QueryMapping(value="allProducts")  // Same as @SchemaMapping(typeName = "Query", value = "allProducts") - it uses the value instead of the method name
+    @QueryMapping(value="allProducts")  // - value must match GraphQL schema operation
     public List<Product> findAllProducts() {
         logger.debug("A DEBUG Message");
 
-        return productRepository.findAll();
+        List<ProductEntity> productEntities = productRepository.findAll();
+
+        List<Product> products = new ArrayList<>();
+
+        for (ProductEntity productEntity: productEntities) {
+            products.add(new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription()));
+
+        }
+
+        return products;
     }
 
-    @QueryMapping // Same as @SchemaMapping(typeName = "Query", value = "getProduct") - it uses the method name as the value
-    public Product getProduct(@Argument Integer id) {
-        return productRepository.findOne(id);
+    @QueryMapping(value = "getProduct")
+    public Product findProduct(@Argument Long id) {
+
+        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+
+        if (productEntity != null) {
+            return null;
+        }
+
+        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription());
     }
 
     @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
     public Product addProduct(@Argument ProductInput productInput) {
-        Product newProduct;
+
+        ProductEntity newProductEntity;
         if (productInput.id()==null) {
-            newProduct = new Product(ThreadLocalRandom.current().nextInt(1, 9999), productInput.title(), productInput.desc());
+            newProductEntity = new ProductEntity(productInput.title(), productInput.desc());
         } else {
-            newProduct = new Product(productInput.id(), productInput.title(), productInput.desc());
+            newProductEntity = new ProductEntity(productInput.id(), productInput.title(), productInput.desc());
         }
-        productRepository.save(newProduct);
-        return newProduct;
+
+        ProductEntity savedProduct = productRepository.save(newProductEntity);
+        return new Product(savedProduct.getId(), savedProduct.getName(), savedProduct.getDescription());
     }
 }
