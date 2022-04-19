@@ -2,20 +2,20 @@ package com.mike.springforgraphql.model.persistence;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Product")
 public class ProductEntity {
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, String description) {
-        this.name = name;
+    public ProductEntity(String title, String description) {
+        this.title = title;
         this.description = description;
     }
 
-    public ProductEntity(Long id, String name, String description) {
+    public ProductEntity(Long id, String title, String description) {
         this.id = id;
-        this.name = name;
+        this.title = title;
         this.description = description;
     }
 
@@ -23,8 +23,8 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.AUTO) // Allow Persistence provider to manage id (Others are IDENTITY, SEQUENCE and TABLE).
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name="description")
     private String description;
@@ -37,12 +37,12 @@ public class ProductEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -57,7 +57,7 @@ public class ProductEntity {
     public String toString() {
         return "ProductEntity{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

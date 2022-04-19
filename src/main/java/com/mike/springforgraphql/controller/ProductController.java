@@ -35,7 +35,7 @@ public class ProductController {
         List<Product> products = new ArrayList<>();
 
         for (ProductEntity productEntity: productEntities) {
-            products.add(new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription()));
+            products.add(new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription()));
 
         }
 
@@ -51,7 +51,7 @@ public class ProductController {
             return null;
         }
 
-        return new Product(productEntity.getId(), productEntity.getName(), productEntity.getDescription());
+        return new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
     }
 
     @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
@@ -65,6 +65,6 @@ public class ProductController {
         }
 
         ProductEntity savedProduct = productRepository.save(newProductEntity);
-        return new Product(savedProduct.getId(), savedProduct.getName(), savedProduct.getDescription());
+        return new Product(savedProduct.getId(), savedProduct.getTitle(), savedProduct.getDescription());
     }
 }
