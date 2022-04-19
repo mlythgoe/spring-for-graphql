@@ -23,12 +23,12 @@ public class DummyProductRepository {
 
     public void save(Product product) {
 
-       for  (int i = 0; i < products.size(); i++) {
-           if (products.get(i).id().equals(product.id())) {
-               products.set(i,product);
-               return;
-           }
-       }
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).id().equals(product.id())) {
+                products.set(i, product);
+                return;
+            }
+        }
         products.add(product);
     }
 

@@ -24,7 +24,7 @@ public class ProductController {
 
     }
 
-    @QueryMapping(value="allProducts")  // - value must match GraphQL schema operation
+    @QueryMapping(value = "allProducts")  // - value must match GraphQL schema operation
     public List<Product> findAllProducts() {
         logger.debug("A DEBUG Message");
 
@@ -32,7 +32,7 @@ public class ProductController {
 
         List<Product> products = new ArrayList<>();
 
-        for (ProductEntity productEntity: productEntities) {
+        for (ProductEntity productEntity : productEntities) {
             products.add(new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription()));
 
         }
@@ -52,11 +52,12 @@ public class ProductController {
         return new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
     }
 
-    @MutationMapping // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
+    @MutationMapping
+    // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
     public Product addProduct(@Argument ProductInput productInput) {
 
         ProductEntity newProductEntity;
-        if (productInput.id()==null) {
+        if (productInput.id() == null) {
             newProductEntity = new ProductEntity(productInput.title(), productInput.desc());
         } else {
             newProductEntity = new ProductEntity(productInput.id(), productInput.title(), productInput.desc());

@@ -1,26 +1,14 @@
-https://www.youtube.com/watch?v=6WfxWfIwoAU - Video this code is based on
+Video this code is based on - https://www.youtube.com/watch?v=6WfxWfIwoAU
 
-http://localhost:8080/graphiql?path=/graphql - GraphiQL url
+GraphiQL url - http://localhost:8080/graphiql?path=/graphql
 
-query GetProduct($productId:ID){
-    getProduct(id:$productId){
-        id
-        title
-        desc
-    }
-}
+H2 Console URL - http://localhost:8080/h2-console/
 
-query variable declaration = 
-{
-    "productId": 1
-}
+H2 Console Settings
+-------------------
 
--------------------------------------------------
-
-query {
-    allProducts{
-        id
-        title
-        desc
-    }
-}
+* Setting Name: Generic H2 (Embedded)
+* Driver class: org.h2.Driver
+* JDBC URL - jdbc:h2:mem:testdb
+* Username: sa
+* Password: password

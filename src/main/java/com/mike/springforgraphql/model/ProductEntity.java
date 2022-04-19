@@ -20,13 +20,14 @@ public class ProductEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Allow Persistence provider to manage id (Others are IDENTITY, SEQUENCE and TABLE).
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    // Allow Persistence provider to manage id (Others are IDENTITY, SEQUENCE and TABLE).
     private Long id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
 
     public Long getId() {
