@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.model.persistence;
+package com.mike.springforgraphql.model;
 
 import javax.persistence.*;
 

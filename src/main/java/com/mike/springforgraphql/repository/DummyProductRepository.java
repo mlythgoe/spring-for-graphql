@@ -1,6 +1,6 @@
 package com.mike.springforgraphql.repository;
 
-import com.mike.springforgraphql.model.api.Product;
+import com.mike.springforgraphql.api.Product;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;

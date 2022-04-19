@@ -1,8 +1,6 @@
-package com.mike.springforgraphql.controller;
+package com.mike.springforgraphql.api;
 
-import com.mike.springforgraphql.model.api.Product;
-import com.mike.springforgraphql.model.persistence.ProductEntity;
-import com.mike.springforgraphql.model.api.ProductInput;
+import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
