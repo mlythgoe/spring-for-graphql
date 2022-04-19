@@ -1,5 +1,5 @@
 """
-ProductInput is the inout type for passing in details of a new product, or a product to be updated.
+ProductInput is the input type for passing in details of a new product, or a product to be updated.
 """
 input ProductInput {
     """
