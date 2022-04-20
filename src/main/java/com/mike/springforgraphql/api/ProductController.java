@@ -45,7 +45,7 @@ public class ProductController {
 
         ProductEntity productEntity = productRepository.findById(id).orElse(null);
 
-        if (productEntity != null) {
+        if (productEntity == null) {
             return null;
         }
 
