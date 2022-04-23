@@ -65,7 +65,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  getProduct(id:1){\n    id\n    title\n    desc\n  }\n}",
+						"query": "query {\n  getProduct(id:999){\n    id\n    title\n    desc\n  }\n}",
 						"variables": ""
 					}
 				},
