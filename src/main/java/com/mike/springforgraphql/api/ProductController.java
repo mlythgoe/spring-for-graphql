@@ -53,7 +53,6 @@ public class ProductController {
     }
 
     @MutationMapping
-    // Same as @SchemaMapping(typeName = "Mutation", value = "addProduct") - it uses the method name as the value
     public Product addProduct(@Argument ProductInput productInput) {
 
         ProductEntity newProductEntity;
