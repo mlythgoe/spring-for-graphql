@@ -17,8 +17,8 @@ Product is the response object, i.e. it has been persisted, and so will always h
 """
 type Product {
     id: ID!
-    title: String
-    desc: String
+    title: String!
+    desc: String!
 }
 
 type Mutation {
