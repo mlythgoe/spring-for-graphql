@@ -24,7 +24,7 @@ public class ProductController {
 
     }
 
-    @QueryMapping(value = "allProducts")  // - value must match GraphQL schema operation
+    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
     public List<Product> findAllProducts() {
         logger.debug("A DEBUG Message");
 
@@ -40,7 +40,7 @@ public class ProductController {
         return products;
     }
 
-    @QueryMapping(value = "getProduct")
+    @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
         ProductEntity productEntity = productRepository.findById(id).orElse(null);
@@ -52,7 +52,7 @@ public class ProductController {
         return new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
     }
 
-    @MutationMapping
+    @MutationMapping // no value property given so method name must match GraphQL schema operation
     public Product addProduct(@Argument ProductInput productInput) {
 
         ProductEntity newProductEntity;
