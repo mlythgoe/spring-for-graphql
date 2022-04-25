@@ -4,10 +4,12 @@ import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +65,7 @@ public class ProductController {
         return product;
     }
 
-    @MutationMapping // no value property given so method name must match GraphQL schema operation
+    @MutationMapping("addProduct")
     public Product addProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
@@ -88,5 +90,22 @@ public class ProductController {
         logger.debug("Created Product {}", product);
 
         return product;
+    }
+
+    @MutationMapping("deleteProduct")
+    public Long deleteProduct(@Argument Long id){
+
+        logger.debug("Delete Product for Id {}", id);
+
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            logger.debug("Deleted Product for id {}", id);
+            return id;
+        }
+
+        logger.debug("Product for id {} did not exist so could not be deleted", id);
+
+        return null;
+
     }
 }
