@@ -26,7 +26,8 @@ public class ProductController {
 
     @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
     public List<Product> findAllProducts() {
-        logger.debug("A DEBUG Message");
+
+        logger.debug("Find All Products");
 
         List<ProductEntity> productEntities = productRepository.findAll();
 
@@ -37,23 +38,40 @@ public class ProductController {
 
         }
 
+        logger.debug("Returning All Products - {}", products);
+
         return products;
     }
 
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
+        logger.debug("Find Product for id {}", id);
+
         ProductEntity productEntity = productRepository.findById(id).orElse(null);
 
         if (productEntity == null) {
+            logger.debug("No Product found for id {}", id);
+
             return null;
         }
 
-        return new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
+        Product product = new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
+
+        logger.debug("Found Product {} for id {}", product, id);
+
+        return product;
     }
 
     @MutationMapping // no value property given so method name must match GraphQL schema operation
     public Product addProduct(@Argument ProductInput productInput) {
+
+        if (productInput.id() == null) {
+            logger.debug("Insert Product for ProductInput {}", productInput);
+        } else {
+            logger.debug("Update Product for ProductInput {}", productInput);
+
+        }
 
         ProductEntity newProductEntity;
         if (productInput.id() == null) {
@@ -62,7 +80,13 @@ public class ProductController {
             newProductEntity = new ProductEntity(productInput.id(), productInput.title(), productInput.desc());
         }
 
-        ProductEntity savedProduct = productRepository.save(newProductEntity);
-        return new Product(savedProduct.getId(), savedProduct.getTitle(), savedProduct.getDescription());
+        ProductEntity savedProductEntity = productRepository.save(newProductEntity);
+
+        Product product = new Product(
+                savedProductEntity.getId(), savedProductEntity.getTitle(), savedProductEntity.getDescription());
+
+        logger.debug("Created Product {}", product);
+
+        return product;
     }
 }
