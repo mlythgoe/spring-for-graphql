@@ -108,6 +108,32 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "mutation - delete Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    deleteProduct(id:10) \n        \n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

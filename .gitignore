@@ -35,3 +35,7 @@ build/
 /.mvn/wrapper/maven-wrapper.properties
 /mvnw
 /mvnw.cmd
+
+# Ignore Mac DS_Store files
+.DS_Store
+**/.DS_Store
