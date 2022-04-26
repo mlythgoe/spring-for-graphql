@@ -24,6 +24,7 @@ type Product {
 type Mutation {
     """ Add a Product """
     addProduct(productInput: ProductInput): Product
+    """ Delete a Product """
     deleteProduct(id: Int): Int
 
 }
