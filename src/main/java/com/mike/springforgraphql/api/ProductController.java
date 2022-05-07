@@ -63,8 +63,8 @@ public class ProductController {
         return product;
     }
 
-    @MutationMapping("addProduct")
-    public Product addProduct(@Argument ProductInput productInput) {
+    @MutationMapping("saveProduct")
+    public Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
             logger.debug("Insert Product for ProductInput {}", productInput);
