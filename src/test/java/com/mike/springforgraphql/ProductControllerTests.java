@@ -18,7 +18,7 @@ record ProductControllerTests(ProductController productController) {
     }
 
     @Test
-    void testControllerFindAllProducts() {
+    void testFindAllProducts() {
 
         List<Product> products = productController.findAllProducts();
         Assert.assertNotNull(products);
@@ -61,5 +61,20 @@ record ProductControllerTests(ProductController productController) {
 
     }
 
+    @Test
+    void testDeleteProductThatExists() {
+
+        Long deletedId = productController.deleteProduct(1L);
+        Assert.assertNotNull(deletedId);
+
+    }
+
+    @Test
+    void testDeleteProductThatDoesNotExist() {
+
+        Long deletedId = productController.deleteProduct(99999999L);
+        Assert.assertNull(deletedId);
+
+    }
 
 }
