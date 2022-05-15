@@ -5,6 +5,7 @@ import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.ContextValue;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,9 @@ public class ProductController {
     }
 
     @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
-    public List<Product> findAllProducts() {
+    public List<Product> findAllProducts(@ContextValue String myHeader) {
 
-        logger.debug("Find All Products");
+        logger.debug("Find All Products, myHeader value = {}", myHeader);
 
         List<ProductEntity> productEntities = productRepository.findAll();
 
