@@ -30,7 +30,7 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testFindOneProductThatExists() {
 
-        Product product = productController.findProduct(10L);
+        Product product = productController.findProduct(1L);
         assertThat(product).isNotNull();
 
     }
@@ -46,10 +46,12 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testSaveProductThatDoesExist() {
 
-        ProductInput productInput = new ProductInput(1L, "testTitle", "testDescription");
+        Long productId = 1L;
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription");
 
         Product product = productController.saveProduct(productInput);
         assertThat(product.id()).isNotNull();
+        assertThat(product.id()).isEqualTo(productId);
 
     }
 
@@ -66,8 +68,9 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testDeleteProductThatExists() {
 
-        Long deletedId = productController.deleteProduct(2L);
-        assertThat(deletedId).isNotNull();
+        Long idToDelete = 2L;
+        Long deletedId = productController.deleteProduct(idToDelete);
+        assertThat(deletedId).isEqualTo(idToDelete);
 
     }
 
