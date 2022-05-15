@@ -21,7 +21,7 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testFindAllProducts() {
 
-        List<Product> products = productController.findAllProducts();
+        List<Product> products = productController.findAllProducts("ignore");
         assertThat(products).isNotNull();
         assertThat(products.size()).isEqualTo(3);
 
