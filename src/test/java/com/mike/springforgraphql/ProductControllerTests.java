@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 record ProductControllerTests(ProductController productController) {
 
@@ -22,13 +24,14 @@ record ProductControllerTests(ProductController productController) {
 
         List<Product> products = productController.findAllProducts();
         Assert.assertNotNull(products);
+        assertThat(products.size()).isEqualTo(3);
 
     }
 
     @Test
     void testFindOneProductThatExists() {
 
-        Product product = productController.findProduct(1L);
+        Product product = productController.findProduct(10L);
         Assert.assertNotNull(product);
 
     }
@@ -44,7 +47,7 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testSaveProductThatDoesExist() {
 
-        ProductInput productInput = new ProductInput(1L, "testTitle", "testDescriptiopn");
+        ProductInput productInput = new ProductInput(1L, "testTitle", "testDescription");
 
         Product product = productController.saveProduct(productInput);
         Assert.assertNotNull(product.id());
@@ -54,17 +57,17 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductInput productInput = new ProductInput(null, "testTitle", "testDescriptiopn");
+        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription");
 
         Product product = productController.saveProduct(productInput);
-        Assert.assertNotNull(product);
+        Assert.assertNotNull(product.id());
 
     }
 
     @Test
     void testDeleteProductThatExists() {
 
-        Long deletedId = productController.deleteProduct(1L);
+        Long deletedId = productController.deleteProduct(2L);
         Assert.assertNotNull(deletedId);
 
     }
