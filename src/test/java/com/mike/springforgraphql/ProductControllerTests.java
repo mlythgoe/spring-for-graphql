@@ -11,13 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class ProductControllerTests {
-
-    private final ProductController productController;
+record ProductControllerTests(ProductController productController) {
 
     @Autowired
-    ProductControllerTests(ProductController productController) {
-        this.productController = productController;
+    ProductControllerTests {
     }
 
     @Test
@@ -47,7 +44,7 @@ class ProductControllerTests {
     @Test
     void testSaveProductThatDoesExist() {
 
-        ProductInput productInput = new ProductInput(1L,"testTitle", "testDescriptiopn");
+        ProductInput productInput = new ProductInput(1L, "testTitle", "testDescriptiopn");
 
         Product product = productController.saveProduct(productInput);
         Assert.assertNotNull(product.id());
@@ -57,7 +54,7 @@ class ProductControllerTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductInput productInput = new ProductInput(null,"testTitle", "testDescriptiopn");
+        ProductInput productInput = new ProductInput(null, "testTitle", "testDescriptiopn");
 
         Product product = productController.saveProduct(productInput);
         Assert.assertNotNull(product);

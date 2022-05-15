@@ -11,13 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-class ProductRepositoryTests {
-
-    private final ProductRepository productRepository;
+record ProductRepositoryTests(ProductRepository productRepository) {
 
     @Autowired
-    ProductRepositoryTests(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    ProductRepositoryTests {
     }
 
     @Test
