@@ -3,7 +3,6 @@ package com.mike.springforgraphql;
 import com.mike.springforgraphql.api.Product;
 import com.mike.springforgraphql.api.ProductController;
 import com.mike.springforgraphql.api.ProductInput;
-import graphql.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ record ProductControllerTests(ProductController productController) {
     void testFindAllProducts() {
 
         List<Product> products = productController.findAllProducts();
-        Assert.assertNotNull(products);
+        assertThat(products).isNotNull();
         assertThat(products.size()).isEqualTo(3);
 
     }
@@ -32,7 +31,7 @@ record ProductControllerTests(ProductController productController) {
     void testFindOneProductThatExists() {
 
         Product product = productController.findProduct(10L);
-        Assert.assertNotNull(product);
+        assertThat(product).isNotNull();
 
     }
 
@@ -40,7 +39,7 @@ record ProductControllerTests(ProductController productController) {
     void testFindOneProductThatDoesNotExist() {
 
         Product product = productController.findProduct(99999999L);
-        Assert.assertNull(product);
+        assertThat(product).isNull();
 
     }
 
@@ -50,7 +49,7 @@ record ProductControllerTests(ProductController productController) {
         ProductInput productInput = new ProductInput(1L, "testTitle", "testDescription");
 
         Product product = productController.saveProduct(productInput);
-        Assert.assertNotNull(product.id());
+        assertThat(product.id()).isNotNull();
 
     }
 
@@ -60,7 +59,7 @@ record ProductControllerTests(ProductController productController) {
         ProductInput productInput = new ProductInput(null, "testTitle", "testDescription");
 
         Product product = productController.saveProduct(productInput);
-        Assert.assertNotNull(product.id());
+        assertThat(product.id()).isNotNull();
 
     }
 
@@ -68,7 +67,7 @@ record ProductControllerTests(ProductController productController) {
     void testDeleteProductThatExists() {
 
         Long deletedId = productController.deleteProduct(2L);
-        Assert.assertNotNull(deletedId);
+        assertThat(deletedId).isNotNull();
 
     }
 
@@ -76,7 +75,7 @@ record ProductControllerTests(ProductController productController) {
     void testDeleteProductThatDoesNotExist() {
 
         Long deletedId = productController.deleteProduct(99999999L);
-        Assert.assertNull(deletedId);
+        assertThat(deletedId).isNull();
 
     }
 

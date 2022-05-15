@@ -9,8 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -22,23 +24,23 @@ record ProductRepositoryTests(ProductRepository productRepository) {
     }
 
     @Test
-    void testyFindAllProducts() {
+    void testFindAllProducts() {
 
         List<ProductEntity> productEntities = productRepository.findAll();
-        Assert.assertNotNull(productEntities);
+        assertThat(productEntities).isNotNull();
 
     }
 
     @Test
-    void testyFindProductUsingIdThatExists() {
+    void testFindProductUsingIdThatExists() {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(1L);
-        Assert.assertNotNull(optionalProductEntity);
+        assertThat(optionalProductEntity).isNotNull();
 
     }
 
     @Test
-    void testyFindProductUsingIdThatDoesNotExist() {
+    void testFindProductUsingIdThatDoesNotExist() {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
         Assert.assertTrue(optionalProductEntity.isEmpty());
@@ -61,7 +63,8 @@ record ProductRepositoryTests(ProductRepository productRepository) {
                 "Expected deleteById() to throw, but it didn't"
         );
 
-        assertTrue(thrown.getMessage().contains("No class com.mike.springforgraphql.model.ProductEntity " +
+        assertTrue(Objects.requireNonNull(thrown.getMessage())
+                .contains("No class com.mike.springforgraphql.model.ProductEntity " +
                 "entity with id 99999999 exists!"));
 
     }
