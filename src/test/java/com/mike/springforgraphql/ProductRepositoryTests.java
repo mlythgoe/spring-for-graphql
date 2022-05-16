@@ -28,6 +28,8 @@ record ProductRepositoryTests(ProductRepository productRepository) {
 
         List<ProductEntity> productEntities = productRepository.findAll();
         assertThat(productEntities).isNotNull();
+        assertThat(productEntities.size()).isEqualTo(3);
+
 
     }
 
@@ -44,6 +46,28 @@ record ProductRepositoryTests(ProductRepository productRepository) {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
         Assert.assertTrue(optionalProductEntity.isEmpty());
+
+    }
+
+    @Test
+    void testSaveProductUsingIdThatDoesExist() {
+
+        Long productId = 1L;
+        ProductEntity productEntity = new ProductEntity(productId, "testTitle", "testDescription");
+
+        ProductEntity savedProduct = productRepository.save(productEntity);
+        assertThat(savedProduct.getId()).isNotNull();
+        assertThat(savedProduct.getId()).isEqualTo(productId);
+
+    }
+
+    @Test
+    void testSaveProductThatDoesNotExist() {
+
+        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
+
+        ProductEntity savedProduct = productRepository.save(productEntity);
+        assertThat(savedProduct.getId()).isNotNull();
 
     }
 
