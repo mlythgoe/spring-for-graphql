@@ -28,7 +28,7 @@ record ProductControllerTests(ProductController productController) {
     }
 
     @Test
-    void testFindOneProductThatExists() {
+    void testFindOneProductUsingIdThatExists() {
 
         Product product = productController.findProduct(1L);
         assertThat(product).isNotNull();
@@ -36,7 +36,7 @@ record ProductControllerTests(ProductController productController) {
     }
 
     @Test
-    void testFindOneProductThatDoesNotExist() {
+    void testFindOneProductUsingIdThatDoesNotExist() {
 
         Product product = productController.findProduct(99999999L);
         assertThat(product).isNull();
