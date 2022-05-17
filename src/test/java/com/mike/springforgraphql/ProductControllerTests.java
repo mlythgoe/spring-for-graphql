@@ -22,7 +22,9 @@ class ProductControllerTests {
     @Test
     void testFindAllProducts() {
 
-        List<Product> products = productController.findAllProducts();
+        String dummyHeaderValue = "dummyHeaderValue";
+
+        List<Product> products = productController.findAllProducts(dummyHeaderValue);
 
         assertThat(products).isNotNull();
         assertThat(products.size()).isEqualTo(3);
