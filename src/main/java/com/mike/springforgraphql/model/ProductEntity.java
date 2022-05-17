@@ -21,7 +21,6 @@ public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    // Allow Persistence provider to manage id (Others are IDENTITY, SEQUENCE and TABLE).
     private Long id;
 
     @Column(name = "title")
