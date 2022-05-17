@@ -6,17 +6,18 @@ import com.mike.springforgraphql.api.ProductInput;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @SpringBootTest
-record ProductControllerTests(ProductController productController) {
+class ProductControllerTests {
 
     @Autowired
-    ProductControllerTests {
-    }
+    ProductController productController;
 
     @Test
     void testFindAllProducts() {
@@ -31,6 +32,7 @@ record ProductControllerTests(ProductController productController) {
     void testFindOneProductUsingIdThatExists() {
 
         Product product = productController.findProduct(1L);
+        System.out.println("testFindOneProductUsingIdThatExists" +  product);
         assertThat(product).isNotNull();
 
     }
@@ -44,12 +46,18 @@ record ProductControllerTests(ProductController productController) {
     }
 
     @Test
-    void testSaveProductThatDoesExist() {
+    void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
         ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription");
 
+        System.out.println("*****testSaveProductUsingIdThatDoesExist 1" +  productInput);
+
         Product product = productController.saveProduct(productInput);
+
+        System.out.println("*****testSaveProductUsingIdThatDoesExist 2" +  product);
+
+
         assertThat(product.id()).isNotNull();
         assertThat(product.id()).isEqualTo(productId);
 
@@ -58,9 +66,15 @@ record ProductControllerTests(ProductController productController) {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription");
+        Long productId = null;
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription");
+
+        System.out.println("******testSaveProductUsingIdThatDoesNotExist 1" +  productInput);
 
         Product product = productController.saveProduct(productInput);
+
+        System.out.println("******testSaveProductUsingIdThatDoesNotExist" +  product);
+
         assertThat(product.id()).isNotNull();
 
     }

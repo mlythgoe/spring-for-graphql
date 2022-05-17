@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Transactional
 @SpringBootTest
-record ProductRepositoryTests(ProductRepository productRepository) {
+class ProductRepositoryTests {
 
     @Autowired
-    ProductRepositoryTests {
-    }
+    ProductRepository productRepository;
 
     @Test
     void testFindAllProducts() {
@@ -53,7 +54,10 @@ record ProductRepositoryTests(ProductRepository productRepository) {
     void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
-        ProductEntity productEntity = new ProductEntity(productId, "testTitle", "testDescription");
+
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
+
+        ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription");
 
         ProductEntity savedProduct = productRepository.save(productEntity);
         assertThat(savedProduct.getId()).isNotNull();
