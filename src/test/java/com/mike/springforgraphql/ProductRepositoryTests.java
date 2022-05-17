@@ -28,6 +28,7 @@ class ProductRepositoryTests {
     void testFindAllProducts() {
 
         List<ProductEntity> productEntities = productRepository.findAll();
+
         assertThat(productEntities).isNotNull();
         assertThat(productEntities.size()).isEqualTo(3);
 
@@ -38,6 +39,8 @@ class ProductRepositoryTests {
     void testFindProductUsingIdThatExists() {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(1L);
+
+        assertThat(optionalProductEntity).isPresent();
         assertThat(optionalProductEntity).isNotNull();
 
     }
@@ -46,6 +49,7 @@ class ProductRepositoryTests {
     void testFindProductUsingIdThatDoesNotExist() {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
+
         Assert.assertTrue(optionalProductEntity.isEmpty());
 
     }
@@ -57,11 +61,15 @@ class ProductRepositoryTests {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
-        ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription");
+        if (optionalProductEntity.isPresent()) {
 
-        ProductEntity savedProduct = productRepository.save(productEntity);
-        assertThat(savedProduct.getId()).isNotNull();
-        assertThat(savedProduct.getId()).isEqualTo(productId);
+            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription");
+
+            ProductEntity savedProduct = productRepository.save(productEntity);
+
+            assertThat(savedProduct.getId()).isNotNull();
+            assertThat(savedProduct.getId()).isEqualTo(productId);
+        }
 
     }
 
@@ -71,6 +79,7 @@ class ProductRepositoryTests {
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
 
         ProductEntity savedProduct = productRepository.save(productEntity);
+
         assertThat(savedProduct.getId()).isNotNull();
 
     }
@@ -78,7 +87,14 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatExists() {
 
+        Long countBefore = productRepository.count();
+
         productRepository.deleteById(1L);
+
+        Long countAfter = productRepository.count();
+
+        assertThat(countBefore).isGreaterThan(countAfter);
+
 
     }
 
