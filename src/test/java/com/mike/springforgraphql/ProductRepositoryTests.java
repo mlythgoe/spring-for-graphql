@@ -61,7 +61,7 @@ class ProductRepositoryTests {
 
         Long productId = 1L;
 
-        Long countBefore = productRepository.count();
+        long countBefore = productRepository.count();
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
@@ -76,7 +76,7 @@ class ProductRepositoryTests {
             fail("Product did not already exist");
         }
 
-        Long countAfter = productRepository.count();
+        long countAfter = productRepository.count();
 
         assertThat(countBefore).isEqualTo(countAfter);
 
@@ -86,7 +86,7 @@ class ProductRepositoryTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        Long countBefore = productRepository.count();
+        long countBefore = productRepository.count();
 
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
 
@@ -94,7 +94,7 @@ class ProductRepositoryTests {
 
         assertThat(savedProduct.getId()).isNotNull();
 
-        Long countAfter = productRepository.count();
+        long countAfter = productRepository.count();
 
         assertThat(countBefore+1).isEqualTo(countAfter);
 
@@ -103,14 +103,13 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatExists() {
 
-        Long countBefore = productRepository.count();
+        long countBefore = productRepository.count();
 
         productRepository.deleteById(1L);
 
-        Long countAfter = productRepository.count();
+        long countAfter = productRepository.count();
 
         assertThat(countBefore-1).isEqualTo(countAfter);
-
 
     }
 
