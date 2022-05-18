@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,15 +33,17 @@ class ProductRepositoryTests {
         assertThat(productEntities).isNotNull();
         assertThat(productEntities.size()).isEqualTo(3);
 
-
     }
 
     @Test
     void testFindProductUsingIdThatExists() {
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(1L);
+        Long productId = 1L;
+
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         assertThat(optionalProductEntity).isPresent();
+        assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
 
     }
 
@@ -68,13 +71,15 @@ class ProductRepositoryTests {
 
             ProductEntity savedProduct = productRepository.save(productEntity);
 
-            assertThat(savedProduct.getId()).isNotNull();
             assertThat(savedProduct.getId()).isEqualTo(productId);
-
-            Long countAfter = productRepository.count();
-
-            assertThat(countBefore).isEqualTo(countAfter);
+        } else {
+            fail("Product did not already exist");
         }
+
+        Long countAfter = productRepository.count();
+
+        assertThat(countBefore).isEqualTo(countAfter);
+
 
     }
 
@@ -91,7 +96,7 @@ class ProductRepositoryTests {
 
         Long countAfter = productRepository.count();
 
-        assertThat(countBefore).isLessThan(countAfter);
+        assertThat(countBefore+1).isEqualTo(countAfter);
 
     }
 
@@ -104,7 +109,7 @@ class ProductRepositoryTests {
 
         Long countAfter = productRepository.count();
 
-        assertThat(countBefore).isGreaterThan(countAfter);
+        assertThat(countBefore-1).isEqualTo(countAfter);
 
 
     }

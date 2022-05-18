@@ -35,6 +35,7 @@ class ProductControllerTests {
         Product product = productController.findProduct(1L);
 
         assertThat(product).isNotNull();
+        assertThat(product.id()).isEqualTo(1L);
 
     }
 
