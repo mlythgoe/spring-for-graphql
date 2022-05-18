@@ -41,7 +41,6 @@ class ProductRepositoryTests {
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(1L);
 
         assertThat(optionalProductEntity).isPresent();
-        assertThat(optionalProductEntity).isNotNull();
 
     }
 
@@ -59,6 +58,8 @@ class ProductRepositoryTests {
 
         Long productId = 1L;
 
+        Long countBefore = productRepository.count();
+
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         if (optionalProductEntity.isPresent()) {
@@ -69,6 +70,10 @@ class ProductRepositoryTests {
 
             assertThat(savedProduct.getId()).isNotNull();
             assertThat(savedProduct.getId()).isEqualTo(productId);
+
+            Long countAfter = productRepository.count();
+
+            assertThat(countBefore).isEqualTo(countAfter);
         }
 
     }
@@ -76,11 +81,17 @@ class ProductRepositoryTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
+        Long countBefore = productRepository.count();
+
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
 
         ProductEntity savedProduct = productRepository.save(productEntity);
 
         assertThat(savedProduct.getId()).isNotNull();
+
+        Long countAfter = productRepository.count();
+
+        assertThat(countBefore).isLessThan(countAfter);
 
     }
 
