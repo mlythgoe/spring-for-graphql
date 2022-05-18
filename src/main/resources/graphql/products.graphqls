@@ -35,8 +35,3 @@ type Query {
     """ Get a Product for a Specific Id """
     getProduct(id: ID): Product
 }
-
-
-
-
-

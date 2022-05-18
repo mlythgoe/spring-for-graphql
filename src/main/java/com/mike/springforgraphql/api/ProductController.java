@@ -20,6 +20,7 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     public ProductController(ProductRepository productRepository) {
+
         this.productRepository = productRepository;
 
     }
@@ -34,6 +35,7 @@ public class ProductController {
         List<Product> products = new ArrayList<>();
 
         for (ProductEntity productEntity : productEntities) {
+
             products.add(new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription()));
 
         }
@@ -67,17 +69,26 @@ public class ProductController {
     public Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
+
             logger.debug("Insert Product for ProductInput {}", productInput);
+
         } else {
+
             logger.debug("Update Product for ProductInput {}", productInput);
+
 
         }
 
         ProductEntity newProductEntity;
+
         if (productInput.id() == null) {
+
             newProductEntity = new ProductEntity(productInput.title(), productInput.desc());
+
         } else {
+
             newProductEntity = new ProductEntity(productInput.id(), productInput.title(), productInput.desc());
+
         }
 
         ProductEntity savedProductEntity = productRepository.save(newProductEntity);
@@ -96,9 +107,11 @@ public class ProductController {
         logger.debug("Delete Product for Id {}", id);
 
         if (productRepository.existsById(id)) {
+
             productRepository.deleteById(id);
             logger.debug("Deleted Product for id {}", id);
             return id;
+
         }
 
         logger.debug("Product for id {} did not exist so could not be deleted", id);
