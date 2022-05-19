@@ -15,9 +15,8 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    Logger logger = LoggerFactory.getLogger(ProductController.class);
-
     private final ProductRepository productRepository;
+    Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductRepository productRepository) {
 
@@ -102,7 +101,7 @@ public class ProductController {
     }
 
     @MutationMapping("deleteProduct")
-    public Long deleteProduct(@Argument Long id){
+    public Long deleteProduct(@Argument Long id) {
 
         logger.debug("Delete Product for Id {}", id);
 

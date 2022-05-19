@@ -72,8 +72,11 @@ class ProductRepositoryTests {
             ProductEntity savedProduct = productRepository.save(productEntity);
 
             assertThat(savedProduct.getId()).isEqualTo(productId);
+
         } else {
+
             fail("Product did not already exist");
+
         }
 
         long countAfter = productRepository.count();
@@ -96,7 +99,7 @@ class ProductRepositoryTests {
 
         long countAfter = productRepository.count();
 
-        assertThat(countBefore+1).isEqualTo(countAfter);
+        assertThat(countBefore + 1).isEqualTo(countAfter);
 
     }
 
@@ -109,7 +112,7 @@ class ProductRepositoryTests {
 
         long countAfter = productRepository.count();
 
-        assertThat(countBefore-1).isEqualTo(countAfter);
+        assertThat(countBefore - 1).isEqualTo(countAfter);
 
     }
 
@@ -124,7 +127,7 @@ class ProductRepositoryTests {
 
         assertTrue(Objects.requireNonNull(thrown.getMessage())
                 .contains("No class com.mike.springforgraphql.model.ProductEntity " +
-                "entity with id 99999999 exists!"));
+                        "entity with id 99999999 exists!"));
 
     }
 

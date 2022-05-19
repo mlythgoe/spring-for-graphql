@@ -5,6 +5,14 @@ import javax.persistence.*;
 @Entity(name = "Product")
 public class ProductEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "description")
+    private String description;
+
     public ProductEntity() {
     }
 
@@ -18,16 +26,6 @@ public class ProductEntity {
         this.title = title;
         this.description = description;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "description")
-    private String description;
 
     public Long getId() {
         return id;
