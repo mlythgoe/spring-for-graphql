@@ -16,6 +16,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductRepository productRepository;
+
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductRepository productRepository) {
@@ -42,6 +43,7 @@ public class ProductController {
         logger.debug("Returning All Products - {}", products);
 
         return products;
+
     }
 
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
@@ -62,6 +64,7 @@ public class ProductController {
         logger.debug("Found Product {} for id {}", product, id);
 
         return product;
+
     }
 
     @MutationMapping("saveProduct")
@@ -98,6 +101,7 @@ public class ProductController {
         logger.debug("Created Product {}", product);
 
         return product;
+
     }
 
     @MutationMapping("deleteProduct")

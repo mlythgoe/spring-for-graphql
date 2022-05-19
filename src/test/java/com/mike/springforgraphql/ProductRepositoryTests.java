@@ -83,7 +83,6 @@ class ProductRepositoryTests {
 
         assertThat(countBefore).isEqualTo(countAfter);
 
-
     }
 
     @Test

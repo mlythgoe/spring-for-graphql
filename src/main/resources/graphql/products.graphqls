@@ -26,7 +26,6 @@ type Mutation {
     saveProduct(productInput: ProductInput): Product
     """ Delete a Product """
     deleteProduct(id: Int): Int
-
 }
 
 type Query {
