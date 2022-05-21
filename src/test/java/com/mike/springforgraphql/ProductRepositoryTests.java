@@ -2,7 +2,6 @@ package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.repository.ProductRepository;
-import graphql.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +15,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Transactional
 @SpringBootTest
@@ -52,7 +50,7 @@ class ProductRepositoryTests {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
 
-        Assert.assertTrue(optionalProductEntity.isEmpty());
+        assertThat(optionalProductEntity).isEmpty();
 
     }
 
@@ -124,9 +122,9 @@ class ProductRepositoryTests {
                 "Expected deleteById() to throw, but it didn't"
         );
 
-        assertTrue(Objects.requireNonNull(thrown.getMessage())
+        assertThat(Objects.requireNonNull(thrown.getMessage())
                 .contains("No class com.mike.springforgraphql.model.ProductEntity " +
-                        "entity with id 99999999 exists!"));
+                        "entity with id 99999999 exists!")).isTrue();
 
     }
 
