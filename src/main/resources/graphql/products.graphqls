@@ -10,6 +10,7 @@ input ProductInput {
     id: ID
     title: String!
     desc: String!
+    price: Int!
 }
 
 """
@@ -19,6 +20,7 @@ type Product {
     id: ID!
     title: String!
     desc: String!
+    price: Int!
 }
 
 type Mutation {

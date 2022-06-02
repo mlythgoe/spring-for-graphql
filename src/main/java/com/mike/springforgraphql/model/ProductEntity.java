@@ -12,19 +12,24 @@ public class ProductEntity {
     private String title;
     @Column(name = "description")
     private String description;
+    @Column(name = "price")
+    private Integer price;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String title, String description) {
+    public ProductEntity(String title, String description, Integer price) {
         this.title = title;
         this.description = description;
+        this.price = price;
     }
 
-    public ProductEntity(Long id, String title, String description) {
+    public ProductEntity(Long id, String title, String description, Integer price) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.price = price;
+
     }
 
     public Long getId() {
@@ -51,12 +56,21 @@ public class ProductEntity {
         this.description = description;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

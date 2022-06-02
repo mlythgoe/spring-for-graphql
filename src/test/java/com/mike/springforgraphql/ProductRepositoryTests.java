@@ -65,7 +65,7 @@ class ProductRepositoryTests {
 
         if (optionalProductEntity.isPresent()) {
 
-            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription");
+            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
 
             ProductEntity savedProduct = productRepository.save(productEntity);
 
@@ -88,7 +88,7 @@ class ProductRepositoryTests {
 
         long countBefore = productRepository.count();
 
-        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
+        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         ProductEntity savedProduct = productRepository.save(productEntity);
 

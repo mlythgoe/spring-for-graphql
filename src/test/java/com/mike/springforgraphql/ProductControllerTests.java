@@ -52,7 +52,7 @@ class ProductControllerTests {
     void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription");
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999);
 
         Product product = productController.saveProduct(productInput);
 
@@ -65,7 +65,7 @@ class ProductControllerTests {
     void testSaveProductThatDoesNotExist() {
 
         Long productId = null;
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription");
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999);
 
         Product product = productController.saveProduct(productInput);
 

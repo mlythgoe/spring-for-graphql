@@ -36,7 +36,8 @@ public class ProductController {
 
         for (ProductEntity productEntity : productEntities) {
 
-            products.add(new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription()));
+            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
+                    productEntity.getDescription(), productEntity.getPrice()));
 
         }
 
@@ -59,7 +60,8 @@ public class ProductController {
             return null;
         }
 
-        Product product = new Product(productEntity.getId(), productEntity.getTitle(), productEntity.getDescription());
+        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
+                productEntity.getDescription(), productEntity.getPrice());
 
         logger.debug("Found Product {} for id {}", product, id);
 
@@ -85,18 +87,21 @@ public class ProductController {
 
         if (productInput.id() == null) {
 
-            newProductEntity = new ProductEntity(productInput.title(), productInput.desc());
+            newProductEntity = new ProductEntity(productInput.title(),
+                    productInput.desc(), productInput.price());
 
         } else {
 
-            newProductEntity = new ProductEntity(productInput.id(), productInput.title(), productInput.desc());
+            newProductEntity = new ProductEntity(productInput.id(), productInput.title(),
+                    productInput.desc(), productInput.price());
 
         }
 
         ProductEntity savedProductEntity = productRepository.save(newProductEntity);
 
         Product product = new Product(
-                savedProductEntity.getId(), savedProductEntity.getTitle(), savedProductEntity.getDescription());
+                savedProductEntity.getId(), savedProductEntity.getTitle(),
+                savedProductEntity.getDescription(), savedProductEntity.getPrice());
 
         logger.debug("Created Product {}", product);
 
