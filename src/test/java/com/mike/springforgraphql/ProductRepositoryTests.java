@@ -128,4 +128,13 @@ class ProductRepositoryTests {
 
     }
 
+    @Test
+    void testFindPriceGreaterThan() {
+
+        List<ProductEntity> products = productRepository.findByPriceGreaterThan(100);
+
+        assertThat(products.size()).isEqualTo(2);
+
+    }
+
 }

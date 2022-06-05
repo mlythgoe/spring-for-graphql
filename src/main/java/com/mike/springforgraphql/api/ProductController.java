@@ -1,6 +1,7 @@
 package com.mike.springforgraphql.api;
 
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +16,16 @@ import java.util.List;
 @Controller
 public class ProductController {
 
+    private final ProductCustomRepository productCustomRepository;
     private final ProductRepository productRepository;
+
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
 
         this.productRepository = productRepository;
+        this.productCustomRepository = productCustomRepository;
 
     }
 
@@ -32,18 +36,7 @@ public class ProductController {
 
         List<ProductEntity> productEntities = productRepository.findAll();
 
-        List<Product> products = new ArrayList<>();
-
-        for (ProductEntity productEntity : productEntities) {
-
-            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
-                    productEntity.getDescription(), productEntity.getPrice()));
-
-        }
-
-        logger.debug("Returning All Products - {}", products);
-
-        return products;
+        return convertProductEntityListToProductList(productEntities);
 
     }
 
@@ -67,6 +60,41 @@ public class ProductController {
 
         return product;
 
+    }
+
+    @QueryMapping("searchProducts") // value (i.e. "getProduct") must match GraphQL schema operation
+    public List<Product> searchProducts(@Argument ProductSearchCriteria productSearchCriteria) {
+
+        logger.debug("Search for Products using criteria {}", productSearchCriteria);
+
+        List<ProductEntity> productEntities;
+
+        productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        if (productEntities == null) {
+            logger.debug("No Products found for search criteria {}", productSearchCriteria);
+
+            return null;
+        }
+
+        return convertProductEntityListToProductList(productEntities);
+
+    }
+
+    private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
+        List<Product> products = new ArrayList<>();
+
+
+        for (ProductEntity productEntity : productEntities) {
+
+            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
+                    productEntity.getDescription(), productEntity.getPrice()));
+
+        }
+
+        logger.debug("Returning All Products - {}", products);
+
+        return products;
     }
 
     @MutationMapping("saveProduct")

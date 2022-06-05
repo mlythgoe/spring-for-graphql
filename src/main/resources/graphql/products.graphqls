@@ -14,6 +14,16 @@ input ProductInput {
 }
 
 """
+ProductSearchCriteria is the container for search criteria
+"""
+input ProductSearchCriteria{
+    title: String
+    desc: String
+    lowerPrice: Int
+    upperPrice: Int
+}
+
+"""
 Product is the response object, i.e. it has been persisted, and so will always have an Id
 """
 type Product {
@@ -35,4 +45,6 @@ type Query {
     allProducts: [Product]
     """ Get a Product for a Specific Id """
     getProduct(id: ID): Product
+    """ Get a Product for a variety of conditions """
+    searchProducts(productSearchCriteria: ProductSearchCriteria): [Product]
 }
