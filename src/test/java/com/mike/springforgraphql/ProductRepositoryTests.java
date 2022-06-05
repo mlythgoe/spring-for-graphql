@@ -128,7 +128,7 @@ class ProductRepositoryTests {
         );
 
         assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class ProductEntity entity with id 99999999 exists!")).isTrue();
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!")).isTrue();
 
     }
 
