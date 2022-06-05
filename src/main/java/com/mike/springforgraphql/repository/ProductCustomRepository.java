@@ -23,7 +23,7 @@ public class ProductCustomRepository {
     public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteria productSearchCriteria) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
+        CriteriaQuery<ProductEntity> criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
 
         Root<ProductEntity> productEntityRoot = criteriaQuery.from(ProductEntity.class);
 
