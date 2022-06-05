@@ -1,6 +1,8 @@
 package com.mike.springforgraphql;
 
+import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ class ProductRepositoryTests {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductCustomRepository productCustomRepository;
 
     @Test
     void testFindAllProducts() {
@@ -134,6 +139,30 @@ class ProductRepositoryTests {
         List<ProductEntity> products = productRepository.findByPriceGreaterThan(100);
 
         assertThat(products.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(2);
+
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForTitle() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(1);
+
 
     }
 
