@@ -61,7 +61,7 @@ public class ProductController {
 
     }
 
-    @QueryMapping("searchProducts") // value (i.e. "getProduct") must match GraphQL schema operation
+    @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema operation
     public List<Product> searchProducts(@Argument ProductSearchCriteria productSearchCriteria) {
 
         logger.debug("Search for Products using criteria {}", productSearchCriteria);
@@ -80,7 +80,7 @@ public class ProductController {
 
     }
 
-    @MutationMapping("saveProduct")
+    @MutationMapping("saveProduct")  // value (i.e. "saveProduct") must match GraphQL schema operation
     public Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
@@ -119,7 +119,7 @@ public class ProductController {
 
     }
 
-    @MutationMapping("deleteProduct")
+    @MutationMapping("deleteProduct") // value (i.e. "deleteProduct") must match GraphQL schema operation
     public Long deleteProduct(@Argument Long id) {
 
         logger.debug("Delete Product for Id {}", id);
