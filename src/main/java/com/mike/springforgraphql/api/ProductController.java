@@ -19,7 +19,6 @@ public class ProductController {
     private final ProductCustomRepository productCustomRepository;
     private final ProductRepository productRepository;
 
-
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
@@ -81,22 +80,6 @@ public class ProductController {
 
     }
 
-    private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
-        List<Product> products = new ArrayList<>();
-
-
-        for (ProductEntity productEntity : productEntities) {
-
-            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
-                    productEntity.getDescription(), productEntity.getPrice()));
-
-        }
-
-        logger.debug("Returning All Products - {}", products);
-
-        return products;
-    }
-
     @MutationMapping("saveProduct")
     public Product saveProduct(@Argument ProductInput productInput) {
 
@@ -107,7 +90,6 @@ public class ProductController {
         } else {
 
             logger.debug("Update Product for ProductInput {}", productInput);
-
 
         }
 
@@ -154,5 +136,21 @@ public class ProductController {
 
         return null;
 
+    }
+
+    private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
+
+        List<Product> products = new ArrayList<>();
+
+        for (ProductEntity productEntity : productEntities) {
+
+            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
+                    productEntity.getDescription(), productEntity.getPrice()));
+
+        }
+
+        logger.debug("Returning All Products - {}", products);
+
+        return products;
     }
 }
