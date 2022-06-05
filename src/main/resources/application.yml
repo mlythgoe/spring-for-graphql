@@ -1,0 +1,34 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: 'true'
+    database: mysql
+    defer-datasource-initialization: 'false'
+    hibernate:
+      ddl-auto: none
+    show-sql: 'true'
+  datasource:
+    password: password
+    username: sa
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+  graphql:
+    graphiql:
+      enabled: 'true'
+    path: /graphql
+  h2:
+    console:
+      enabled: 'true'
+logging:
+  level:
+    org:
+      hibernate:
+        nodeValue: info
+        type:
+          descriptor:
+            sql: trace
+      springframework: info
+    com:
+      mike:
+        springforgraphql: debug
