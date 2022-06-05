@@ -1,5 +1,10 @@
 spring:
 
+  graphql:
+    graphiql:
+      enabled: 'true'
+    path: /graphql
+
   jpa:
     properties:
       hibernate:
@@ -15,11 +20,6 @@ spring:
     password: password
     username: sa
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-
-  graphql:
-    graphiql:
-      enabled: 'true'
-    path: /graphql
 
   h2:
     console:
