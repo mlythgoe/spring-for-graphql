@@ -134,9 +134,9 @@ class ProductRepositoryTests {
     }
 
     @Test
-    void testFindPriceGreaterThan() {
+    void testFindPriceBetween() {
 
-        List<ProductEntity> products = productRepository.findByPriceGreaterThan(100);
+        List<ProductEntity> products = productRepository.findByPriceBetween(100,99999);
 
         assertThat(products.size()).isEqualTo(2);
 

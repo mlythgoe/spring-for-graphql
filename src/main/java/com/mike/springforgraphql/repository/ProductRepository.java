@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity,Long>, JpaSpecificationExecutor<ProductEntity> {
 
-    List<ProductEntity> findByPriceGreaterThan(Integer price);
-
-
+    List<ProductEntity> findByPriceBetween(Integer lowerPrice, Integer upperPrice);
 
 }
