@@ -1,4 +1,5 @@
 spring:
+
   jpa:
     properties:
       hibernate:
@@ -9,17 +10,21 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: 'true'
+
   datasource:
     password: password
     username: sa
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
+
   graphql:
     graphiql:
       enabled: 'true'
     path: /graphql
+
   h2:
     console:
       enabled: 'true'
+
 logging:
   level:
     org:

@@ -3,6 +3,7 @@ package com.mike.springforgraphql;
 import com.mike.springforgraphql.api.Product;
 import com.mike.springforgraphql.api.ProductController;
 import com.mike.springforgraphql.api.ProductInput;
+import com.mike.springforgraphql.api.ProductSearchCriteria;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +46,17 @@ class ProductControllerTests {
         Product product = productController.findProduct(99999999L);
 
         assertThat(product).isNull();
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+
+        List<Product> products = productController.searchProducts(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(2);
 
     }
 

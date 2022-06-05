@@ -142,7 +142,6 @@ class ProductRepositoryTests {
 
         assertThat(products.size()).isEqualTo(2);
 
-
     }
 
     @Test
