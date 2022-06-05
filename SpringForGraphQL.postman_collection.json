@@ -59,6 +59,32 @@
 			"response": []
 		},
 		{
+			"name": "query - getProduct - non-existing Product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  getProduct(id:999){\n    id\n    title\n    desc\n    price\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "query - search using price",
 			"request": {
 				"method": "POST",
@@ -66,7 +92,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {upperPrice:20})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteria: {lowerPrice:20, upperPrice:500})   {\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -93,58 +119,6 @@
 					"mode": "graphql",
 					"graphql": {
 						"query": "query {\n  searchProducts(productSearchCriteria: {title:\"Phone\"})   {\n    id\n    title\n    desc\n    price\n  }\n}",
-						"variables": ""
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/graphql",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "query - getProduct - using query",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query {\n  getProduct(id:1){\n    id\n    title\n    desc\n  }\n}",
-						"variables": ""
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/graphql",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "query - getProduct - non-existing Product",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "query {\n  getProduct(id:999){\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
