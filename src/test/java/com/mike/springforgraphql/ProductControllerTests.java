@@ -4,6 +4,7 @@ import com.mike.springforgraphql.api.Product;
 import com.mike.springforgraphql.api.ProductController;
 import com.mike.springforgraphql.api.ProductInput;
 import com.mike.springforgraphql.api.ProductSearchCriteria;
+import com.mike.springforgraphql.model.ProductEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,6 +58,17 @@ class ProductControllerTests {
         List<Product> products = productController.searchProducts(productSearchCriteria);
 
         assertThat(products.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForTitle() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+
+        List<Product> products = productController.searchProducts(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(1);
 
     }
 

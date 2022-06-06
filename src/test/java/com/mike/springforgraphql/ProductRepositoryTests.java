@@ -60,6 +60,28 @@ class ProductRepositoryTests {
     }
 
     @Test
+    void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForTitle() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(1);
+
+    }
+
+    @Test
     void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
@@ -132,27 +154,6 @@ class ProductRepositoryTests {
 
     }
 
-    @Test
-    void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
 
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
-
-        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
-
-        assertThat(products.size()).isEqualTo(2);
-
-    }
-
-    @Test
-    void testFindUsingProductSearchCriteriaForTitle() {
-
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
-
-        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
-
-        assertThat(products.size()).isEqualTo(1);
-
-
-    }
 
 }
