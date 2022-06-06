@@ -149,7 +149,7 @@ public class ProductController {
 
         }
 
-        logger.debug("Returning All Products - {}", products);
+        logger.debug("Returning Products - {}", products);
 
         return products;
     }
