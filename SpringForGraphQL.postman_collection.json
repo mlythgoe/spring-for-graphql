@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "query - AllProducts",
+			"name": "query - allProducts",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -85,7 +85,7 @@
 			"response": []
 		},
 		{
-			"name": "query - search using price",
+			"name": "query - searchProducts using price",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -111,7 +111,7 @@
 			"response": []
 		},
 		{
-			"name": "query - search using title",
+			"name": "query - searchProducts using title",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -137,7 +137,33 @@
 			"response": []
 		},
 		{
-			"name": "mutation - save Product",
+			"name": "query - searchProducts using NO criteria",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  searchProducts(productSearchCriteria: {})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - saveProduct",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -163,7 +189,7 @@
 			"response": []
 		},
 		{
-			"name": "mutation - delete Product",
+			"name": "mutation - deleteProduct",
 			"request": {
 				"method": "POST",
 				"header": [],
