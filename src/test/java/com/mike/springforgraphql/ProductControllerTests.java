@@ -88,8 +88,7 @@ class ProductControllerTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        Long productId = null;
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999);
+        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription", 9999);
 
         Product product = productController.saveProduct(productInput);
 
