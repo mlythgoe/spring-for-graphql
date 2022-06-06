@@ -163,7 +163,7 @@
 			"response": []
 		},
 		{
-			"name": "mutation - saveProduct",
+			"name": "mutation - saveProduct - create",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -171,6 +171,32 @@
 					"mode": "graphql",
 					"graphql": {
 						"query": "mutation {\n    saveProduct(\n        productInput: {\n        title: \"Title\",\n        desc: \"Desc\"\n        price: 9999\n        }\n    ) {\n        id\n        desc\n        title\n        price\n    }\n        \n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - saveProduct - update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n        id: 10,\n        title: \"Title\",\n        desc: \"Desc\"\n        price: 9999\n        }\n    ) {\n        id\n        desc\n        title\n        price\n    }\n        \n}",
 						"variables": ""
 					}
 				},
