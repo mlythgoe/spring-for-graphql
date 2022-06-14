@@ -25,29 +25,29 @@ public class ProductCustomRepository {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<ProductEntity> criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
 
-        Root<ProductEntity> productEntityRoot = criteriaQuery.from(ProductEntity.class);
+        Root<ProductEntity> root = criteriaQuery.from(ProductEntity.class);
 
         if ( productSearchCriteria.title() != null ) {
-            Predicate titlePredicate = criteriaBuilder.like(productEntityRoot.get(ProductEntity_.TITLE),
+            Predicate titlePredicate = criteriaBuilder.like(root.get(ProductEntity_.TITLE),
                     productSearchCriteria.title());
             criteriaQuery.where(titlePredicate);
         }
 
         if ( productSearchCriteria.lowerPrice() != null ) {
-            Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(productEntityRoot.get(ProductEntity_.PRICE),
+            Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteria.lowerPrice());
             criteriaQuery.where(lowerPricePredicate);
         }
 
         if ( productSearchCriteria.upperPrice() != null ) {
-            Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(productEntityRoot.get(ProductEntity_.PRICE),
+            Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteria.upperPrice());
             criteriaQuery.where(upperPricePredicate);
         }
 
-        TypedQuery<ProductEntity> query = entityManager.createQuery(criteriaQuery);
+        TypedQuery<ProductEntity> typedQuery = entityManager.createQuery(criteriaQuery);
 
-        return query.getResultList();
+        return typedQuery.getResultList();
 
     }
 
