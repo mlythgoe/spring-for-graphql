@@ -1,8 +1,9 @@
 package com.mike.springforgraphql;
 
+import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
-import graphql.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,8 +15,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Transactional
 @SpringBootTest
@@ -23,6 +24,9 @@ class ProductRepositoryTests {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductCustomRepository productCustomRepository;
 
     @Test
     void testFindAllProducts() {
@@ -32,16 +36,17 @@ class ProductRepositoryTests {
         assertThat(productEntities).isNotNull();
         assertThat(productEntities.size()).isEqualTo(3);
 
-
     }
 
     @Test
     void testFindProductUsingIdThatExists() {
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(1L);
+        Long productId = 1L;
+
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         assertThat(optionalProductEntity).isPresent();
-        assertThat(optionalProductEntity).isNotNull();
+        assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
 
     }
 
@@ -50,7 +55,29 @@ class ProductRepositoryTests {
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
 
-        Assert.assertTrue(optionalProductEntity.isEmpty());
+        assertThat(optionalProductEntity).isEmpty();
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(2);
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForTitle() {
+
+        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+
+        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+
+        assertThat(products.size()).isEqualTo(1);
 
     }
 
@@ -59,42 +86,57 @@ class ProductRepositoryTests {
 
         Long productId = 1L;
 
+        long countBefore = productRepository.count();
+
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         if (optionalProductEntity.isPresent()) {
 
-            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription");
+            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
 
             ProductEntity savedProduct = productRepository.save(productEntity);
 
-            assertThat(savedProduct.getId()).isNotNull();
             assertThat(savedProduct.getId()).isEqualTo(productId);
+
+        } else {
+
+            fail("Product did not already exist");
+
         }
+
+        long countAfter = productRepository.count();
+
+        assertThat(countBefore).isEqualTo(countAfter);
 
     }
 
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription");
+        long countBefore = productRepository.count();
+
+        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         ProductEntity savedProduct = productRepository.save(productEntity);
 
         assertThat(savedProduct.getId()).isNotNull();
+
+        long countAfter = productRepository.count();
+
+        assertThat(countBefore + 1).isEqualTo(countAfter);
 
     }
 
     @Test
     void testDeleteProductThatExists() {
 
-        Long countBefore = productRepository.count();
+        long countBefore = productRepository.count();
 
         productRepository.deleteById(1L);
 
-        Long countAfter = productRepository.count();
+        long countAfter = productRepository.count();
 
-        assertThat(countBefore).isGreaterThan(countAfter);
-
+        assertThat(countBefore - 1).isEqualTo(countAfter);
 
     }
 
@@ -107,10 +149,11 @@ class ProductRepositoryTests {
                 "Expected deleteById() to throw, but it didn't"
         );
 
-        assertTrue(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.ProductEntity " +
-                "entity with id 99999999 exists!"));
+        assertThat(Objects.requireNonNull(thrown.getMessage())
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!")).isTrue();
 
     }
+
+
 
 }

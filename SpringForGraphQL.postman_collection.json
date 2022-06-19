@@ -1,19 +1,20 @@
 {
 	"info": {
-		"_postman_id": "97e47c1d-96a6-427d-b8b9-05b115475819",
+		"_postman_id": "66c80e81-287e-437f-8e73-7494c8dd87ff",
 		"name": "SpringForGraphQL",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "246"
 	},
 	"item": [
 		{
-			"name": "query - AllProducts",
+			"name": "query - allProducts",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  allProducts{\n    id\n    title\n    desc\n  }\n}",
+						"query": "query {\n  allProducts{\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -65,7 +66,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  getProduct(id:999){\n    id\n    title\n    desc\n  }\n}",
+						"query": "query {\n  getProduct(id:999){\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -84,14 +85,14 @@
 			"response": []
 		},
 		{
-			"name": "mutation - save Product",
+			"name": "query - searchProducts using price",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n    saveProduct(\n        productInput: {\n        title: \"Title\",\n        desc: \"Desc\"\n        }\n    ) {\n        id\n        desc\n        title\n    }\n        \n}",
+						"query": "query {\n  searchProducts(productSearchCriteria: {lowerPrice:20, upperPrice:500})   {\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -110,7 +111,111 @@
 			"response": []
 		},
 		{
-			"name": "mutation - delete Product",
+			"name": "query - searchProducts using title",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  searchProducts(productSearchCriteria: {title:\"Phone\"})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "query - searchProducts using NO criteria",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n  searchProducts(productSearchCriteria: {})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - saveProduct - create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n        title: \"Title\",\n        desc: \"Desc\"\n        price: 9999\n        }\n    ) {\n        id\n        desc\n        title\n        price\n    }\n        \n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - saveProduct - update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n        id: 10,\n        title: \"Title\",\n        desc: \"Desc\"\n        price: 9999\n        }\n    ) {\n        id\n        desc\n        title\n        price\n    }\n        \n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - deleteProduct",
 			"request": {
 				"method": "POST",
 				"header": [],

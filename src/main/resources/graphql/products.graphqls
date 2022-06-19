@@ -10,6 +10,17 @@ input ProductInput {
     id: ID
     title: String!
     desc: String!
+    price: Int!
+}
+
+"""
+ProductSearchCriteria is the container for search criteria
+"""
+input ProductSearchCriteria{
+    title: String
+    desc: String
+    lowerPrice: Int
+    upperPrice: Int
 }
 
 """
@@ -19,6 +30,7 @@ type Product {
     id: ID!
     title: String!
     desc: String!
+    price: Int!
 }
 
 type Mutation {
@@ -26,7 +38,6 @@ type Mutation {
     saveProduct(productInput: ProductInput): Product
     """ Delete a Product """
     deleteProduct(id: Int): Int
-
 }
 
 type Query {
@@ -34,9 +45,6 @@ type Query {
     allProducts: [Product]
     """ Get a Product for a Specific Id """
     getProduct(id: ID): Product
+    """ Get a Product for a variety of conditions """
+    searchProducts(productSearchCriteria: ProductSearchCriteria): [Product]
 }
-
-
-
-
-
