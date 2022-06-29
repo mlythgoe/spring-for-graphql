@@ -23,7 +23,7 @@ public class ProductEntity {
             nullable = false
     )
 
-    private List<ProductPriceHistoryEntity> bids = new ArrayList<>();
+    private List<ProductPriceHistoryEntity> productPriceHistoryEntityList = new ArrayList<>();
 
     public ProductEntity() {
     }
@@ -56,6 +56,14 @@ public class ProductEntity {
 
     public Integer getPrice() {
         return price;
+    }
+
+    public List<ProductPriceHistoryEntity> getProductPriceHistoryEntityList() {
+        return productPriceHistoryEntityList;
+    }
+
+    public void setProductPriceHistoryEntityList(List<ProductPriceHistoryEntity> productPriceHistoryEntityList) {
+        this.productPriceHistoryEntityList = productPriceHistoryEntityList;
     }
 
     @Override
