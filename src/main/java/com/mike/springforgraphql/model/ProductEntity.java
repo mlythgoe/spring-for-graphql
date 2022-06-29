@@ -1,6 +1,8 @@
 package com.mike.springforgraphql.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Product")
 public class ProductEntity {
@@ -14,6 +16,14 @@ public class ProductEntity {
     private String description;
     @Column(name = "price")
     private Integer price;
+
+    @OneToMany
+    @JoinColumn(
+            name = "ProductId",
+            nullable = false
+    )
+
+    private List<ProductPriceHistoryEntity> bids = new ArrayList<>();
 
     public ProductEntity() {
     }
