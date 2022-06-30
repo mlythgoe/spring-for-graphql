@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS ProductPriceHistory;
 DROP TABLE IF EXISTS Product;
 
 
-CREATE TABLE Product
+CREATE TABLE product
 (
     id          bigint AUTO_INCREMENT PRIMARY KEY,
     title       VARCHAR(50) NOT NULL,
@@ -13,10 +13,10 @@ CREATE TABLE Product
     primary key (id)
 ) engine = InnoDB;
 
-CREATE TABLE ProductPriceHistory
+CREATE TABLE productpricehistory
 (
     id          bigint AUTO_INCREMENT PRIMARY KEY,
-    productId   bigint NOT NULL,
+    product_id   bigint NOT NULL,
     startDate    TIMESTAMP  NOT NULL,
     price       INTEGER     NOT NULL,
     primary key (id)

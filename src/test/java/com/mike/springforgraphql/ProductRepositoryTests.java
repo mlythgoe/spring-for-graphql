@@ -2,7 +2,9 @@ package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
+import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,6 +31,9 @@ class ProductRepositoryTests {
 
     @Autowired
     ProductCustomRepository productCustomRepository;
+
+    @Autowired
+    ProductPriceHistoryRepository productPriceHistoryRepository;
 
     @Test
     void testFindAllProducts() {
@@ -118,6 +125,14 @@ class ProductRepositoryTests {
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         ProductEntity savedProduct = productRepository.save(productEntity);
+
+        ProductPriceHistoryEntity productPriceHistoryEntity = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()),11, savedProduct);
+
+       // ProductPriceHistoryEntity savedProductPriceHistory = productPriceHistoryRepository.save(productPriceHistoryEntity);
+
+        savedProduct.getProductPriceHistoryEntityList().add(productPriceHistoryEntity);
+
+        savedProduct = productRepository.save(savedProduct);
 
         assertThat(savedProduct.getId()).isNotNull();
 
