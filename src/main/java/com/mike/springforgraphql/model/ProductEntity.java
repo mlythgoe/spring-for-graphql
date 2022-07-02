@@ -2,9 +2,11 @@ package com.mike.springforgraphql.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Entity(name = "Product")
+@Entity
 @Table(name = "product")
 public class ProductEntity {
 
@@ -18,13 +20,9 @@ public class ProductEntity {
     @Column(name = "price")
     private Integer price;
 
-    @OneToMany
-    @JoinColumn(
-            name = "ProductId",
-            nullable = false
-    )
+    @OneToMany(mappedBy = "productEntity")
+    private Set<ProductPriceHistory> productPriceHistories = new HashSet<>();
 
-    private List<ProductPriceHistoryEntity> productPriceHistoryEntityList = new ArrayList<>();
 
     public ProductEntity() {
     }
@@ -59,12 +57,12 @@ public class ProductEntity {
         return price;
     }
 
-    public List<ProductPriceHistoryEntity> getProductPriceHistoryEntityList() {
-        return productPriceHistoryEntityList;
+    public Set<ProductPriceHistory> getProductPriceHistories() {
+        return productPriceHistories;
     }
 
-    public void setProductPriceHistoryEntityList(List<ProductPriceHistoryEntity> productPriceHistoryEntityList) {
-        this.productPriceHistoryEntityList = productPriceHistoryEntityList;
+    public void setProductPriceHistories(Set<ProductPriceHistory> productPriceHistories) {
+        this.productPriceHistories = productPriceHistories;
     }
 
     @Override
@@ -74,6 +72,7 @@ public class ProductEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", productPriceHistories=" + productPriceHistories +
                 '}';
     }
 }

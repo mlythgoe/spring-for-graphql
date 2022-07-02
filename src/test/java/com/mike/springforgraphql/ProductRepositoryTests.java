@@ -2,7 +2,7 @@ package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
-import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
+import com.mike.springforgraphql.model.ProductPriceHistory;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
@@ -124,21 +124,26 @@ class ProductRepositoryTests {
 
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
+        // Save Parent
         ProductEntity savedProduct = productRepository.save(productEntity);
 
-        ProductPriceHistoryEntity productPriceHistoryEntity = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()),11, savedProduct);
+        ProductPriceHistory productPriceHistory = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 11, savedProduct);
 
-       // ProductPriceHistoryEntity savedProductPriceHistory = productPriceHistoryRepository.save(productPriceHistoryEntity);
+        // Save Child
+        ProductPriceHistory savedProductPriceHistory = productPriceHistoryRepository.save(productPriceHistory);
 
-        savedProduct.getProductPriceHistoryEntityList().add(productPriceHistoryEntity);
-
-        savedProduct = productRepository.save(savedProduct);
+        // Add Child - needed - if you don't do it, the child is not persisted
+        savedProduct.getProductPriceHistories().add(productPriceHistory);
 
         assertThat(savedProduct.getId()).isNotNull();
 
         long countAfter = productRepository.count();
 
         assertThat(countBefore + 1).isEqualTo(countAfter);
+
+        Optional<ProductEntity> getProductEntity = productRepository.findById(savedProduct.getId());
+
+        assertThat(getProductEntity.isPresent());
 
     }
 
@@ -158,17 +163,11 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        EmptyResultDataAccessException thrown = assertThrows(
-                EmptyResultDataAccessException.class,
-                () -> productRepository.deleteById(99999999L),
-                "Expected deleteById() to throw, but it didn't"
-        );
+        EmptyResultDataAccessException thrown = assertThrows(EmptyResultDataAccessException.class, () -> productRepository.deleteById(99999999L), "Expected deleteById() to throw, but it didn't");
 
-        assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!")).isTrue();
+        assertThat(Objects.requireNonNull(thrown.getMessage()).contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!")).isTrue();
 
     }
-
 
 
 }

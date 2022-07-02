@@ -1,25 +1,23 @@
 package com.mike.springforgraphql.model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "ProductPriceHistory")
+@Entity
 @Table(name = "productpricehistory")
-public class ProductPriceHistoryEntity {
+public class ProductPriceHistory {
 
-    public ProductPriceHistoryEntity() {
+    public ProductPriceHistory() {
     }
 
-    public ProductPriceHistoryEntity(Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistory(Date startDate, int price, ProductEntity productEntity) {
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
 
     }
 
-    public ProductPriceHistoryEntity(Long id, Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistory(Long id, Date startDate, int price, ProductEntity productEntity) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
@@ -38,12 +36,7 @@ public class ProductPriceHistoryEntity {
     private int price;
 
     @ManyToOne
-    @JoinColumn(
-            name = "productId",
-            updatable = false, insertable = false
-    )
-    @NotNull
+    @JoinColumn(name="product_id", nullable=false)
     private ProductEntity productEntity;
-
 
 }
