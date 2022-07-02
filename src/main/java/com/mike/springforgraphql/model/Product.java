@@ -1,14 +1,12 @@
 package com.mike.springforgraphql.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "product")
-public class ProductEntity {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,20 +18,20 @@ public class ProductEntity {
     @Column(name = "price")
     private Integer price;
 
-    @OneToMany(mappedBy = "productEntity")
+    @OneToMany(mappedBy = "product")
     private Set<ProductPriceHistory> productPriceHistories = new HashSet<>();
 
 
-    public ProductEntity() {
+    public Product() {
     }
 
-    public ProductEntity(String title, String description, Integer price) {
+    public Product(String title, String description, Integer price) {
         this.title = title;
         this.description = description;
         this.price = price;
     }
 
-    public ProductEntity(Long id, String title, String description, Integer price) {
+    public Product(Long id, String title, String description, Integer price) {
         this.id = id;
         this.title = title;
         this.description = description;

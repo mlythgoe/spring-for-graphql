@@ -1,6 +1,6 @@
 package com.mike.springforgraphql.api;
 
-import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.Product;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -29,22 +29,22 @@ public class ProductController {
     }
 
     @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
-    public List<Product> findAllProducts() {
+    public List<com.mike.springforgraphql.api.Product> findAllProducts() {
 
         logger.debug("Find All Products");
 
-        List<ProductEntity> productEntities = productRepository.findAll();
+        List<Product> productEntities = productRepository.findAll();
 
         return convertProductEntityListToProductList(productEntities);
 
     }
 
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
-    public Product findProduct(@Argument Long id) {
+    public com.mike.springforgraphql.api.Product findProduct(@Argument Long id) {
 
         logger.debug("Find Product for id {}", id);
 
-        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+        com.mike.springforgraphql.model.Product productEntity = productRepository.findById(id).orElse(null);
 
         if (productEntity == null) {
             logger.debug("No Product found for id {}", id);
@@ -52,7 +52,7 @@ public class ProductController {
             return null;
         }
 
-        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
+        com.mike.springforgraphql.api.Product product = new com.mike.springforgraphql.api.Product(productEntity.getId(), productEntity.getTitle(),
                 productEntity.getDescription(), productEntity.getPrice());
 
         logger.debug("Found Product {} for id {}", product, id);
@@ -62,11 +62,11 @@ public class ProductController {
     }
 
     @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema operation
-    public List<Product> searchProducts(@Argument ProductSearchCriteria productSearchCriteria) {
+    public List<com.mike.springforgraphql.api.Product> searchProducts(@Argument ProductSearchCriteria productSearchCriteria) {
 
         logger.debug("Search for Products using criteria {}", productSearchCriteria);
 
-        List<ProductEntity> productEntities;
+        List<com.mike.springforgraphql.model.Product> productEntities;
 
         productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
 
@@ -81,7 +81,7 @@ public class ProductController {
     }
 
     @MutationMapping("saveProduct")  // value (i.e. "saveProduct") must match GraphQL schema operation
-    public Product saveProduct(@Argument ProductInput productInput) {
+    public com.mike.springforgraphql.api.Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
 
@@ -93,25 +93,25 @@ public class ProductController {
 
         }
 
-        ProductEntity newProductEntity;
+        Product newProduct;
 
         if (productInput.id() == null) {
 
-            newProductEntity = new ProductEntity(productInput.title(),
+            newProduct = new Product(productInput.title(),
                     productInput.desc(), productInput.price());
 
         } else {
 
-            newProductEntity = new ProductEntity(productInput.id(), productInput.title(),
+            newProduct = new com.mike.springforgraphql.model.Product(productInput.id(), productInput.title(),
                     productInput.desc(), productInput.price());
 
         }
 
-        ProductEntity savedProductEntity = productRepository.save(newProductEntity);
+        com.mike.springforgraphql.model.Product savedProduct = productRepository.save(newProduct);
 
-        Product product = new Product(
-                savedProductEntity.getId(), savedProductEntity.getTitle(),
-                savedProductEntity.getDescription(), savedProductEntity.getPrice());
+        com.mike.springforgraphql.api.Product product = new com.mike.springforgraphql.api.Product(
+                savedProduct.getId(), savedProduct.getTitle(),
+                savedProduct.getDescription(), savedProduct.getPrice());
 
         logger.debug("Created Product {}", product);
 
@@ -138,14 +138,14 @@ public class ProductController {
 
     }
 
-    private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
+    private List<com.mike.springforgraphql.api.Product> convertProductEntityListToProductList(List<Product> productEntities) {
 
-        List<Product> products = new ArrayList<>();
+        List<com.mike.springforgraphql.api.Product> products = new ArrayList<>();
 
-        for (ProductEntity productEntity : productEntities) {
+        for (Product product : productEntities) {
 
-            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
-                    productEntity.getDescription(), productEntity.getPrice()));
+            products.add(new com.mike.springforgraphql.api.Product(product.getId(), product.getTitle(),
+                    product.getDescription(), product.getPrice()));
 
         }
 

@@ -10,18 +10,18 @@ public class ProductPriceHistory {
     public ProductPriceHistory() {
     }
 
-    public ProductPriceHistory(Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistory(Date startDate, int price, Product product) {
         this.startDate = startDate;
         this.price = price;
-        this.productEntity = productEntity;
+        this.product = product;
 
     }
 
-    public ProductPriceHistory(Long id, Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistory(Long id, Date startDate, int price, Product product) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
-        this.productEntity = productEntity;
+        this.product = product;
 
     }
 
@@ -37,6 +37,6 @@ public class ProductPriceHistory {
 
     @ManyToOne
     @JoinColumn(name="product_id", nullable=false)
-    private ProductEntity productEntity;
+    private Product product;
 
 }
