@@ -7,6 +7,20 @@ import java.sql.Date;
 @Table(name = "productpricehistory")
 public class ProductPriceHistory {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "startDate")
+    private java.sql.Date startDate;
+
+    @Column(name = "price")
+    private int price;
+
+    @ManyToOne
+    @JoinColumn(name="product_id", nullable=false)
+    private Product product;
+
     public ProductPriceHistory() {
     }
 
@@ -25,18 +39,30 @@ public class ProductPriceHistory {
 
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    @Column(name = "startDate")
-    private java.sql.Date startDate;
+    public Long getId() {
+        return id;
+    }
 
-    @Column(name = "price")
-    private int price;
+    public Date getStartDate() {
+        return startDate;
+    }
 
-    @ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
-    private Product product;
+    public int getPrice() {
+        return price;
+    }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductPriceHistory{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", price=" + price +
+                ", product=" + product +
+                '}';
+    }
 }

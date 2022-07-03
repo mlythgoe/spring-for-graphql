@@ -1,14 +1,12 @@
 package com.mike.springforgraphql;
 
-import com.mike.springforgraphql.api.Product;
-import com.mike.springforgraphql.api.ProductController;
-import com.mike.springforgraphql.api.ProductInput;
-import com.mike.springforgraphql.api.ProductSearchCriteria;
+import com.mike.springforgraphql.api.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,7 +73,7 @@ class ProductControllerTests {
     void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999);
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999, new ArrayList<>());
 
         Product product = productController.saveProduct(productInput);
 
@@ -87,7 +85,7 @@ class ProductControllerTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription", 9999);
+        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription", 9999, new ArrayList<>());
 
         Product product = productController.saveProduct(productInput);
 

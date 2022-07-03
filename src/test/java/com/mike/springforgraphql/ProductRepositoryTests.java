@@ -127,13 +127,21 @@ class ProductRepositoryTests {
         // Save Parent
         Product savedProduct = productRepository.save(product);
 
-        ProductPriceHistory productPriceHistory = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 11, savedProduct);
+        ProductPriceHistory productPriceHistory1 = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 11, savedProduct);
 
-        // Save Child
-        ProductPriceHistory savedProductPriceHistory = productPriceHistoryRepository.save(productPriceHistory);
+        // Save Child1
+        productPriceHistoryRepository.save(productPriceHistory1);
 
-        // Add Child - needed - if you don't do it, the child is not persisted
-        savedProduct.getProductPriceHistories().add(productPriceHistory);
+        ProductPriceHistory productPriceHistory2 = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 20, savedProduct);
+
+        // Save Child2
+        productPriceHistoryRepository.save(productPriceHistory2);
+
+        // Add Child - needed - if you don't do it, the child is not persisted with the link the parent
+//        savedProduct.getProductPriceHistories().add(productPriceHistory1);
+//        savedProduct.getProductPriceHistories().add(productPriceHistory2);
+
+        productRepository.save(savedProduct);
 
         assertThat(savedProduct.getId()).isNotNull();
 
@@ -165,7 +173,7 @@ class ProductRepositoryTests {
 
         EmptyResultDataAccessException thrown =
                 assertThrows(EmptyResultDataAccessException.class, () ->
-                        productRepository.deleteById(99999999L),
+                                productRepository.deleteById(99999999L),
                         "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage())

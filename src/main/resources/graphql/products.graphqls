@@ -11,6 +11,18 @@ input ProductInput {
     title: String!
     desc: String!
     price: Int!
+    productPriceHistoryInputList: [ProductPriceHistoryInput]
+}
+
+input ProductPriceHistoryInput {
+    """
+    'id' is optional in the ProductInput.
+    If it's a new product, the id will be created and returned by the back end and so should not be passed in the request
+    For an update, it is assumed the id will be supplied.
+    """
+    id: ID
+    startDate: String!
+    price: Int!
 }
 
 """
@@ -30,6 +42,13 @@ type Product {
     id: ID!
     title: String!
     desc: String!
+    price: Int!
+    productPriceHistories: [ProductPriceHistory]
+}
+
+type ProductPriceHistory {
+    id: ID!
+    startDate: String!
     price: Int!
 }
 

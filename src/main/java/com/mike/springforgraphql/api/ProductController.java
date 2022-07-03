@@ -1,8 +1,10 @@
 package com.mike.springforgraphql.api;
 
 import com.mike.springforgraphql.model.Product;
+import com.mike.springforgraphql.model.ProductPriceHistory;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
+import com.mike.springforgraphql.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -16,13 +18,16 @@ import java.util.List;
 @Controller
 public class ProductController {
 
+    private final ProductService productService;
+
     private final ProductCustomRepository productCustomRepository;
     private final ProductRepository productRepository;
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    public ProductController(ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
+    public ProductController(ProductService productService, ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
 
+        this.productService = productService;
         this.productRepository = productRepository;
         this.productCustomRepository = productCustomRepository;
 
@@ -53,7 +58,7 @@ public class ProductController {
         }
 
         com.mike.springforgraphql.api.Product product = new com.mike.springforgraphql.api.Product(productEntity.getId(), productEntity.getTitle(),
-                productEntity.getDescription(), productEntity.getPrice());
+                productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
         logger.debug("Found Product {} for id {}", product, id);
 
@@ -93,29 +98,17 @@ public class ProductController {
 
         }
 
-        Product newProduct;
+        com.mike.springforgraphql.model.Product savedProduct = productService.saveProduct(productInput);
 
-        if (productInput.id() == null) {
+        var productList = new ArrayList<Product>();
+        productList.add(savedProduct);
 
-            newProduct = new Product(productInput.title(),
-                    productInput.desc(), productInput.price());
+        var apiProductList = convertProductEntityListToProductList(productList);
 
-        } else {
 
-            newProduct = new com.mike.springforgraphql.model.Product(productInput.id(), productInput.title(),
-                    productInput.desc(), productInput.price());
+        logger.debug("Created Product {}", productList.get(0));
 
-        }
-
-        com.mike.springforgraphql.model.Product savedProduct = productRepository.save(newProduct);
-
-        com.mike.springforgraphql.api.Product product = new com.mike.springforgraphql.api.Product(
-                savedProduct.getId(), savedProduct.getTitle(),
-                savedProduct.getDescription(), savedProduct.getPrice());
-
-        logger.debug("Created Product {}", product);
-
-        return product;
+        return apiProductList.get(0);
 
     }
 
@@ -138,19 +131,31 @@ public class ProductController {
 
     }
 
-    private List<com.mike.springforgraphql.api.Product> convertProductEntityListToProductList(List<Product> productEntities) {
+    private List<com.mike.springforgraphql.api.Product> convertProductEntityListToProductList(List<Product> products) {
 
-        List<com.mike.springforgraphql.api.Product> products = new ArrayList<>();
+        List<com.mike.springforgraphql.api.Product> apiProducts = new ArrayList<>();
 
-        for (Product product : productEntities) {
+        for (Product product : products) {
 
-            products.add(new com.mike.springforgraphql.api.Product(product.getId(), product.getTitle(),
-                    product.getDescription(), product.getPrice()));
+            com.mike.springforgraphql.api.Product apiProduct =
+                    new com.mike.springforgraphql.api.Product(product.getId(), product.getTitle(),
+                            product.getDescription(), product.getPrice(), new ArrayList<>());
+
+            for (ProductPriceHistory productPriceHistory : product.getProductPriceHistories()) {
+                apiProduct.productPriceHistories().add(
+                        new com.mike.springforgraphql.api.ProductPriceHistory(
+                                productPriceHistory.getId(), productPriceHistory.getStartDate(),
+                                productPriceHistory.getPrice()
+                        )
+                );
+            }
+
+            apiProducts.add(apiProduct);
 
         }
 
         logger.debug("Returning Products - {}", products);
 
-        return products;
+        return apiProducts;
     }
 }

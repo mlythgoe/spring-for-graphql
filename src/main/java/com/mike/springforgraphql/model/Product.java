@@ -1,8 +1,9 @@
 package com.mike.springforgraphql.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -19,8 +20,7 @@ public class Product {
     private Integer price;
 
     @OneToMany(mappedBy = "product")
-    private Set<ProductPriceHistory> productPriceHistories = new HashSet<>();
-
+    private List<ProductPriceHistory> productPriceHistories = new ArrayList<>();
 
     public Product() {
     }
@@ -29,6 +29,7 @@ public class Product {
         this.title = title;
         this.description = description;
         this.price = price;
+        productPriceHistories = new ArrayList<>();
     }
 
     public Product(Long id, String title, String description, Integer price) {
@@ -36,6 +37,7 @@ public class Product {
         this.title = title;
         this.description = description;
         this.price = price;
+        productPriceHistories = new ArrayList<>();
 
     }
 
@@ -55,11 +57,11 @@ public class Product {
         return price;
     }
 
-    public Set<ProductPriceHistory> getProductPriceHistories() {
+    public List<ProductPriceHistory> getProductPriceHistories() {
         return productPriceHistories;
     }
 
-    public void setProductPriceHistories(Set<ProductPriceHistory> productPriceHistories) {
+    public void setProductPriceHistories(List<ProductPriceHistory> productPriceHistories) {
         this.productPriceHistories = productPriceHistories;
     }
 
