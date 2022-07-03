@@ -1,9 +1,9 @@
 package com.mike.springforgraphql.service;
 
-import com.mike.springforgraphql.api.Product;
 import com.mike.springforgraphql.api.ProductInput;
 import com.mike.springforgraphql.api.ProductPriceHistoryInput;
-import com.mike.springforgraphql.model.ProductPriceHistory;
+import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Service
 public class ProductService {
@@ -22,36 +21,36 @@ public class ProductService {
     @Autowired
     ProductPriceHistoryRepository productPriceHistoryRepository;
 
-    public com.mike.springforgraphql.model.Product saveProduct(ProductInput productInput) {
+    public ProductEntity saveProduct(ProductInput productInput) {
 
-        com.mike.springforgraphql.model.Product newProduct;
+        ProductEntity newProductEntity;
 
         if (productInput.id() == null) {
 
-            newProduct = new com.mike.springforgraphql.model.Product(productInput.title(),
+            newProductEntity = new ProductEntity(productInput.title(),
                     productInput.desc(), productInput.price());
 
             for (ProductPriceHistoryInput productPriceHistoryInput: productInput.productPriceHistoryInputList()) {
-                var startDateAsSqlDate = Date.valueOf(LocalDate.parse(productPriceHistoryInput.startDate()));
-                newProduct.getProductPriceHistories().add(
-                        new ProductPriceHistory(startDateAsSqlDate,  productPriceHistoryInput.price(), newProduct));
+                Date startDateAsSqlDate = Date.valueOf(LocalDate.parse(productPriceHistoryInput.startDate()));
+                newProductEntity.getProductPriceHistories().add(
+                        new ProductPriceHistoryEntity(startDateAsSqlDate,  productPriceHistoryInput.price(), newProductEntity));
 
             }
 
 
         } else {
 
-            newProduct = new com.mike.springforgraphql.model.Product(productInput.id(), productInput.title(),
+            newProductEntity = new ProductEntity(productInput.id(), productInput.title(),
                     productInput.desc(), productInput.price());
 
         }
 
-        com.mike.springforgraphql.model.Product savedProduct = productRepository.save(newProduct);
+        ProductEntity savedProductEntity = productRepository.save(newProductEntity);
 
-        productPriceHistoryRepository.saveAll(newProduct.getProductPriceHistories());
+        productPriceHistoryRepository.saveAll(newProductEntity.getProductPriceHistories());
 
 
-        return savedProduct;
+        return savedProductEntity;
 
     }
 }

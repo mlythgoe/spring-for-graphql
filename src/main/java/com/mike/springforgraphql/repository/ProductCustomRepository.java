@@ -1,8 +1,8 @@
 package com.mike.springforgraphql.repository;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
-import com.mike.springforgraphql.model.Product;
-import com.mike.springforgraphql.model.Product_;
+import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductEntity_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,32 +20,32 @@ public class ProductCustomRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Product> findUsingProductSearchCriteria(ProductSearchCriteria productSearchCriteria) {
+    public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteria productSearchCriteria) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        CriteriaQuery<ProductEntity> criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
 
-        Root<Product> root = criteriaQuery.from(Product.class);
+        Root<ProductEntity> root = criteriaQuery.from(ProductEntity.class);
 
         if ( productSearchCriteria.title() != null ) {
-            Predicate titlePredicate = criteriaBuilder.like(root.get(Product_.TITLE),
+            Predicate titlePredicate = criteriaBuilder.like(root.get(ProductEntity_.TITLE),
                     productSearchCriteria.title());
             criteriaQuery.where(titlePredicate);
         }
 
         if ( productSearchCriteria.lowerPrice() != null ) {
-            Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(Product_.PRICE),
+            Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteria.lowerPrice());
             criteriaQuery.where(lowerPricePredicate);
         }
 
         if ( productSearchCriteria.upperPrice() != null ) {
-            Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(Product_.PRICE),
+            Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteria.upperPrice());
             criteriaQuery.where(upperPricePredicate);
         }
 
-        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        TypedQuery<ProductEntity> typedQuery = entityManager.createQuery(criteriaQuery);
 
         return typedQuery.getResultList();
 

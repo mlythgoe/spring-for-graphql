@@ -1,8 +1,8 @@
 package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
-import com.mike.springforgraphql.model.Product;
-import com.mike.springforgraphql.model.ProductPriceHistory;
+import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @SpringBootTest
-class ProductRepositoryTests {
+class ProductEntityRepositoryTests {
 
     @Autowired
     ProductRepository productRepository;
@@ -38,10 +38,10 @@ class ProductRepositoryTests {
     @Test
     void testFindAllProducts() {
 
-        List<Product> productEntities = productRepository.findAll();
+        List<ProductEntity> productEntityEntities = productRepository.findAll();
 
-        assertThat(productEntities).isNotNull();
-        assertThat(productEntities.size()).isEqualTo(3);
+        assertThat(productEntityEntities).isNotNull();
+        assertThat(productEntityEntities.size()).isEqualTo(3);
 
     }
 
@@ -50,7 +50,7 @@ class ProductRepositoryTests {
 
         Long productId = 1L;
 
-        Optional<Product> optionalProductEntity = productRepository.findById(productId);
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         assertThat(optionalProductEntity).isPresent();
         assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
@@ -60,7 +60,7 @@ class ProductRepositoryTests {
     @Test
     void testFindProductUsingIdThatDoesNotExist() {
 
-        Optional<Product> optionalProductEntity = productRepository.findById(99999999L);
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
 
         assertThat(optionalProductEntity).isEmpty();
 
@@ -71,9 +71,9 @@ class ProductRepositoryTests {
 
         ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
 
-        List<Product> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
 
-        assertThat(products.size()).isEqualTo(2);
+        assertThat(productEntities.size()).isEqualTo(2);
 
     }
 
@@ -82,9 +82,9 @@ class ProductRepositoryTests {
 
         ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
 
-        List<Product> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
 
-        assertThat(products.size()).isEqualTo(1);
+        assertThat(productEntities.size()).isEqualTo(1);
 
     }
 
@@ -95,15 +95,15 @@ class ProductRepositoryTests {
 
         long countBefore = productRepository.count();
 
-        Optional<Product> optionalProductEntity = productRepository.findById(productId);
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         if (optionalProductEntity.isPresent()) {
 
-            Product product = new Product(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
+            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
 
-            Product savedProduct = productRepository.save(product);
+            ProductEntity savedProductEntity = productRepository.save(productEntity);
 
-            assertThat(savedProduct.getId()).isEqualTo(productId);
+            assertThat(savedProductEntity.getId()).isEqualTo(productId);
 
         } else {
 
@@ -122,34 +122,34 @@ class ProductRepositoryTests {
 
         long countBefore = productRepository.count();
 
-        Product product = new Product(null, "testTitle", "testDescription", 9999);
+        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         // Save Parent
-        Product savedProduct = productRepository.save(product);
+        ProductEntity savedProductEntity = productRepository.save(productEntity);
 
-        ProductPriceHistory productPriceHistory1 = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 11, savedProduct);
+        ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 11, savedProductEntity);
 
         // Save Child1
-        productPriceHistoryRepository.save(productPriceHistory1);
+        productPriceHistoryRepository.save(productPriceHistoryEntity1);
 
-        ProductPriceHistory productPriceHistory2 = new ProductPriceHistory(Date.valueOf(LocalDate.now()), 20, savedProduct);
+        ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 20, savedProductEntity);
 
         // Save Child2
-        productPriceHistoryRepository.save(productPriceHistory2);
+        productPriceHistoryRepository.save(productPriceHistoryEntity2);
 
         // Add Child - needed - if you don't do it, the child is not persisted with the link the parent
 //        savedProduct.getProductPriceHistories().add(productPriceHistory1);
 //        savedProduct.getProductPriceHistories().add(productPriceHistory2);
 
-        productRepository.save(savedProduct);
+        productRepository.save(savedProductEntity);
 
-        assertThat(savedProduct.getId()).isNotNull();
+        assertThat(savedProductEntity.getId()).isNotNull();
 
         long countAfter = productRepository.count();
 
         assertThat(countBefore + 1).isEqualTo(countAfter);
 
-        Optional<Product> getProductEntity = productRepository.findById(savedProduct.getId());
+        Optional<ProductEntity> getProductEntity = productRepository.findById(savedProductEntity.getId());
 
         assertThat(getProductEntity.isPresent());
 
@@ -177,7 +177,7 @@ class ProductRepositoryTests {
                         "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.Product entity with id 99999999 exists!"))
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!"))
                 .isTrue();
 
     }

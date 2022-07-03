@@ -5,7 +5,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "productpricehistory")
-public class ProductPriceHistory {
+public class ProductPriceHistoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,23 +19,23 @@ public class ProductPriceHistory {
 
     @ManyToOne
     @JoinColumn(name="product_id", nullable=false)
-    private Product product;
+    private ProductEntity productEntity;
 
-    public ProductPriceHistory() {
+    public ProductPriceHistoryEntity() {
     }
 
-    public ProductPriceHistory(Date startDate, int price, Product product) {
+    public ProductPriceHistoryEntity(Date startDate, int price, ProductEntity productEntity) {
         this.startDate = startDate;
         this.price = price;
-        this.product = product;
+        this.productEntity = productEntity;
 
     }
 
-    public ProductPriceHistory(Long id, Date startDate, int price, Product product) {
+    public ProductPriceHistoryEntity(Long id, Date startDate, int price, ProductEntity productEntity) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
-        this.product = product;
+        this.productEntity = productEntity;
 
     }
 
@@ -52,8 +52,8 @@ public class ProductPriceHistory {
         return price;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductEntity getProduct() {
+        return productEntity;
     }
 
     @Override
