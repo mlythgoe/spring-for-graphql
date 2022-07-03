@@ -19,16 +19,12 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductCustomRepository productCustomRepository;
-    private final ProductRepository productRepository;
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    public ProductController(ProductService productService, ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
+    public ProductController(ProductService productService) {
 
         this.productService = productService;
-        this.productRepository = productRepository;
-        this.productCustomRepository = productCustomRepository;
 
     }
 
