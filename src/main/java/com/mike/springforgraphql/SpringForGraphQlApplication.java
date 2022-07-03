@@ -4,11 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringForGraphqlApplication {
+public class SpringForGraphQlApplication {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(SpringForGraphqlApplication.class, args);
+        SpringApplication.run(SpringForGraphQlApplication.class, args);
 
     }
 

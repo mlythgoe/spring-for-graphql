@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
-class ProductEntityControllerTests {
+class ProductControllerTests {
 
     @Autowired
     ProductController productController;
