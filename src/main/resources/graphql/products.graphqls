@@ -65,5 +65,5 @@ type Query {
     """ Get a Product for a Specific Id """
     getProduct(id: ID): Product
     """ Get a Product for a variety of conditions """
-    searchProducts(productSearchCriteria: ProductSearchCriteria): [Product]
+    searchProducts(productSearchCriteriaInput: ProductSearchCriteria): [Product]
 }

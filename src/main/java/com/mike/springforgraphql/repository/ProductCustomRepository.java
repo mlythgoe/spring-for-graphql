@@ -1,6 +1,6 @@
 package com.mike.springforgraphql.repository;
 
-import com.mike.springforgraphql.api.ProductSearchCriteria;
+import com.mike.springforgraphql.api.ProductSearchCriteriaInput;
 import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.model.ProductEntity_;
 import org.springframework.stereotype.Repository;
@@ -20,28 +20,28 @@ public class ProductCustomRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteria productSearchCriteria) {
+    public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteriaInput productSearchCriteriaInput) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<ProductEntity> criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
 
         Root<ProductEntity> root = criteriaQuery.from(ProductEntity.class);
 
-        if ( productSearchCriteria.title() != null ) {
+        if ( productSearchCriteriaInput.title() != null ) {
             Predicate titlePredicate = criteriaBuilder.like(root.get(ProductEntity_.TITLE),
-                    productSearchCriteria.title());
+                    productSearchCriteriaInput.title());
             criteriaQuery.where(titlePredicate);
         }
 
-        if ( productSearchCriteria.lowerPrice() != null ) {
+        if ( productSearchCriteriaInput.lowerPrice() != null ) {
             Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
-                    productSearchCriteria.lowerPrice());
+                    productSearchCriteriaInput.lowerPrice());
             criteriaQuery.where(lowerPricePredicate);
         }
 
-        if ( productSearchCriteria.upperPrice() != null ) {
+        if ( productSearchCriteriaInput.upperPrice() != null ) {
             Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
-                    productSearchCriteria.upperPrice());
+                    productSearchCriteriaInput.upperPrice());
             criteriaQuery.where(upperPricePredicate);
         }
 

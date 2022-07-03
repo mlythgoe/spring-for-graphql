@@ -2,7 +2,7 @@ package com.mike.springforgraphql.service;
 
 import com.mike.springforgraphql.api.ProductInput;
 import com.mike.springforgraphql.api.ProductPriceHistoryInput;
-import com.mike.springforgraphql.api.ProductSearchCriteria;
+import com.mike.springforgraphql.api.ProductSearchCriteriaInput;
 import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
@@ -93,14 +93,14 @@ public class ProductService {
 
     }
 
-    public List<ProductEntity> searchProducts(ProductSearchCriteria productSearchCriteria) {
+    public List<ProductEntity> searchProducts(ProductSearchCriteriaInput productSearchCriteriaInput) {
 
         List<ProductEntity> productEntities;
 
-        productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         if (productEntities == null) {
-            logger.debug("No Products found for search criteria {}", productSearchCriteria);
+            logger.debug("No Products found for search criteria {}", productSearchCriteriaInput);
 
             return null;
         }

@@ -50,9 +50,9 @@ class ProductControllerTests {
     @Test
     void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
 
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<Product> products = productController.searchProducts(productSearchCriteria);
+        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
         assertThat(products.size()).isEqualTo(2);
 
@@ -61,9 +61,9 @@ class ProductControllerTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null, null);
 
-        List<Product> products = productController.searchProducts(productSearchCriteria);
+        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
         assertThat(products.size()).isEqualTo(1);
 

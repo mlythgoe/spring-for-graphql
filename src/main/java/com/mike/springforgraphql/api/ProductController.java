@@ -64,16 +64,16 @@ public class ProductController {
     }
 
     @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema operation
-    public List<Product> searchProducts(@Argument ProductSearchCriteria productSearchCriteria) {
+    public List<Product> searchProducts(@Argument ProductSearchCriteriaInput productSearchCriteriaInput) {
 
-        logger.debug("Search for Products using criteria {}", productSearchCriteria);
+        logger.debug("Search for Products using criteria {}", productSearchCriteriaInput);
 
         List<ProductEntity> productEntities;
 
-        productEntities = productService.searchProducts(productSearchCriteria);
+        productEntities = productService.searchProducts(productSearchCriteriaInput);
 
         if (productEntities == null) {
-            logger.debug("No Products found for search criteria {}", productSearchCriteria);
+            logger.debug("No Products found for search criteria {}", productSearchCriteriaInput);
 
             return null;
         }

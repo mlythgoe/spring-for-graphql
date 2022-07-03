@@ -1,6 +1,6 @@
 package com.mike.springforgraphql;
 
-import com.mike.springforgraphql.api.ProductSearchCriteria;
+import com.mike.springforgraphql.api.ProductSearchCriteriaInput;
 import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
@@ -69,9 +69,9 @@ class ProductEntityRepositoryTests {
     @Test
     void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
 
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities.size()).isEqualTo(2);
 
@@ -80,9 +80,9 @@ class ProductEntityRepositoryTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null, null);
 
-        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities.size()).isEqualTo(1);
 
