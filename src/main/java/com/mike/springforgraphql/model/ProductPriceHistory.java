@@ -62,7 +62,7 @@ public class ProductPriceHistory {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", price=" + price +
-                ", product=" + product +
+           //     ", product=" + product +
                 '}';
     }
 }
