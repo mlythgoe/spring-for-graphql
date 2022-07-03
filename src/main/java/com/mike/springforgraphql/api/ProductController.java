@@ -57,8 +57,6 @@ public class ProductController {
 
         List<ProductEntity> productEntityEntities = productService.findAllProducts();
 
-
-
         return convertProductEntityListToProductList(productEntityEntities);
 
     }
@@ -97,12 +95,9 @@ public class ProductController {
 
         ProductEntity savedProduct = productService.saveProduct(productInput);
 
-        List<ProductEntity> productList = new ArrayList<>();
-        productList.add(savedProduct);
-
         Product apiProduct = convertProductEntityToProduct(savedProduct);
 
-        logger.debug("Created Product {}", productList.get(0));
+        logger.debug("Created Product {}", apiProduct);
 
         return apiProduct;
 
@@ -136,12 +131,14 @@ public class ProductController {
                             productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
             for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+
                 product.productPriceHistories().add(
                         new ProductPriceHistory(
                                 productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
                                 productPriceHistoryEntity.getPrice()
                         )
                 );
+
             }
 
         logger.debug("Returning Product - {}", product);
@@ -160,12 +157,14 @@ public class ProductController {
                             productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
             for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+
                 apiProduct.productPriceHistories().add(
                         new ProductPriceHistory(
                                 productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
                                 productPriceHistoryEntity.getPrice()
                         )
                 );
+
             }
 
             apiProducts.add(apiProduct);
