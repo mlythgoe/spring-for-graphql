@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Product")
+@Entity
+@Table(name = "product")
 public class ProductEntity {
 
     @Id
@@ -17,13 +18,8 @@ public class ProductEntity {
     @Column(name = "price")
     private Integer price;
 
-    @OneToMany
-    @JoinColumn(
-            name = "ProductId",
-            nullable = false
-    )
-
-    private List<ProductPriceHistoryEntity> productPriceHistoryEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "productEntity")
+    private List<ProductPriceHistoryEntity> productPriceHistories = new ArrayList<>();
 
     public ProductEntity() {
     }
@@ -32,6 +28,7 @@ public class ProductEntity {
         this.title = title;
         this.description = description;
         this.price = price;
+        productPriceHistories = new ArrayList<>();
     }
 
     public ProductEntity(Long id, String title, String description, Integer price) {
@@ -39,6 +36,7 @@ public class ProductEntity {
         this.title = title;
         this.description = description;
         this.price = price;
+        productPriceHistories = new ArrayList<>();
 
     }
 
@@ -58,12 +56,12 @@ public class ProductEntity {
         return price;
     }
 
-    public List<ProductPriceHistoryEntity> getProductPriceHistoryEntityList() {
-        return productPriceHistoryEntityList;
+    public List<ProductPriceHistoryEntity> getProductPriceHistories() {
+        return productPriceHistories;
     }
 
-    public void setProductPriceHistoryEntityList(List<ProductPriceHistoryEntity> productPriceHistoryEntityList) {
-        this.productPriceHistoryEntityList = productPriceHistoryEntityList;
+    public void setProductPriceHistories(List<ProductPriceHistoryEntity> productPriceHistories) {
+        this.productPriceHistories = productPriceHistories;
     }
 
     @Override
@@ -73,6 +71,7 @@ public class ProductEntity {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", productPriceHistories=" + productPriceHistories +
                 '}';
     }
 }

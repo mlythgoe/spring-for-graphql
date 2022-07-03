@@ -2,7 +2,9 @@ package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
+import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @SpringBootTest
-class ProductRepositoryTests {
+class ProductEntityRepositoryTests {
 
     @Autowired
     ProductRepository productRepository;
@@ -28,13 +32,16 @@ class ProductRepositoryTests {
     @Autowired
     ProductCustomRepository productCustomRepository;
 
+    @Autowired
+    ProductPriceHistoryRepository productPriceHistoryRepository;
+
     @Test
     void testFindAllProducts() {
 
-        List<ProductEntity> productEntities = productRepository.findAll();
+        List<ProductEntity> productEntityEntities = productRepository.findAll();
 
-        assertThat(productEntities).isNotNull();
-        assertThat(productEntities.size()).isEqualTo(3);
+        assertThat(productEntityEntities).isNotNull();
+        assertThat(productEntityEntities.size()).isEqualTo(3);
 
     }
 
@@ -64,9 +71,9 @@ class ProductRepositoryTests {
 
         ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria(null, null, 1, 500);
 
-        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
 
-        assertThat(products.size()).isEqualTo(2);
+        assertThat(productEntities.size()).isEqualTo(2);
 
     }
 
@@ -75,9 +82,9 @@ class ProductRepositoryTests {
 
         ProductSearchCriteria productSearchCriteria = new ProductSearchCriteria("Phone", null, null, null);
 
-        List<ProductEntity> products = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
 
-        assertThat(products.size()).isEqualTo(1);
+        assertThat(productEntities.size()).isEqualTo(1);
 
     }
 
@@ -94,9 +101,9 @@ class ProductRepositoryTests {
 
             ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
 
-            ProductEntity savedProduct = productRepository.save(productEntity);
+            ProductEntity savedProductEntity = productRepository.save(productEntity);
 
-            assertThat(savedProduct.getId()).isEqualTo(productId);
+            assertThat(savedProductEntity.getId()).isEqualTo(productId);
 
         } else {
 
@@ -117,13 +124,34 @@ class ProductRepositoryTests {
 
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
-        ProductEntity savedProduct = productRepository.save(productEntity);
+        // Save Parent
+        ProductEntity savedProductEntity = productRepository.save(productEntity);
 
-        assertThat(savedProduct.getId()).isNotNull();
+        ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 11, savedProductEntity);
+
+        // Save Child1
+        productPriceHistoryRepository.save(productPriceHistoryEntity1);
+
+        ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 20, savedProductEntity);
+
+        // Save Child2
+        productPriceHistoryRepository.save(productPriceHistoryEntity2);
+
+        // Add Child - needed - if you don't do it, the child is not persisted with the link the parent
+//        savedProduct.getProductPriceHistories().add(productPriceHistory1);
+//        savedProduct.getProductPriceHistories().add(productPriceHistory2);
+
+        productRepository.save(savedProductEntity);
+
+        assertThat(savedProductEntity.getId()).isNotNull();
 
         long countAfter = productRepository.count();
 
         assertThat(countBefore + 1).isEqualTo(countAfter);
+
+        Optional<ProductEntity> getProductEntity = productRepository.findById(savedProductEntity.getId());
+
+        assertThat(getProductEntity.isPresent());
 
     }
 
@@ -143,17 +171,16 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        EmptyResultDataAccessException thrown = assertThrows(
-                EmptyResultDataAccessException.class,
-                () -> productRepository.deleteById(99999999L),
-                "Expected deleteById() to throw, but it didn't"
-        );
+        EmptyResultDataAccessException thrown =
+                assertThrows(EmptyResultDataAccessException.class, () ->
+                                productRepository.deleteById(99999999L),
+                        "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!")).isTrue();
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!"))
+                .isTrue();
 
     }
-
 
 
 }

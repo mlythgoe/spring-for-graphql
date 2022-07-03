@@ -1,8 +1,10 @@
 package com.mike.springforgraphql.api;
 
 import com.mike.springforgraphql.model.ProductEntity;
+import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
+import com.mike.springforgraphql.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -16,48 +18,48 @@ import java.util.List;
 @Controller
 public class ProductController {
 
+    private final ProductService productService;
     private final ProductCustomRepository productCustomRepository;
     private final ProductRepository productRepository;
 
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    public ProductController(ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
+    public ProductController(ProductService productService, ProductRepository productRepository, ProductCustomRepository productCustomRepository) {
 
+        this.productService = productService;
         this.productRepository = productRepository;
         this.productCustomRepository = productCustomRepository;
-
-    }
-
-    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
-    public List<Product> findAllProducts() {
-
-        logger.debug("Find All Products");
-
-        List<ProductEntity> productEntities = productRepository.findAll();
-
-        return convertProductEntityListToProductList(productEntities);
 
     }
 
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
-        logger.debug("Find Product for id {}", id);
+        ProductEntity productEntity = productService.findProduct(id);
 
-        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+        if ( productEntity == null ) {
 
-        if (productEntity == null) {
             logger.debug("No Product found for id {}", id);
 
             return null;
+
         }
 
-        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
-                productEntity.getDescription(), productEntity.getPrice());
+        Product product = convertProductEntityToProduct(productEntity);
 
         logger.debug("Found Product {} for id {}", product, id);
 
         return product;
+    }
+
+    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
+    public List<Product> findAllProducts() {
+
+        List<ProductEntity> productEntityEntities = productService.findAllProducts();
+
+
+
+        return convertProductEntityListToProductList(productEntityEntities);
 
     }
 
@@ -68,7 +70,7 @@ public class ProductController {
 
         List<ProductEntity> productEntities;
 
-        productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        productEntities = productService.searchProducts(productSearchCriteria);
 
         if (productEntities == null) {
             logger.debug("No Products found for search criteria {}", productSearchCriteria);
@@ -93,29 +95,16 @@ public class ProductController {
 
         }
 
-        ProductEntity newProductEntity;
+        ProductEntity savedProduct = productService.saveProduct(productInput);
 
-        if (productInput.id() == null) {
+        List<ProductEntity> productList = new ArrayList<>();
+        productList.add(savedProduct);
 
-            newProductEntity = new ProductEntity(productInput.title(),
-                    productInput.desc(), productInput.price());
+        Product apiProduct = convertProductEntityToProduct(savedProduct);
 
-        } else {
+        logger.debug("Created Product {}", productList.get(0));
 
-            newProductEntity = new ProductEntity(productInput.id(), productInput.title(),
-                    productInput.desc(), productInput.price());
-
-        }
-
-        ProductEntity savedProductEntity = productRepository.save(newProductEntity);
-
-        Product product = new Product(
-                savedProductEntity.getId(), savedProductEntity.getTitle(),
-                savedProductEntity.getDescription(), savedProductEntity.getPrice());
-
-        logger.debug("Created Product {}", product);
-
-        return product;
+        return apiProduct;
 
     }
 
@@ -124,33 +113,67 @@ public class ProductController {
 
         logger.debug("Delete Product for Id {}", id);
 
-        if (productRepository.existsById(id)) {
+        var deletedId = productService.deleteProduct(id);
 
-            productRepository.deleteById(id);
-            logger.debug("Deleted Product for id {}", id);
-            return id;
+        if (deletedId == null ) {
+            logger.debug("Product for id {} did not exist so could not be deleted", id);
+
+        } else {
+            logger.debug("Product for id {} deleted", id);
 
         }
 
-        logger.debug("Product for id {} did not exist so could not be deleted", id);
+        return deletedId;
 
-        return null;
+    }
 
+    private Product convertProductEntityToProduct(ProductEntity productEntity) {
+
+        logger.debug("Converting ProductEntity {} to Product", productEntity);
+
+            Product product =
+                    new Product(productEntity.getId(), productEntity.getTitle(),
+                            productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+
+            for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+                product.productPriceHistories().add(
+                        new ProductPriceHistory(
+                                productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
+                                productPriceHistoryEntity.getPrice()
+                        )
+                );
+            }
+
+        logger.debug("Returning Product - {}", product);
+
+        return product;
     }
 
     private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
 
-        List<Product> products = new ArrayList<>();
+        List<Product> apiProducts = new ArrayList<>();
 
         for (ProductEntity productEntity : productEntities) {
 
-            products.add(new Product(productEntity.getId(), productEntity.getTitle(),
-                    productEntity.getDescription(), productEntity.getPrice()));
+            Product apiProduct =
+                    new Product(productEntity.getId(), productEntity.getTitle(),
+                            productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+
+            for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+                apiProduct.productPriceHistories().add(
+                        new ProductPriceHistory(
+                                productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
+                                productPriceHistoryEntity.getPrice()
+                        )
+                );
+            }
+
+            apiProducts.add(apiProduct);
 
         }
 
-        logger.debug("Returning Products - {}", products);
+        logger.debug("Returning Products - {}", productEntities);
 
-        return products;
+        return apiProducts;
     }
 }

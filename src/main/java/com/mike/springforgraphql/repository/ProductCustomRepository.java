@@ -2,8 +2,8 @@ package com.mike.springforgraphql.repository;
 
 import com.mike.springforgraphql.api.ProductSearchCriteria;
 import com.mike.springforgraphql.model.ProductEntity;
-import org.springframework.stereotype.Repository;
 import com.mike.springforgraphql.model.ProductEntity_;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
