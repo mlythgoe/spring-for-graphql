@@ -14,7 +14,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  allProducts{\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  allProducts{\n    id\n    title\n    desc\n    price\n    productPriceHistories {\n      id\n      startDate\n      price\n    }\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -40,7 +40,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  getProduct(id:1){\n    id\n    title\n    desc\n  }\n}",
+						"query": "query {\n  getProduct(id:3){\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -92,7 +92,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {lowerPrice:20, upperPrice:500})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteria: {lowerPrice:20, upperPrice:99999})   {\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -118,7 +118,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {title:\"Phone\"})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteria: {title:\"Microwave\"})   {\n    id\n    title\n    desc\n    price\n    productPriceHistories {\n      id\n      startDate\n      price\n    }\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -196,7 +196,33 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n    saveProduct(\n        productInput: {\n            title: \"Title\",\n            desc: \"Desc\"\n            price: 9999,\n            productPriceHistoryInputList: [\n                {\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                                {\n                    startDate: \"2010-01-01\",\n                    price: 555\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n            title: \"Title\",\n            desc: \"Desc\"\n            price: 9999,\n            productPriceHistoryInputList: [\n                {\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                {\n                    startDate: \"2010-01-01\",\n                    price: 555\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mutation - saveProduct - update with New Price History Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n            id: 11,\n            title: \"Title\",\n            desc: \"Desc\"\n            price: 9999,\n            productPriceHistoryInputList: [\n                {\n                    id: \"12\",\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                {\n                    id: \"14\",\n                    startDate: \"2000-01-01\",\n                    price: 99999\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
 						"variables": ""
 					}
 				},
@@ -222,7 +248,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n    saveProduct(\n        productInput: {\n        id: 10,\n        title: \"Title\",\n        desc: \"Desc\"\n        price: 9999\n        }\n    ) {\n        id\n        desc\n        title\n        price\n    }\n        \n}",
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n        id: 10,\n        title: \"Titlexxxxx\",\n        desc: \"Desc\"\n        price: 9999\n        productPriceHistoryInputList: [\n                {\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                                {\n                    startDate: \"2010-01-01\",\n                    price: 555\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
 						"variables": ""
 					}
 				},

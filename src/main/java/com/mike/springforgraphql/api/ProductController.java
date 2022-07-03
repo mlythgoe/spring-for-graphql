@@ -32,36 +32,34 @@ public class ProductController {
 
     }
 
-    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
-    public List<Product> findAllProducts() {
-
-        logger.debug("Find All Products");
-
-        List<ProductEntity> productEntityEntities = productRepository.findAll();
-
-        return convertProductEntityListToProductList(productEntityEntities);
-
-    }
-
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
-        logger.debug("Find Product for id {}", id);
+        ProductEntity productEntity = productService.findProduct(id);
 
-        ProductEntity productEntity = productRepository.findById(id).orElse(null);
+        if ( productEntity == null ) {
 
-        if (productEntity == null) {
             logger.debug("No Product found for id {}", id);
 
             return null;
+
         }
 
-        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
-                productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+        Product product = convertProductEntityToProduct(productEntity);
 
         logger.debug("Found Product {} for id {}", product, id);
 
         return product;
+    }
+
+    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
+    public List<Product> findAllProducts() {
+
+        List<ProductEntity> productEntityEntities = productService.findAllProducts();
+
+
+
+        return convertProductEntityListToProductList(productEntityEntities);
 
     }
 
@@ -70,17 +68,17 @@ public class ProductController {
 
         logger.debug("Search for Products using criteria {}", productSearchCriteria);
 
-        List<ProductEntity> productEntityEntities;
+        List<ProductEntity> productEntities;
 
-        productEntityEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteria);
+        productEntities = productService.searchProducts(productSearchCriteria);
 
-        if (productEntityEntities == null) {
+        if (productEntities == null) {
             logger.debug("No Products found for search criteria {}", productSearchCriteria);
 
             return null;
         }
 
-        return convertProductEntityListToProductList(productEntityEntities);
+        return convertProductEntityListToProductList(productEntities);
 
     }
 
@@ -102,11 +100,11 @@ public class ProductController {
         List<ProductEntity> productList = new ArrayList<>();
         productList.add(savedProduct);
 
-        List<Product> apiProductList = convertProductEntityListToProductList(productList);
+        Product apiProduct = convertProductEntityToProduct(savedProduct);
 
         logger.debug("Created Product {}", productList.get(0));
 
-        return apiProductList.get(0);
+        return apiProduct;
 
     }
 
@@ -115,18 +113,40 @@ public class ProductController {
 
         logger.debug("Delete Product for Id {}", id);
 
-        if (productRepository.existsById(id)) {
+        var deletedId = productService.deleteProduct(id);
 
-            productRepository.deleteById(id);
-            logger.debug("Deleted Product for id {}", id);
-            return id;
+        if (deletedId == null ) {
+            logger.debug("Product for id {} did not exist so could not be deleted", id);
+
+        } else {
+            logger.debug("Product for id {} deleted", id);
 
         }
 
-        logger.debug("Product for id {} did not exist so could not be deleted", id);
+        return deletedId;
 
-        return null;
+    }
 
+    private Product convertProductEntityToProduct(ProductEntity productEntity) {
+
+        logger.debug("Converting ProductEntity {} to Product", productEntity);
+
+            Product product =
+                    new Product(productEntity.getId(), productEntity.getTitle(),
+                            productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+
+            for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+                product.productPriceHistories().add(
+                        new ProductPriceHistory(
+                                productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
+                                productPriceHistoryEntity.getPrice()
+                        )
+                );
+            }
+
+        logger.debug("Returning Product - {}", product);
+
+        return product;
     }
 
     private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
