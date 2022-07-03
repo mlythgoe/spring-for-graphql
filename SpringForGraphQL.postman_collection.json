@@ -222,7 +222,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n    saveProduct(\n        productInput: {\n            id: 11,\n            title: \"Title\",\n            desc: \"Desc\"\n            price: 9999,\n            productPriceHistoryInputList: [\n                {\n                    id: \"12\",\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                {\n                    id: \"14\",\n                    startDate: \"2000-01-01\",\n                    price: 99999\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
+						"query": "mutation {\n    saveProduct(\n        productInput: {\n            id: 11,\n            title: \"Title\",\n            desc: \"Desc\"\n            price: 9999,\n            productPriceHistoryInputList: [\n                {\n                    id: \"12\",\n                    startDate: \"2020-01-01\",\n                    price: 999\n                },\n                {\n                    startDate: \"2000-01-01\",\n                    price: 99999\n                }\n            ]\n        }\n    ) {\n        id\n        desc\n        title\n        price\n        productPriceHistories {\n            id\n            startDate\n            price\n        }\n    }\n        \n}",
 						"variables": ""
 					}
 				},
