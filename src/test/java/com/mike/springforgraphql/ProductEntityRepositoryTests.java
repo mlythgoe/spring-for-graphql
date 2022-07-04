@@ -48,12 +48,17 @@ class ProductEntityRepositoryTests {
     @Test
     void testFindProductUsingIdThatExists() {
 
-        Long productId = 1L;
+        Long productId = 3L;
 
         Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
 
         assertThat(optionalProductEntity).isPresent();
         assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
+        assertThat(optionalProductEntity.get().getTitle()).isEqualTo("Microwave");
+        assertThat(optionalProductEntity.get().getDescription()).isEqualTo("Goes PING!!!!");
+        assertThat(optionalProductEntity.get().getPrice()).isEqualTo(444);
+
+
 
     }
 
@@ -143,7 +148,7 @@ class ProductEntityRepositoryTests {
         // Save Child2
         productPriceHistoryRepository.save(productPriceHistoryEntity2);
 
-        // Add Child - needed - if you don't do it, the child is not persisted with the link the
+        // Add Child - needed - if you don't do it, the child is not persisted with the link to the
         // parent
         // savedProduct.getProductPriceHistories().add(productPriceHistory1);
         // savedProduct.getProductPriceHistories().add(productPriceHistory2);
@@ -158,7 +163,7 @@ class ProductEntityRepositoryTests {
 
         Optional<ProductEntity> getProductEntity = productRepository.findById(savedProductEntity.getId());
 
-        assertThat(getProductEntity.isPresent());
+        assertThat(getProductEntity.isPresent()).isTrue();
 
     }
 
