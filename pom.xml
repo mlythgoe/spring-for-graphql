@@ -56,6 +56,44 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <version>2.22.8</version>
+                        <configuration>
+                            <java>
+                                <eclipse>
+                                    <file>src/main/resources/spotless/eclipse-java-formatter.xml</file>
+                                    <version>4.10.0</version>
+                                </eclipse>
+                                <removeUnusedImports/>
+                            </java>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.8</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.owasp</groupId>
+                        <artifactId>dependency-check-maven</artifactId>
+                        <version>7.1.1</version>
+                        <configuration>
+                            <skipTestScope>false</skipTestScope>
+                            <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                        </configuration>
+                    </plugin>
+
         </plugins>
     </build>
 

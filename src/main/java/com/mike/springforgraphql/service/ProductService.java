@@ -26,7 +26,7 @@ public class ProductService {
 
     @Autowired
     public ProductService(ProductRepository productRepository, ProductCustomRepository productCustomRepository,
-                          ProductPriceHistoryRepository productPriceHistoryRepository) {
+            ProductPriceHistoryRepository productPriceHistoryRepository) {
         this.productRepository = productRepository;
         this.productCustomRepository = productCustomRepository;
         this.productPriceHistoryRepository = productPriceHistoryRepository;

@@ -33,7 +33,7 @@ public class ProductController {
 
         ProductEntity productEntity = productService.findProduct(id);
 
-        if ( productEntity == null ) {
+        if (productEntity == null) {
 
             logger.debug("No Product found for id {}", id);
 
@@ -48,7 +48,7 @@ public class ProductController {
         return product;
     }
 
-    @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
+    @QueryMapping("allProducts") // value (i.e. "allProducts") must match GraphQL schema operation
     public List<Product> findAllProducts() {
 
         logger.debug("Find All Products");
@@ -63,7 +63,8 @@ public class ProductController {
 
     }
 
-    @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema operation
+    @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema
+                                    // operation
     public List<Product> searchProducts(@Argument ProductSearchCriteriaInput productSearchCriteriaInput) {
 
         logger.debug("Search for Products using criteria {}", productSearchCriteriaInput);
@@ -86,7 +87,8 @@ public class ProductController {
 
     }
 
-    @MutationMapping("saveProduct")  // value (i.e. "saveProduct") must match GraphQL schema operation
+    @MutationMapping("saveProduct") // value (i.e. "saveProduct") must match GraphQL schema
+                                    // operation
     public Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
@@ -109,14 +111,15 @@ public class ProductController {
 
     }
 
-    @MutationMapping("deleteProduct") // value (i.e. "deleteProduct") must match GraphQL schema operation
+    @MutationMapping("deleteProduct") // value (i.e. "deleteProduct") must match GraphQL schema
+                                      // operation
     public Long deleteProduct(@Argument Long id) {
 
         logger.debug("Delete Product for Id {}", id);
 
         var deletedId = productService.deleteProduct(id);
 
-        if (deletedId == null ) {
+        if (deletedId == null) {
             logger.debug("Product for id {} did not exist so could not be deleted", id);
 
         } else {
@@ -130,20 +133,17 @@ public class ProductController {
 
     private Product convertProductEntityToProduct(ProductEntity productEntity) {
 
-            Product product =
-                    new Product(productEntity.getId(), productEntity.getTitle(),
-                            productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
+                productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
-            for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
+        for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
 
-                product.productPriceHistories().add(
-                        new ProductPriceHistory(
-                                productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
-                                productPriceHistoryEntity.getPrice()
-                        )
-                );
+            product.productPriceHistories().add(
+                    new ProductPriceHistory(
+                            productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
+                            productPriceHistoryEntity.getPrice()));
 
-            }
+        }
 
         return product;
     }
@@ -154,18 +154,15 @@ public class ProductController {
 
         for (ProductEntity productEntity : productEntities) {
 
-            Product apiProduct =
-                    new Product(productEntity.getId(), productEntity.getTitle(),
-                            productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
+            Product apiProduct = new Product(productEntity.getId(), productEntity.getTitle(),
+                    productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
             for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
 
                 apiProduct.productPriceHistories().add(
                         new ProductPriceHistory(
                                 productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
-                                productPriceHistoryEntity.getPrice()
-                        )
-                );
+                                productPriceHistoryEntity.getPrice()));
 
             }
 

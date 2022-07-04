@@ -18,7 +18,7 @@ public class ProductPriceHistoryEntity {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
+    @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity productEntity;
 
     public ProductPriceHistoryEntity() {
@@ -38,7 +38,6 @@ public class ProductPriceHistoryEntity {
         this.productEntity = productEntity;
 
     }
-
 
     public Long getId() {
         return id;
@@ -62,7 +61,7 @@ public class ProductPriceHistoryEntity {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", price=" + price +
-           //     ", product=" + product +
+                // ", product=" + product +
                 '}';
     }
 }

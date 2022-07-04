@@ -27,19 +27,19 @@ public class ProductCustomRepository {
 
         Root<ProductEntity> root = criteriaQuery.from(ProductEntity.class);
 
-        if ( productSearchCriteriaInput.title() != null ) {
+        if (productSearchCriteriaInput.title() != null) {
             Predicate titlePredicate = criteriaBuilder.like(root.get(ProductEntity_.TITLE),
                     productSearchCriteriaInput.title());
             criteriaQuery.where(titlePredicate);
         }
 
-        if ( productSearchCriteriaInput.lowerPrice() != null ) {
+        if (productSearchCriteriaInput.lowerPrice() != null) {
             Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.lowerPrice());
             criteriaQuery.where(lowerPricePredicate);
         }
 
-        if ( productSearchCriteriaInput.upperPrice() != null ) {
+        if (productSearchCriteriaInput.upperPrice() != null) {
             Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.upperPrice());
             criteriaQuery.where(upperPricePredicate);

@@ -71,7 +71,8 @@ class ProductEntityRepositoryTests {
 
         ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
+        List<ProductEntity> productEntities = productCustomRepository
+                .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities.size()).isEqualTo(2);
 
@@ -80,9 +81,11 @@ class ProductEntityRepositoryTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null, null);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
+                null);
 
-        List<ProductEntity> productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
+        List<ProductEntity> productEntities = productCustomRepository
+                .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities.size()).isEqualTo(1);
 
@@ -99,7 +102,8 @@ class ProductEntityRepositoryTests {
 
         if (optionalProductEntity.isPresent()) {
 
-            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle", "testDescription", 9999);
+            ProductEntity productEntity = new ProductEntity(optionalProductEntity.get().getId(), "testTitle",
+                    "testDescription", 9999);
 
             ProductEntity savedProductEntity = productRepository.save(productEntity);
 
@@ -127,19 +131,22 @@ class ProductEntityRepositoryTests {
         // Save Parent
         ProductEntity savedProductEntity = productRepository.save(productEntity);
 
-        ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 11, savedProductEntity);
+        ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
+                Date.valueOf(LocalDate.now()), 11, savedProductEntity);
 
         // Save Child1
         productPriceHistoryRepository.save(productPriceHistoryEntity1);
 
-        ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(Date.valueOf(LocalDate.now()), 20, savedProductEntity);
+        ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
+                Date.valueOf(LocalDate.now()), 20, savedProductEntity);
 
         // Save Child2
         productPriceHistoryRepository.save(productPriceHistoryEntity2);
 
-        // Add Child - needed - if you don't do it, the child is not persisted with the link the parent
-//        savedProduct.getProductPriceHistories().add(productPriceHistory1);
-//        savedProduct.getProductPriceHistories().add(productPriceHistory2);
+        // Add Child - needed - if you don't do it, the child is not persisted with the link the
+        // parent
+        // savedProduct.getProductPriceHistories().add(productPriceHistory1);
+        // savedProduct.getProductPriceHistories().add(productPriceHistory2);
 
         productRepository.save(savedProductEntity);
 
@@ -171,16 +178,14 @@ class ProductEntityRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        EmptyResultDataAccessException thrown =
-                assertThrows(EmptyResultDataAccessException.class, () ->
-                                productRepository.deleteById(99999999L),
-                        "Expected deleteById() to throw, but it didn't");
+        EmptyResultDataAccessException thrown = assertThrows(EmptyResultDataAccessException.class,
+                () -> productRepository.deleteById(99999999L),
+                "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage())
                 .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!"))
-                .isTrue();
+                        .isTrue();
 
     }
-
 
 }

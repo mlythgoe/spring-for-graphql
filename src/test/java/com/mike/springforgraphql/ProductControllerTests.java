@@ -61,7 +61,8 @@ class ProductControllerTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null, null);
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
+                null);
 
         List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
@@ -73,7 +74,8 @@ class ProductControllerTests {
     void testSaveProductUsingIdThatDoesExist() {
 
         Long productId = 1L;
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999, new ArrayList<>());
+        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999,
+                new ArrayList<>());
 
         Product product = productController.saveProduct(productInput);
 
