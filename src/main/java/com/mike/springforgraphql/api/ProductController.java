@@ -2,8 +2,6 @@ package com.mike.springforgraphql.api;
 
 import com.mike.springforgraphql.model.ProductEntity;
 import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
-import com.mike.springforgraphql.repository.ProductCustomRepository;
-import com.mike.springforgraphql.repository.ProductRepository;
 import com.mike.springforgraphql.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +29,8 @@ public class ProductController {
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
+        logger.debug("Find Product for id {}", id);
+
         ProductEntity productEntity = productService.findProduct(id);
 
         if ( productEntity == null ) {
@@ -51,9 +51,15 @@ public class ProductController {
     @QueryMapping("allProducts")  // value (i.e. "allProducts") must match GraphQL schema operation
     public List<Product> findAllProducts() {
 
-        List<ProductEntity> productEntityEntities = productService.findAllProducts();
+        logger.debug("Find All Products");
 
-        return convertProductEntityListToProductList(productEntityEntities);
+        List<ProductEntity> productEntities = productService.findAllProducts();
+
+        List<Product> products = convertProductEntityListToProductList(productEntities);
+
+        logger.debug("Found All Product {}", products);
+
+        return products;
 
     }
 
@@ -72,7 +78,11 @@ public class ProductController {
             return null;
         }
 
-        return convertProductEntityListToProductList(productEntities);
+        List<Product> products = convertProductEntityListToProductList(productEntities);
+
+        logger.debug("Found {} Products using criteria {}", products, productSearchCriteriaInput);
+
+        return products;
 
     }
 
@@ -120,8 +130,6 @@ public class ProductController {
 
     private Product convertProductEntityToProduct(ProductEntity productEntity) {
 
-        logger.debug("Converting ProductEntity {} to Product", productEntity);
-
             Product product =
                     new Product(productEntity.getId(), productEntity.getTitle(),
                             productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
@@ -136,8 +144,6 @@ public class ProductController {
                 );
 
             }
-
-        logger.debug("Returning Product - {}", product);
 
         return product;
     }
@@ -166,8 +172,6 @@ public class ProductController {
             apiProducts.add(apiProduct);
 
         }
-
-        logger.debug("Returning Products - {}", productEntities);
 
         return apiProducts;
     }

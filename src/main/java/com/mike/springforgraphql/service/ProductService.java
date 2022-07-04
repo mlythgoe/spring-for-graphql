@@ -29,8 +29,6 @@ public class ProductService {
     @Autowired
     ProductPriceHistoryRepository productPriceHistoryRepository;
 
-    Logger logger = LoggerFactory.getLogger(ProductService.class);
-
     public ProductEntity saveProduct(ProductInput productInput) {
 
         ProductEntity newProductEntity;
@@ -59,35 +57,24 @@ public class ProductService {
 
         productPriceHistoryRepository.saveAll(newProductEntity.getProductPriceHistories());
 
-
         return savedProductEntity;
 
     }
 
     public ProductEntity findProduct(Long id) {
 
-        logger.debug("Find Product for id {}", id);
-
         ProductEntity productEntity = productRepository.findById(id).orElse(null);
 
         if (productEntity == null) {
-            logger.debug("No Product found for id {}", id);
-
             return null;
         }
-
-        logger.debug("Found Product {} for id {}", productEntity, id);
 
         return productEntity;
     }
 
     public List<ProductEntity> findAllProducts() {
 
-        logger.debug("Find All Products");
-
         List<ProductEntity> productEntities = productRepository.findAll();
-
-        logger.debug("Found All Product {}", productEntities);
 
         return productEntities;
 
@@ -100,8 +87,6 @@ public class ProductService {
         productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         if (productEntities == null) {
-            logger.debug("No Products found for search criteria {}", productSearchCriteriaInput);
-
             return null;
         }
 
@@ -110,17 +95,12 @@ public class ProductService {
 
     public Long deleteProduct(Long id) {
 
-        logger.debug("Delete Product for Id {}", id);
-
         if (productRepository.existsById(id)) {
 
             productRepository.deleteById(id);
-            logger.debug("Deleted Product for id {}", id);
             return id;
 
         }
-
-        logger.debug("Product for id {} did not exist so could not be deleted", id);
 
         return null;
 
