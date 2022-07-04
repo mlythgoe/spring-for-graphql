@@ -8,8 +8,6 @@ import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +18,19 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    @Autowired
     ProductRepository productRepository;
 
-    @Autowired
     ProductCustomRepository productCustomRepository;
 
-    @Autowired
     ProductPriceHistoryRepository productPriceHistoryRepository;
+
+    @Autowired
+    public ProductService(ProductRepository productRepository, ProductCustomRepository productCustomRepository,
+                          ProductPriceHistoryRepository productPriceHistoryRepository) {
+        this.productRepository = productRepository;
+        this.productCustomRepository = productCustomRepository;
+        this.productPriceHistoryRepository = productPriceHistoryRepository;
+    }
 
     public ProductEntity saveProduct(ProductInput productInput) {
 
@@ -63,20 +66,12 @@ public class ProductService {
 
     public ProductEntity findProduct(Long id) {
 
-        ProductEntity productEntity = productRepository.findById(id).orElse(null);
-
-        if (productEntity == null) {
-            return null;
-        }
-
-        return productEntity;
+        return productRepository.findById(id).orElse(null);
     }
 
     public List<ProductEntity> findAllProducts() {
 
-        List<ProductEntity> productEntities = productRepository.findAll();
-
-        return productEntities;
+        return productRepository.findAll();
 
     }
 
@@ -85,10 +80,6 @@ public class ProductService {
         List<ProductEntity> productEntities;
 
         productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
-
-        if (productEntities == null) {
-            return null;
-        }
 
         return productEntities;
     }
