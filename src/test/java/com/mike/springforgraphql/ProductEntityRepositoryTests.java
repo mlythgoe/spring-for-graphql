@@ -58,8 +58,6 @@ class ProductEntityRepositoryTests {
         assertThat(optionalProductEntity.get().getDescription()).isEqualTo("Goes PING!!!!");
         assertThat(optionalProductEntity.get().getPrice()).isEqualTo(444);
 
-
-
     }
 
     @Test

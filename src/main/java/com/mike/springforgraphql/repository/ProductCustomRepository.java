@@ -33,16 +33,33 @@ public class ProductCustomRepository {
             criteriaQuery.where(titlePredicate);
         }
 
-        if (productSearchCriteriaInput.lowerPrice() != null) {
+        if (productSearchCriteriaInput.lowerPrice() != null &&
+                productSearchCriteriaInput.upperPrice() != null) {
             Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.lowerPrice());
-            criteriaQuery.where(lowerPricePredicate);
-        }
 
-        if (productSearchCriteriaInput.upperPrice() != null) {
             Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.upperPrice());
-            criteriaQuery.where(upperPricePredicate);
+
+            Predicate lowerAndUpperPricePredicate = criteriaBuilder.and(lowerPricePredicate, upperPricePredicate);
+
+            criteriaQuery.where(lowerAndUpperPricePredicate);
+        } else {
+            if (productSearchCriteriaInput.lowerPrice() != null) {
+
+                Predicate lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
+                        productSearchCriteriaInput.lowerPrice());
+
+                criteriaQuery.where(lowerPricePredicate);
+
+            }
+
+            if (productSearchCriteriaInput.upperPrice() != null) {
+                Predicate upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
+                        productSearchCriteriaInput.upperPrice());
+                criteriaQuery.where(upperPricePredicate);
+            }
+
         }
 
         TypedQuery<ProductEntity> typedQuery = entityManager.createQuery(criteriaQuery);

@@ -4,7 +4,8 @@ ProductInput is the input type for passing in details of a new productEntity, or
 input ProductInput {
     """
     'id' is optional in the ProductInput.
-    If it's a new productEntity, the id will be created and returned by the back end and so should not be passed in the request
+    If it's a new productEntity, the id will be created and returned by the back end and so should not be
+    passed in the request
     For an update, it is assumed the id will be supplied.
     """
     id: ID
@@ -14,10 +15,14 @@ input ProductInput {
     productPriceHistoryInputList: [ProductPriceHistoryInput]
 }
 
+"""
+ProductPriceHistoryInput is the input type for passing in a historical price of a product
+"""
 input ProductPriceHistoryInput {
     """
-    'id' is optional in the ProductInput.
-    If it's a new productEntity, the id will be created and returned by the back end and so should not be passed in the request
+    'id' is optional in the ProductPriceHistoryInput.
+    If it's a new productPriceHistoryEntity, the id will be created and returned by the backend and so should not be
+    passed in the request
     For an update, it is assumed the id will be supplied.
     """
     id: ID
@@ -36,7 +41,7 @@ input ProductSearchCriteria{
 }
 
 """
-Product is the response object, i.e. it has been persisted, and so will always have an Id
+Product is the response object for a product, i.e. it has been persisted, and so will always have an Id
 """
 type Product {
     id: ID!
@@ -46,6 +51,9 @@ type Product {
     productPriceHistories: [ProductPriceHistory]
 }
 
+"""
+ProductPriceHistory is the response object a the price history, a child of product
+"""
 type ProductPriceHistory {
     id: ID!
     startDate: String!
