@@ -6,7 +6,6 @@ import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.repository.ProductCustomRepository;
 import com.mike.springforgraphql.repository.ProductPriceHistoryRepository;
 import com.mike.springforgraphql.repository.ProductRepository;
-import org.assertj.core.api.AbstractBooleanAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -180,8 +179,8 @@ class ProductEntityRepositoryTests {
                 () -> productRepository.deleteById(99999999L),
                 "Expected deleteById() to throw, but it didn't");
 
-        assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!"));
+        assertThat(Objects.requireNonNull(thrown.getMessage()))
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!");
 
     }
 

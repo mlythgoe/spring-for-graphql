@@ -72,7 +72,8 @@ class ProductControllerTests {
     @Test
     void testFindUsingProductSearchCriteriaForProductThatDoesNotExist() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("ProductThatDoesNotExist", null, null,
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("ProductThatDoesNotExist", null,
+                null,
                 null);
 
         List<Product> products = productController.searchProducts(productSearchCriteriaInput);
