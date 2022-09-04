@@ -81,7 +81,7 @@ public class ProductController {
         if (productEntities == null) {
             logger.debug("No Products found for search criteria {}", productSearchCriteriaInput);
 
-            return null;
+            return new ArrayList<>();
         }
 
         List<Product> products = convertProductEntityListToProductList(productEntities);

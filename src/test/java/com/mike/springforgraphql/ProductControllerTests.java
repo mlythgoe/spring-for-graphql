@@ -25,8 +25,7 @@ class ProductControllerTests {
 
         List<Product> products = productController.findAllProducts();
 
-        assertThat(products).isNotNull();
-        assertThat(products.size()).isEqualTo(3);
+        assertThat(products).isNotNull().hasSize(3);
 
     }
 
@@ -56,7 +55,7 @@ class ProductControllerTests {
 
         List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
-        assertThat(products.size()).isEqualTo(2);
+        assertThat(products).hasSize(2);
 
     }
 
@@ -68,7 +67,20 @@ class ProductControllerTests {
 
         List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
-        assertThat(products.size()).isEqualTo(1);
+        assertThat(products).hasSize(1);
+
+    }
+
+    @Test
+    void testFindUsingProductSearchCriteriaForProductThatDoesNotExist() {
+
+        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("ProductThatDoesNotExist", null,
+                null,
+                null);
+
+        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
+
+        assertThat(products).isEmpty();
 
     }
 

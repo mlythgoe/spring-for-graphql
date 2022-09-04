@@ -40,8 +40,7 @@ class ProductEntityRepositoryTests {
 
         List<ProductEntity> productEntityEntities = productRepository.findAll();
 
-        assertThat(productEntityEntities).isNotNull();
-        assertThat(productEntityEntities.size()).isEqualTo(3);
+        assertThat(productEntityEntities).isNotNull().hasSize(3);
 
     }
 
@@ -77,7 +76,7 @@ class ProductEntityRepositoryTests {
         List<ProductEntity> productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
-        assertThat(productEntities.size()).isEqualTo(2);
+        assertThat(productEntities).hasSize(2);
 
     }
 
@@ -90,7 +89,7 @@ class ProductEntityRepositoryTests {
         List<ProductEntity> productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
-        assertThat(productEntities.size()).isEqualTo(1);
+        assertThat(productEntities).hasSize(1);
 
     }
 
@@ -146,11 +145,6 @@ class ProductEntityRepositoryTests {
         // Save Child2
         productPriceHistoryRepository.save(productPriceHistoryEntity2);
 
-        // Add Child - needed - if you don't do it, the child is not persisted with the link to the
-        // parent
-        // savedProduct.getProductPriceHistories().add(productPriceHistory1);
-        // savedProduct.getProductPriceHistories().add(productPriceHistory2);
-
         productRepository.save(savedProductEntity);
 
         assertThat(savedProductEntity.getId()).isNotNull();
@@ -161,7 +155,7 @@ class ProductEntityRepositoryTests {
 
         Optional<ProductEntity> getProductEntity = productRepository.findById(savedProductEntity.getId());
 
-        assertThat(getProductEntity.isPresent()).isTrue();
+        assertThat(getProductEntity).isPresent();
 
     }
 
@@ -185,9 +179,8 @@ class ProductEntityRepositoryTests {
                 () -> productRepository.deleteById(99999999L),
                 "Expected deleteById() to throw, but it didn't");
 
-        assertThat(Objects.requireNonNull(thrown.getMessage())
-                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!"))
-                        .isTrue();
+        assertThat(Objects.requireNonNull(thrown.getMessage()))
+                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!");
 
     }
 
