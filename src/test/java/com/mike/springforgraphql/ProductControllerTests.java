@@ -129,13 +129,4 @@ class ProductControllerTests {
 
     }
 
-    @Test
-    void testNotifyProductPriceChange() {
-
-        Flux<ProductPriceHistory> productPriceHistoryFlux = productController.notifyProductPriceChange(3L);
-
-        assertThat(productPriceHistoryFlux).isNull();
-
-    }
-
 }
