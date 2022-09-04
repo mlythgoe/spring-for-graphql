@@ -8,10 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 @Controller
 public class ProductController {
@@ -64,7 +69,7 @@ public class ProductController {
     }
 
     @QueryMapping("searchProducts") // value (i.e. "searchProducts") must match GraphQL schema
-                                    // operation
+    // operation
     public List<Product> searchProducts(@Argument ProductSearchCriteriaInput productSearchCriteriaInput) {
 
         logger.debug("Search for Products using criteria {}", productSearchCriteriaInput);
@@ -88,7 +93,7 @@ public class ProductController {
     }
 
     @MutationMapping("saveProduct") // value (i.e. "saveProduct") must match GraphQL schema
-                                    // operation
+    // operation
     public Product saveProduct(@Argument ProductInput productInput) {
 
         if (productInput.id() == null) {
@@ -112,7 +117,7 @@ public class ProductController {
     }
 
     @MutationMapping("deleteProduct") // value (i.e. "deleteProduct") must match GraphQL schema
-                                      // operation
+    // operation
     public Long deleteProduct(@Argument Long id) {
 
         logger.debug("Delete Product for Id {}", id);
@@ -172,4 +177,19 @@ public class ProductController {
 
         return apiProducts;
     }
+
+    @SubscriptionMapping
+    public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
+        Random rn = new Random();
+        ProductEntity productEntity = productService.findProduct(productId);
+
+        Product product = convertProductEntityToProduct(productEntity);
+
+        // A flux is the publisher of data
+        return Flux.fromStream(
+                Stream.generate(() ->
+                        new ProductPriceHistory(1L, new Date(), rn.nextInt(10) + 1)));
+    }
+
+
 }

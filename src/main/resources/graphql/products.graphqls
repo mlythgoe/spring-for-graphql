@@ -75,3 +75,7 @@ type Query {
     """ Get a Product for a variety of conditions """
     searchProducts(productSearchCriteriaInput: ProductSearchCriteria): [Product]
 }
+
+type Subscription {
+    notifyProductPriceChanges (id: ID): ProductPriceHistory
+}

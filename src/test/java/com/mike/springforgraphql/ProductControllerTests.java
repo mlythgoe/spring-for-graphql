@@ -4,7 +4,9 @@ import com.mike.springforgraphql.api.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +114,15 @@ class ProductControllerTests {
         Long deletedId = productController.deleteProduct(99999999L);
 
         assertThat(deletedId).isNull();
+
+    }
+
+    @Test
+    void testNotifyProductPriceChange() {
+
+        Flux<ProductPriceHistory> productPriceHistoryFlux = productController.notifyProductPriceChange(3L);
+
+        assertThat(productPriceHistoryFlux).isNull();
 
     }
 
