@@ -8,15 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
-import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Stream;
 
 @Controller
 public class ProductController {
@@ -159,37 +154,11 @@ public class ProductController {
 
         for (ProductEntity productEntity : productEntities) {
 
-            Product apiProduct = new Product(productEntity.getId(), productEntity.getTitle(),
-                    productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
-
-            for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
-
-                apiProduct.productPriceHistories().add(
-                        new ProductPriceHistory(
-                                productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
-                                productPriceHistoryEntity.getPrice()));
-
-            }
-
+            Product apiProduct = convertProductEntityToProduct(productEntity);
             apiProducts.add(apiProduct);
 
         }
 
         return apiProducts;
     }
-
-    @SubscriptionMapping
-    public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
-        Random rn = new Random();
-        ProductEntity productEntity = productService.findProduct(productId);
-
-        Product product = convertProductEntityToProduct(productEntity);
-
-        // A flux is the publisher of data
-        return Flux.fromStream(
-                Stream.generate(() ->
-                        new ProductPriceHistory(1L, new Date(), rn.nextInt(10) + 1)));
-    }
-
-
 }
