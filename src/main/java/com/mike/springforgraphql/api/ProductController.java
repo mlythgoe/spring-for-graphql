@@ -8,10 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
 
 @Controller
 public class ProductController {
@@ -161,4 +166,17 @@ public class ProductController {
 
         return apiProducts;
     }
+
+    @SubscriptionMapping("notifyProductPriceChange")
+    public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
+        Random rn = new Random();
+        Product product = findProduct(productId);
+
+        // A flux is the publisher of data
+        return Flux.fromStream(
+                Stream.generate(() ->
+                        new ProductPriceHistory(productId, new Date(), rn.nextInt(10) + 1)));
+    }
+
+
 }

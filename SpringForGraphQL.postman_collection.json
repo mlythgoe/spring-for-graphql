@@ -92,7 +92,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {lowerPrice:20, upperPrice:99999})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteriaInput: {lowerPrice:20, upperPrice:99999})   {\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -118,7 +118,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {title:\"Microwave\"})   {\n    id\n    title\n    desc\n    price\n    productPriceHistories {\n      id\n      startDate\n      price\n    }\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteriaInput: {title:\"Microwave\"})   {\n    id\n    title\n    desc\n    price\n    productPriceHistories {\n      id\n      startDate\n      price\n    }\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -144,7 +144,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query {\n  searchProducts(productSearchCriteria: {})   {\n    id\n    title\n    desc\n    price\n  }\n}",
+						"query": "query {\n  searchProducts(productSearchCriteriaInput: {})   {\n    id\n    title\n    desc\n    price\n  }\n}",
 						"variables": ""
 					}
 				},
@@ -274,7 +274,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "mutation {\n    deleteProduct(id:10) \n        \n}",
+						"query": "mutation {\n    deleteProduct(id:3) \n        \n}",
 						"variables": ""
 					}
 				},

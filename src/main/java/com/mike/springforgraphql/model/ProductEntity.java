@@ -18,7 +18,7 @@ public class ProductEntity {
     @Column(name = "price")
     private Integer price;
 
-    @OneToMany(mappedBy = "productEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ProductPriceHistoryEntity> productPriceHistories = new ArrayList<>();
 
     public ProductEntity() {
