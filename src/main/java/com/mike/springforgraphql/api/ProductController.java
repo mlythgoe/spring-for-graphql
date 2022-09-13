@@ -169,13 +169,23 @@ public class ProductController {
 
     @SubscriptionMapping("notifyProductPriceChange")
     public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
-        Random rn = new Random();
-        Product product = findProduct(productId);
+
 
         // A flux is the publisher of data
         return Flux.fromStream(
-                Stream.generate(() ->
-                        new ProductPriceHistory(productId, new Date(), rn.nextInt(10) + 1)));
+                Stream.generate(() -> produceStreamItem(productId)));
+    }
+
+    private ProductPriceHistory produceStreamItem(Long productId) {
+        Random rn = new Random();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println("Exception thrown is " + e);
+            throw new RuntimeException(e);
+        }
+        return  new ProductPriceHistory(productId, new Date(), rn.nextInt(10) + 1);
+
     }
 
 
