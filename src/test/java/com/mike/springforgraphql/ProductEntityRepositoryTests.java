@@ -130,32 +130,26 @@ class ProductEntityRepositoryTests {
 
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
-        // Save Parent
-        ProductEntity savedProductEntity = productRepository.save(productEntity);
-
         ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
-                Date.valueOf(LocalDate.now()), 11, savedProductEntity);
-
-        // Save Child1
-        productPriceHistoryRepository.save(productPriceHistoryEntity1);
+                Date.valueOf(LocalDate.now()), 11, productEntity);
+        productEntity.getProductPriceHistories().add(productPriceHistoryEntity1);
 
         ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
-                Date.valueOf(LocalDate.now()), 20, savedProductEntity);
+                Date.valueOf(LocalDate.now()), 20, productEntity);
+        productEntity.getProductPriceHistories().add(productPriceHistoryEntity2);
 
-        // Save Child2
-        productPriceHistoryRepository.save(productPriceHistoryEntity2);
+        productRepository.save(productEntity);
 
-        productRepository.save(savedProductEntity);
-
-        assertThat(savedProductEntity.getId()).isNotNull();
+        assertThat(productEntity.getId()).isNotNull();
 
         long countAfter = productRepository.count();
 
         assertThat(countBefore + 1).isEqualTo(countAfter);
 
-        Optional<ProductEntity> getProductEntity = productRepository.findById(savedProductEntity.getId());
+        Optional<ProductEntity> getProductEntity = productRepository.findById(productEntity.getId());
 
         assertThat(getProductEntity).isPresent();
+        assertThat(getProductEntity.get().getProductPriceHistories().size()).isEqualTo(2);
 
     }
 
