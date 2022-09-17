@@ -19,7 +19,7 @@ H2 Console URL - http://localhost:8080/h2-console/
 ## Using Postman
 
 You can use any GraphQL client but the Git repo includes a Postman collection with
-example queries and mutations - Note the subscriptions do not seem to be working i Postman
+example queries and mutations - Note subscriptions do not seem to be working in Postman
 
 ## Subscriptions
 
