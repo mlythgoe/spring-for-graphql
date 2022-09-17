@@ -23,6 +23,8 @@ public class ProductController {
 
     private final ProductService productService;
 
+    Random rn = new Random();
+
     Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductService productService) {
@@ -169,23 +171,21 @@ public class ProductController {
 
     @SubscriptionMapping("notifyProductPriceChange")
     public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
-        Random rn = new Random();
-        Product product = findProduct(productId);
 
         // A flux is the publisher of data
         return Flux.fromStream(
                 Stream.generate(() -> {
+
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+
                     var productPriceHistory = new ProductPriceHistory(productId, new Date(), rn.nextInt(10) + 1);
-                    System.out.println("Returning - " + productPriceHistory);
                     return productPriceHistory;
                 }));
 
     }
-
 
 }
