@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +126,19 @@ class ProductControllerTests {
         Long deletedId = productController.deleteProduct(99999999L);
 
         assertThat(deletedId).isNull();
+
+    }
+
+    @Test
+    void testNotifyProductPriceChang() {
+
+        Flux<ProductPriceHistory> productPriceHistoryStream = productController.notifyProductPriceChange(1L);
+
+        Mono<ProductPriceHistory> productPriceHistory = productPriceHistoryStream.next();
+
+        assertThat(productPriceHistory).isNotNull();
+
+        System.out.println(productPriceHistory);
 
     }
 
