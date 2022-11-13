@@ -186,7 +186,8 @@ public class ProductController {
                         throw new RuntimeException(e);
                     }
 
-                    var productPriceHistory = new ProductPriceHistory(productId, new Date(), (int) (rn.nextInt(10) + 1 + productId));
+                    var productPriceHistory = new ProductPriceHistory(productId, new Date(),
+                            (int) (rn.nextInt(10) + 1 + productId));
                     return productPriceHistory;
                 }));
 
