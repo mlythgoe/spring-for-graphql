@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.model;
+package com.mike.springforgraphql.db.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

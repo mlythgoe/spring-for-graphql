@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.api;
+package com.mike.springforgraphql.api.response;
 
 import java.util.ArrayList;
 

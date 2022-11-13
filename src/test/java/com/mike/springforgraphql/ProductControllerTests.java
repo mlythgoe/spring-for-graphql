@@ -1,6 +1,10 @@
 package com.mike.springforgraphql;
 
 import com.mike.springforgraphql.api.*;
+import com.mike.springforgraphql.api.input.ProductInput;
+import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
+import com.mike.springforgraphql.api.response.Product;
+import com.mike.springforgraphql.api.response.ProductPriceHistory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

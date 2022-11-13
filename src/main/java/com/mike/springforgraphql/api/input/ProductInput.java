@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.api;
+package com.mike.springforgraphql.api.input;
 
 import java.util.List;
 

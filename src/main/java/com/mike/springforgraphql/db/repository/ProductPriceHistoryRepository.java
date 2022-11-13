@@ -1,6 +1,6 @@
-package com.mike.springforgraphql.repository;
+package com.mike.springforgraphql.db.repository;
 
-import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
+import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

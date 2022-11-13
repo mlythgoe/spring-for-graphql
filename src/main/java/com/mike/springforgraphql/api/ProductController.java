@@ -1,7 +1,11 @@
 package com.mike.springforgraphql.api;
 
-import com.mike.springforgraphql.model.ProductEntity;
-import com.mike.springforgraphql.model.ProductPriceHistoryEntity;
+import com.mike.springforgraphql.api.input.ProductInput;
+import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
+import com.mike.springforgraphql.api.response.Product;
+import com.mike.springforgraphql.api.response.ProductPriceHistory;
+import com.mike.springforgraphql.db.entity.ProductEntity;
+import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
