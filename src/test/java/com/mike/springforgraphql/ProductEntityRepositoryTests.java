@@ -174,7 +174,7 @@ class ProductEntityRepositoryTests {
                 "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage()))
-                .contains("No class com.mike.springforgraphql.model.ProductEntity entity with id 99999999 exists!");
+                .contains("No class com.mike.springforgraphql.db.entity.ProductEntity entity with id 99999999 exists!");
 
     }
 
