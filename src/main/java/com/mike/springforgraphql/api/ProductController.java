@@ -27,9 +27,9 @@ public class ProductController {
 
     private final ProductService productService;
 
-    Random rn = new Random();
+    private final Random rn = new Random();
 
-    Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(ProductService productService) {
 
@@ -42,7 +42,7 @@ public class ProductController {
 
         logger.debug("Find Product for id {}", id);
 
-        ProductEntity productEntity = productService.findProduct(id);
+        var productEntity = productService.findProduct(id);
 
         if (productEntity == null) {
 
@@ -52,7 +52,7 @@ public class ProductController {
 
         }
 
-        Product product = convertProductEntityToProduct(productEntity);
+        var product = convertProductEntityToProduct(productEntity);
 
         logger.debug("Found Product {} for id {}", product, id);
 
@@ -64,9 +64,9 @@ public class ProductController {
 
         logger.debug("Find All Products");
 
-        List<ProductEntity> productEntities = productService.findAllProducts();
+        var productEntities = productService.findAllProducts();
 
-        List<Product> products = convertProductEntityListToProductList(productEntities);
+        var products = convertProductEntityListToProductList(productEntities);
 
         logger.debug("Found All Product {}", products);
 
@@ -90,7 +90,7 @@ public class ProductController {
             return new ArrayList<>();
         }
 
-        List<Product> products = convertProductEntityListToProductList(productEntities);
+        var products = convertProductEntityListToProductList(productEntities);
 
         logger.debug("Found {} Products using criteria {}", products, productSearchCriteriaInput);
 
@@ -112,9 +112,9 @@ public class ProductController {
 
         }
 
-        ProductEntity savedProduct = productService.saveProduct(productInput);
+        var savedProduct = productService.saveProduct(productInput);
 
-        Product apiProduct = convertProductEntityToProduct(savedProduct);
+        var apiProduct = convertProductEntityToProduct(savedProduct);
 
         logger.debug("Created Product {}", apiProduct);
 
@@ -144,7 +144,7 @@ public class ProductController {
 
     private Product convertProductEntityToProduct(ProductEntity productEntity) {
 
-        Product product = new Product(productEntity.getId(), productEntity.getTitle(),
+        var product = new Product(productEntity.getId(), productEntity.getTitle(),
                 productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
         for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
@@ -186,9 +186,8 @@ public class ProductController {
                         throw new RuntimeException(e);
                     }
 
-                    var productPriceHistory = new ProductPriceHistory(productId, new Date(),
+                    return new ProductPriceHistory(productId, new Date(),
                             (int) (rn.nextInt(10) + 1 + productId));
-                    return productPriceHistory;
                 }));
 
     }
