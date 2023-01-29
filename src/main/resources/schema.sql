@@ -27,5 +27,5 @@ create table hibernate_sequence
 ) engine = InnoDB;
 
 insert into hibernate_sequence
-values (10);
+values (20);
 

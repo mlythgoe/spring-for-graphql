@@ -29,7 +29,7 @@ class ProductControllerTests {
 
         List<Product> products = productController.findAllProducts();
 
-        assertThat(products).isNotNull().hasSize(3);
+        assertThat(products).isNotNull().hasSize(13);
 
     }
 
@@ -59,7 +59,7 @@ class ProductControllerTests {
 
         List<Product> products = productController.searchProducts(productSearchCriteriaInput);
 
-        assertThat(products).hasSize(2);
+        assertThat(products).hasSize(3);
 
     }
 

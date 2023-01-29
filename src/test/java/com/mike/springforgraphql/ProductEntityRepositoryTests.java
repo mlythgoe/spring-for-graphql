@@ -40,7 +40,7 @@ class ProductEntityRepositoryTests {
 
         List<ProductEntity> productEntityEntities = productRepository.findAll();
 
-        assertThat(productEntityEntities).isNotNull().hasSize(3);
+        assertThat(productEntityEntities).isNotNull().hasSize(13);
 
     }
 
@@ -76,7 +76,7 @@ class ProductEntityRepositoryTests {
         List<ProductEntity> productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
-        assertThat(productEntities).hasSize(2);
+        assertThat(productEntities).hasSize(3);
 
     }
 
@@ -131,7 +131,7 @@ class ProductEntityRepositoryTests {
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
-                Date.valueOf(LocalDate.now()), 11, productEntity);
+                Date.valueOf(LocalDate.now()), 14, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity1);
 
         ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
