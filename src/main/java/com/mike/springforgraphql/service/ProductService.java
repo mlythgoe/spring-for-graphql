@@ -67,6 +67,7 @@ public class ProductService {
     public ProductEntity findProduct(Long id) {
 
         return productRepository.findById(id).orElse(null);
+
     }
 
     public List<ProductEntity> findAllProducts() {
@@ -82,6 +83,7 @@ public class ProductService {
         productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         return productEntities;
+
     }
 
     public Long deleteProduct(Long id) {
