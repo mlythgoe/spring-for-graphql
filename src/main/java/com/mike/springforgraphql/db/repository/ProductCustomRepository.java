@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -16,6 +17,13 @@ public class ProductCustomRepository {
     private EntityManager entityManager;
 
     public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteriaInput productSearchCriteriaInput) {
+
+        if (productSearchCriteriaInput.lowerPrice() == null &
+                productSearchCriteriaInput.upperPrice() == null &
+                productSearchCriteriaInput.title() == null &&
+                productSearchCriteriaInput.desc() == null) {
+            return new ArrayList<>();
+        }
 
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var criteriaQuery = criteriaBuilder.createQuery(ProductEntity.class);
