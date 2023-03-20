@@ -20,8 +20,8 @@ spring:
     show-sql: 'true'
 
   datasource:
-    password: password
     username: sa
+    password: password
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
 
   h2:
@@ -35,8 +35,8 @@ logging:
         nodeValue: info
         type:
           descriptor:
-            sql: trace
-      springframework: info
+            sql: info
+      springframework: debug
     com:
       mike:
         springforgraphql: debug
