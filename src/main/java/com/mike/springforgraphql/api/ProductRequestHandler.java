@@ -6,7 +6,7 @@ import com.mike.springforgraphql.api.response.Product;
 import com.mike.springforgraphql.api.response.ProductPriceHistory;
 import com.mike.springforgraphql.db.entity.ProductEntity;
 import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
-import com.mike.springforgraphql.service.ProductService;
+import com.mike.springforgraphql.db.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.Argument;

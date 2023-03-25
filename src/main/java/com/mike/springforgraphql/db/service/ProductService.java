@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.service;
+package com.mike.springforgraphql.db.service;
 
 import com.mike.springforgraphql.api.input.ProductInput;
 import com.mike.springforgraphql.api.input.ProductPriceHistoryInput;
