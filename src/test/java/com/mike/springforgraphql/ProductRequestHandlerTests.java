@@ -19,15 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional
 @SpringBootTest
-class ProductControllerTests {
+class ProductRequestHandlerTests {
 
     @Autowired
-    ProductController productController;
+    ProductRequestHandler productRequestHandler;
 
     @Test
     void testFindAllProducts() {
 
-        List<Product> products = productController.findAllProducts();
+        List<Product> products = productRequestHandler.findAllProducts();
 
         assertThat(products).isNotNull().hasSize(13);
 
@@ -36,7 +36,7 @@ class ProductControllerTests {
     @Test
     void testFindOneProductUsingIdThatExists() {
 
-        Product product = productController.findProduct(1L);
+        Product product = productRequestHandler.findProduct(1L);
 
         assertThat(product).isNotNull();
         assertThat(product.id()).isEqualTo(1L);
@@ -46,7 +46,7 @@ class ProductControllerTests {
     @Test
     void testFindOneProductUsingIdThatDoesNotExist() {
 
-        Product product = productController.findProduct(99999999L);
+        Product product = productRequestHandler.findProduct(99999999L);
 
         assertThat(product).isNull();
 
@@ -57,7 +57,7 @@ class ProductControllerTests {
 
         ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
+        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).hasSize(3);
 
@@ -69,7 +69,7 @@ class ProductControllerTests {
         ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
                 null);
 
-        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
+        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).hasSize(1);
 
@@ -82,7 +82,7 @@ class ProductControllerTests {
                 null,
                 null);
 
-        List<Product> products = productController.searchProducts(productSearchCriteriaInput);
+        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).isEmpty();
 
@@ -95,7 +95,7 @@ class ProductControllerTests {
         ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999,
                 new ArrayList<>());
 
-        Product product = productController.saveProduct(productInput);
+        Product product = productRequestHandler.saveProduct(productInput);
 
         assertThat(product.id()).isNotNull();
         assertThat(product.id()).isEqualTo(productId);
@@ -107,7 +107,7 @@ class ProductControllerTests {
 
         ProductInput productInput = new ProductInput(null, "testTitle", "testDescription", 9999, new ArrayList<>());
 
-        Product product = productController.saveProduct(productInput);
+        Product product = productRequestHandler.saveProduct(productInput);
 
         assertThat(product.id()).isNotNull();
 
@@ -118,7 +118,7 @@ class ProductControllerTests {
 
         Long idToDelete = 2L;
 
-        Long deletedId = productController.deleteProduct(idToDelete);
+        Long deletedId = productRequestHandler.deleteProduct(idToDelete);
 
         assertThat(deletedId).isEqualTo(idToDelete);
 
@@ -127,7 +127,7 @@ class ProductControllerTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        Long deletedId = productController.deleteProduct(99999999L);
+        Long deletedId = productRequestHandler.deleteProduct(99999999L);
 
         assertThat(deletedId).isNull();
 
@@ -136,7 +136,7 @@ class ProductControllerTests {
     @Test
     void testNotifyProductPriceChang() {
 
-        Flux<ProductPriceHistory> productPriceHistoryStream = productController.notifyProductPriceChange(1L);
+        Flux<ProductPriceHistory> productPriceHistoryStream = productRequestHandler.notifyProductPriceChange(1L);
 
         Mono<ProductPriceHistory> productPriceHistory = productPriceHistoryStream.next();
 

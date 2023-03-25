@@ -23,15 +23,15 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 @Controller
-public class ProductController {
+public class ProductRequestHandler {
 
     private final ProductService productService;
 
     private final Random rn = new Random();
 
-    private final Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private final Logger logger = LoggerFactory.getLogger(ProductRequestHandler.class);
 
-    public ProductController(ProductService productService) {
+    public ProductRequestHandler(ProductService productService) {
 
         this.productService = productService;
 
