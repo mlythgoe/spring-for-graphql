@@ -37,7 +37,8 @@ subscription {
 
 https://graphql.org/learn/ - An introduction to GraphQL, but a very thorough and detailed one.
 
-https://www.apollographql.com/docs/ - Apollo is a Node/JavaScript framework for GraphQL. Very detailed, talks about schema stitching and many ore advanced topics as well as providing a good introduction.
+https://www.apollographql.com/docs/ - Apollo is a Node/JavaScript framework for GraphQL. Very detailed, talks about 
+    schema stitching and many more advanced topics as well as providing a good introduction.
 
 https://spring.io/projects/spring-graphql#learn - Spring for GraphQL Documentation.
 
