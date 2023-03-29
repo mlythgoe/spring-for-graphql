@@ -12,7 +12,7 @@ H2 Console URL - http://localhost:8080/h2-console/
 
 * Setting Name: Generic H2 (Embedded)
 * Driver class: org.h2.Driver
-* JDBC URL - jdbc:h2:mem:testdb
+* JDBC URL - jdbc:h2:mem:springforgraphqldb
 * Username: sa
 * Password: password
 
