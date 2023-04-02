@@ -61,7 +61,6 @@ public class ProductPriceHistoryEntity {
                 "id=" + id +
                 ", startDate=" + startDate +
                 ", price=" + price +
-                // ", product=" + product +
                 '}';
     }
 }

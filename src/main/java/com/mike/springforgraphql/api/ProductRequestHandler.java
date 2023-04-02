@@ -7,8 +7,7 @@ import com.mike.springforgraphql.api.response.ProductPriceHistory;
 import com.mike.springforgraphql.db.entity.ProductEntity;
 import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.db.service.ProductService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
+@Slf4j
 @Controller
 public class ProductRequestHandler {
 
@@ -29,7 +29,6 @@ public class ProductRequestHandler {
 
     private final Random rn = new Random();
 
-    private final Logger logger = LoggerFactory.getLogger(ProductRequestHandler.class);
 
     public ProductRequestHandler(ProductService productService) {
 
@@ -40,13 +39,13 @@ public class ProductRequestHandler {
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
     public Product findProduct(@Argument Long id) {
 
-        logger.debug("Find Product for id {}", id);
+        log.debug("Find Product for id {}", id);
 
         var productEntity = productService.findProduct(id);
 
         if (productEntity == null) {
 
-            logger.debug("No Product found for id {}", id);
+            log.debug("No Product found for id {}", id);
 
             return null;
 
@@ -54,7 +53,7 @@ public class ProductRequestHandler {
 
         var product = convertProductEntityToProduct(productEntity);
 
-        logger.debug("Found Product {} for id {}", product, id);
+        log.debug("Found Product {} for id {}", product, id);
 
         return product;
     }
@@ -62,13 +61,13 @@ public class ProductRequestHandler {
     @QueryMapping("allProducts") // value (i.e. "allProducts") must match GraphQL schema operation
     public List<Product> findAllProducts() {
 
-        logger.debug("Find All Products");
+        log.debug("Find All Products");
 
         var productEntities = productService.findAllProducts();
 
         var products = convertProductEntityListToProductList(productEntities);
 
-        logger.debug("Found All Product {}", products);
+        log.debug("Found All Product {}", products);
 
         return products;
 
@@ -78,21 +77,21 @@ public class ProductRequestHandler {
     // operation
     public List<Product> searchProducts(@Argument ProductSearchCriteriaInput productSearchCriteriaInput) {
 
-        logger.debug("Search for Products using criteria {}", productSearchCriteriaInput);
+        log.debug("Search for Products using criteria {}", productSearchCriteriaInput);
 
         List<ProductEntity> productEntities;
 
         productEntities = productService.searchProducts(productSearchCriteriaInput);
 
         if (productEntities == null) {
-            logger.debug("No Products found for search criteria {}", productSearchCriteriaInput);
+            log.debug("No Products found for search criteria {}", productSearchCriteriaInput);
 
             return new ArrayList<>();
         }
 
         var products = convertProductEntityListToProductList(productEntities);
 
-        logger.debug("Found {} Products using criteria {}", products, productSearchCriteriaInput);
+        log.debug("Found {} Products using criteria {}", products, productSearchCriteriaInput);
 
         return products;
 
@@ -104,11 +103,11 @@ public class ProductRequestHandler {
 
         if (productInput.id() == null) {
 
-            logger.debug("Insert Product for ProductInput {}", productInput);
+            log.debug("Insert Product for ProductInput {}", productInput);
 
         } else {
 
-            logger.debug("Update Product for ProductInput {}", productInput);
+            log.debug("Update Product for ProductInput {}", productInput);
 
         }
 
@@ -116,7 +115,7 @@ public class ProductRequestHandler {
 
         var apiProduct = convertProductEntityToProduct(savedProduct);
 
-        logger.debug("Created Product {}", apiProduct);
+        log.debug("Created Product {}", apiProduct);
 
         return apiProduct;
 
@@ -126,15 +125,15 @@ public class ProductRequestHandler {
     // operation
     public Long deleteProduct(@Argument Long id) {
 
-        logger.debug("Delete Product for Id {}", id);
+        log.debug("Delete Product for Id {}", id);
 
         var deletedId = productService.deleteProduct(id);
 
         if (deletedId == null) {
-            logger.debug("Product for id {} did not exist so could not be deleted", id);
+            log.debug("Product for id {} did not exist so could not be deleted", id);
 
         } else {
-            logger.debug("Product for id {} deleted", id);
+            log.debug("Product for id {} deleted", id);
 
         }
 
