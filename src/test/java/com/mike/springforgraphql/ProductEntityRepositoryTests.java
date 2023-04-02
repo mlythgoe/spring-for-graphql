@@ -149,7 +149,7 @@ class ProductEntityRepositoryTests {
         Optional<ProductEntity> getProductEntity = productRepository.findById(productEntity.getId());
 
         assertThat(getProductEntity).isPresent();
-        assertThat(getProductEntity.get().getProductPriceHistories().size()).isEqualTo(2);
+        assertThat(getProductEntity.get().getProductPriceHistories()).hasSize(2);
 
     }
 
@@ -174,7 +174,7 @@ class ProductEntityRepositoryTests {
                 "Expected deleteById() to throw, but it didn't");
 
         assertThat(Objects.requireNonNull(thrown.getMessage()))
-                .contains("No class com.mike.springforgraphql.db.entity.ProductEntity entity with id 99999999 exists!");
+                .contains("No class com.mike.springforgraphql.db.entity.ProductEntity entity with id 99999999 exists");
 
     }
 

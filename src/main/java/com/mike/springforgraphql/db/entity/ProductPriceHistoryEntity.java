@@ -1,6 +1,6 @@
 package com.mike.springforgraphql.db.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -8,7 +8,7 @@ import java.sql.Date;
 public class ProductPriceHistoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "startDate")

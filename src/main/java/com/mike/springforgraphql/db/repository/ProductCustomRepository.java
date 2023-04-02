@@ -3,10 +3,11 @@ package com.mike.springforgraphql.db.repository;
 import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
 import com.mike.springforgraphql.db.entity.ProductEntity;
 import com.mike.springforgraphql.db.entity.ProductEntity_;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class ProductCustomRepository {
 
     public List<ProductEntity> findUsingProductSearchCriteria(ProductSearchCriteriaInput productSearchCriteriaInput) {
 
-        if (productSearchCriteriaInput.lowerPrice() == null &
-                productSearchCriteriaInput.upperPrice() == null &
+        if (productSearchCriteriaInput.lowerPrice() == null &&
+                productSearchCriteriaInput.upperPrice() == null &&
                 productSearchCriteriaInput.title() == null &&
                 productSearchCriteriaInput.desc() == null) {
             return new ArrayList<>();
