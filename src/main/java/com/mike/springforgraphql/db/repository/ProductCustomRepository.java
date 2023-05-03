@@ -39,23 +39,21 @@ public class ProductCustomRepository {
 
         if ((productSearchCriteriaInput.lowerPrice() != null) &&
                 (productSearchCriteriaInput.upperPrice() != null)) {
+
             var lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.lowerPrice());
-
             var upperPricePredicate = criteriaBuilder.lessThanOrEqualTo(root.get(ProductEntity_.PRICE),
                     productSearchCriteriaInput.upperPrice());
-
             var lowerAndUpperPricePredicate = criteriaBuilder.and(lowerPricePredicate, upperPricePredicate);
 
             criteriaQuery.where(lowerAndUpperPricePredicate);
-        } else {
-            if (productSearchCriteriaInput.lowerPrice() != null) {
 
+        } else {
+
+            if (productSearchCriteriaInput.lowerPrice() != null) {
                 var lowerPricePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get(ProductEntity_.PRICE),
                         productSearchCriteriaInput.lowerPrice());
-
                 criteriaQuery.where(lowerPricePredicate);
-
             }
 
             if (productSearchCriteriaInput.upperPrice() != null) {
