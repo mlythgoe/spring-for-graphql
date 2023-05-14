@@ -27,7 +27,6 @@ public class ProductRequestHandler {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
 
-
     private final ProductService productService;
 
     private final Random rn = new Random();
@@ -182,16 +181,11 @@ public class ProductRequestHandler {
     // The @SchemaMapping annotation maps a handler method to a field in the GraphQL schema
     // and declares it to be the DataFetcher for that field.
     // The annotation can specify the parent type name, and the field name
-    @SchemaMapping(typeName = "Product")
-    public String desc(Product product) {
-        return product.desc() + " enhanced";
-    }
-
     @SchemaMapping(typeName = "ProductPriceHistory")
     public String startDate(ProductPriceHistory productPriceHistory) {
-        var temp = simpleDateFormat.format(productPriceHistory.startDate());
 
         return simpleDateFormat.format(productPriceHistory.startDate());
+
     }
 
     @SubscriptionMapping("notifyProductPriceChange")
