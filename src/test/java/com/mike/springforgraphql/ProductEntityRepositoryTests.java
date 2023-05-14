@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
@@ -132,11 +131,11 @@ class ProductEntityRepositoryTests {
         ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
-                Timestamp.valueOf(String.valueOf(LocalDate.now().toEpochDay())), 14, productEntity);
+                new Timestamp(System.currentTimeMillis()), 14, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity1);
 
         ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
-                Timestamp.valueOf(String.valueOf(LocalDate.now().toEpochDay())), 20, productEntity);
+                new Timestamp(System.currentTimeMillis()), 20, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity2);
 
         productRepository.save(productEntity);
