@@ -8,13 +8,13 @@ INSERT INTO Product
 VALUES (3, 'Microwave', 'Goes PING!!!!', 444);
 
 INSERT INTO ProductPriceHistory
-VALUES (1, 3, '2020-01-01 00:00:01', 111);
+VALUES (1, 3, '2020-01-01 01:01:01', 111);
 
 INSERT INTO ProductPriceHistory
-VALUES (2, 3, '2021-01-01 00:00:01', 222);
+VALUES (2, 3, '2021-01-01 02:02:02', 222);
 
 INSERT INTO ProductPriceHistory
-VALUES (3, 3, '2022-01-01 00:00:01', 333);
+VALUES (3, 3, '2022-01-01 03:03:03', 333);
 
 INSERT INTO Product
 VALUES (4, 'Product4', 'Pageable Product', 444);

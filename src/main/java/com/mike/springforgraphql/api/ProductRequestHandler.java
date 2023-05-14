@@ -8,13 +8,11 @@ import com.mike.springforgraphql.db.entity.ProductEntity;
 import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
 import com.mike.springforgraphql.db.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
+import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +22,11 @@ import java.util.stream.Stream;
 @Slf4j
 @Controller
 public class ProductRequestHandler {
+
+    String pattern = "yyyy-MM-dd HH:mm:ssZ";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+
 
     private final ProductService productService;
 
@@ -170,6 +173,25 @@ public class ProductRequestHandler {
         }
 
         return apiProducts;
+    }
+
+    // A DataFetcher provides the logic to fetch the data for a query or for any schema field.
+    // The Spring Boot starter for GraphQL has auto-configurations that automates this registration.
+    // For the type of 'Product'
+    // when the 'desc' field is being resolved, use this to render the result
+    // The @SchemaMapping annotation maps a handler method to a field in the GraphQL schema
+    // and declares it to be the DataFetcher for that field.
+    // The annotation can specify the parent type name, and the field name
+    @SchemaMapping(typeName = "Product")
+    public String desc(Product product) {
+        return product.desc() + " enhanced";
+    }
+
+    @SchemaMapping(typeName = "ProductPriceHistory")
+    public String startDate(ProductPriceHistory productPriceHistory) {
+        var temp = simpleDateFormat.format(productPriceHistory.startDate());
+
+        return simpleDateFormat.format(productPriceHistory.startDate());
     }
 
     @SubscriptionMapping("notifyProductPriceChange")

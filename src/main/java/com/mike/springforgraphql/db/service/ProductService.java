@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -48,9 +49,9 @@ public class ProductService {
 
             for (ProductPriceHistoryInput productPriceHistoryInput : productInput.productPriceHistoryInputList()) {
 
-                Date startDateAsSqlDate = Date.valueOf(LocalDate.parse(productPriceHistoryInput.startDate()));
+                Timestamp startDateAsSqlTimestamp = Timestamp.valueOf(productPriceHistoryInput.startDate());
                 newProductEntity.getProductPriceHistories().add(
-                        new ProductPriceHistoryEntity(productPriceHistoryInput.id(), startDateAsSqlDate,
+                        new ProductPriceHistoryEntity(productPriceHistoryInput.id(), startDateAsSqlTimestamp,
                                 productPriceHistoryInput.price(), newProductEntity));
             }
 

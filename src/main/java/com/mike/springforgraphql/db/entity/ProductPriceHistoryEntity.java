@@ -2,6 +2,7 @@ package com.mike.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "productpricehistory")
@@ -12,7 +13,7 @@ public class ProductPriceHistoryEntity {
     private Long id;
 
     @Column(name = "startDate")
-    private java.sql.Date startDate;
+    private java.sql.Timestamp startDate;
 
     @Column(name = "price")
     private int price;
@@ -24,14 +25,14 @@ public class ProductPriceHistoryEntity {
     public ProductPriceHistoryEntity() {
     }
 
-    public ProductPriceHistoryEntity(Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistoryEntity(Timestamp startDate, int price, ProductEntity productEntity) {
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
 
     }
 
-    public ProductPriceHistoryEntity(Long id, Date startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistoryEntity(Long id, Timestamp startDate, int price, ProductEntity productEntity) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
@@ -43,7 +44,7 @@ public class ProductPriceHistoryEntity {
         return id;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
