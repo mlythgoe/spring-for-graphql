@@ -37,7 +37,6 @@ public class ProductPriceHistoryEntity {
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
-
     }
 
     public Long getId() {
