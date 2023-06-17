@@ -1,7 +1,6 @@
 package com.mike.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity

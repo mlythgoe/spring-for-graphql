@@ -23,16 +23,17 @@ import java.util.stream.Stream;
 @Controller
 public class ProductRequestHandler {
 
-    String pattern = "yyyy-MM-dd HH:mm:ssZ";
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-
+    SimpleDateFormat simpleDateFormat;
 
     private final ProductService productService;
 
-    private final Random rn = new Random();
-
+    private final Random rn;
 
     public ProductRequestHandler(ProductService productService) {
+
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        rn = new Random();
 
         this.productService = productService;
 
@@ -132,9 +133,11 @@ public class ProductRequestHandler {
         var deletedId = productService.deleteProduct(id);
 
         if (deletedId == null) {
+
             log.debug("Product for id {} did not exist so could not be deleted", id);
 
         } else {
+
             log.debug("Product for id {} deleted", id);
 
         }
