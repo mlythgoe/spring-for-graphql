@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
@@ -168,12 +169,10 @@ class ProductEntityRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        EmptyResultDataAccessException thrown = assertThrows(EmptyResultDataAccessException.class,
-                () -> productRepository.deleteById(99999999L),
-                "Expected deleteById() to throw, but it didn't");
+        productRepository.deleteById(99999999L);
 
-        assertThat(Objects.requireNonNull(thrown.getMessage()))
-                .contains("No class com.mike.springforgraphql.db.entity.ProductEntity entity with id 99999999 exists");
+        assertDoesNotThrow(
+                () -> productRepository.deleteById(99999999L));
 
     }
 
