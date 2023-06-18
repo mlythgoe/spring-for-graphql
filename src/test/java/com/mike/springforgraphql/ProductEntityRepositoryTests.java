@@ -169,8 +169,6 @@ class ProductEntityRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        productRepository.deleteById(99999999L);
-
         assertDoesNotThrow(
                 () -> productRepository.deleteById(99999999L));
 
