@@ -166,8 +166,15 @@ class ProductEntityRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
+        long countBefore = productRepository.count();
+
         assertDoesNotThrow(
-                () -> productRepository.deleteById(99999999L));
+                () -> productRepository.deleteById(99999999L)
+        );
+
+        long countAfter = productRepository.count();
+
+        assertThat(countBefore).isEqualTo(countAfter);
 
     }
 
