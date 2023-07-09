@@ -169,8 +169,7 @@ class ProductEntityRepositoryTests {
         long countBefore = productRepository.count();
 
         assertDoesNotThrow(
-                () -> productRepository.deleteById(99999999L)
-        );
+                () -> productRepository.deleteById(99999999L));
 
         long countAfter = productRepository.count();
 
