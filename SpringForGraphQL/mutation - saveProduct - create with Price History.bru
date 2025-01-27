@@ -1,0 +1,38 @@
+meta {
+  name: mutation - saveProduct - create with Price History
+  type: graphql
+  seq: 10
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation {
+    saveProduct(
+      productInput: {
+        title: "Title"
+        desc: "Desc"
+        price: 9999
+        productPriceHistoryInputList: [
+          { startDate: "2020-01-01", price: 999 }
+          { startDate: "2010-01-01", price: 555 }
+        ]
+      }
+    ) {
+      id
+      desc
+      title
+      price
+      productPriceHistories {
+        id
+        startDate
+        price
+      }
+    }
+  }
+  
+}

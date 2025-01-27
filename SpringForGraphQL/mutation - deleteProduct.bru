@@ -1,0 +1,18 @@
+meta {
+  name: mutation - deleteProduct
+  type: graphql
+  seq: 13
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation {
+    deleteProduct(id: 3)
+  }
+  
+}

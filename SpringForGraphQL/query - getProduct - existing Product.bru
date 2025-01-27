@@ -1,0 +1,27 @@
+meta {
+  name: query - getProduct - existing Product
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    getProduct(id:3){
+      id
+      desc
+      title
+      price
+      productPriceHistories {
+        id
+        startDate
+        price
+      }
+    }
+  }
+}

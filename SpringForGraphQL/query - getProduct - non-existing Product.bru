@@ -1,0 +1,22 @@
+meta {
+  name: query - getProduct - non-existing Product
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    getProduct(id:999){
+      id
+      title
+      desc
+      price
+    }
+  }
+}

@@ -1,0 +1,22 @@
+meta {
+  name: query - searchProducts using NO criteria
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    searchProducts(productSearchCriteriaInput: {})   {
+      id
+      title
+      desc
+      price
+    }
+  }
+}

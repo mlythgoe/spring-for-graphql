@@ -1,0 +1,25 @@
+meta {
+  name: mutation - saveProduct - create
+  type: graphql
+  seq: 9
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  mutation {
+    saveProduct(
+      productInput: { id: 13, title: "Title133", desc: "Desc", price: 88888 }
+    ) {
+      id
+      desc
+      title
+      price
+    }
+  }
+  
+}

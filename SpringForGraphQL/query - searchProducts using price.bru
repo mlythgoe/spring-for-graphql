@@ -1,0 +1,22 @@
+meta {
+  name: query - searchProducts using price
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    searchProducts(productSearchCriteriaInput: {lowerPrice:20, upperPrice:99999})   {
+      id
+      title
+      desc
+      price
+    }
+  }
+}

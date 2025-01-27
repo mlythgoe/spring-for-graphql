@@ -1,0 +1,27 @@
+meta {
+  name: query - searchProducts using title
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/graphql
+  body: graphql
+  auth: none
+}
+
+body:graphql {
+  query {
+    searchProducts(productSearchCriteriaInput: {title:"Microwave"})   {
+      id
+      title
+      desc
+      price
+      productPriceHistories {
+        id
+        startDate
+        price
+      }
+    }
+  }
+}
