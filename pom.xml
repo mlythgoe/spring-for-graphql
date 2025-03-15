@@ -15,7 +15,8 @@
     <description>spring-for-graphql</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>23</java.version>
+        <maven.compiler.proc>full</maven.compiler.proc>
     </properties>
 
     <dependencies>
