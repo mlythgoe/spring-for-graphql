@@ -1,12 +1,12 @@
-package com.mike.springforgraphql.api;
+package net.mikelythgoe.springforgraphql.api;
 
-import com.mike.springforgraphql.api.input.ProductInput;
-import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
-import com.mike.springforgraphql.api.response.Product;
-import com.mike.springforgraphql.api.response.ProductPriceHistory;
-import com.mike.springforgraphql.db.entity.ProductEntity;
-import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
-import com.mike.springforgraphql.db.service.ProductService;
+import net.mikelythgoe.springforgraphql.api.input.ProductInput;
+import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
+import net.mikelythgoe.springforgraphql.api.response.Product;
+import net.mikelythgoe.springforgraphql.api.response.ProductPriceHistory;
+import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
+import net.mikelythgoe.springforgraphql.db.entity.ProductPriceHistoryEntity;
+import net.mikelythgoe.springforgraphql.db.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;

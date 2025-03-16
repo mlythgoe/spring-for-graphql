@@ -1,13 +1,13 @@
-package com.mike.springforgraphql.db.service;
+package net.mikelythgoe.springforgraphql.db.service;
 
-import com.mike.springforgraphql.api.input.ProductInput;
-import com.mike.springforgraphql.api.input.ProductPriceHistoryInput;
-import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
-import com.mike.springforgraphql.db.entity.ProductEntity;
-import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
-import com.mike.springforgraphql.db.repository.ProductCustomRepository;
-import com.mike.springforgraphql.db.repository.ProductPriceHistoryRepository;
-import com.mike.springforgraphql.db.repository.ProductRepository;
+import net.mikelythgoe.springforgraphql.api.input.ProductInput;
+import net.mikelythgoe.springforgraphql.api.input.ProductPriceHistoryInput;
+import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
+import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
+import net.mikelythgoe.springforgraphql.db.entity.ProductPriceHistoryEntity;
+import net.mikelythgoe.springforgraphql.db.repository.ProductCustomRepository;
+import net.mikelythgoe.springforgraphql.db.repository.ProductPriceHistoryRepository;
+import net.mikelythgoe.springforgraphql.db.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

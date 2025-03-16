@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.api.input;
+package net.mikelythgoe.springforgraphql.api.input;
 
 public record ProductSearchCriteriaInput(String title,
                                          String desc,

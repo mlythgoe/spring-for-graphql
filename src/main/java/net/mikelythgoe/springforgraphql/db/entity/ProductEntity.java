@@ -1,4 +1,4 @@
-package com.mike.springforgraphql.db.entity;
+package net.mikelythgoe.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;

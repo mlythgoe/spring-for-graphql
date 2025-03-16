@@ -1,11 +1,11 @@
-package com.mike.springforgraphql;
+package net.mikelythgoe.springforgraphql;
 
-import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
-import com.mike.springforgraphql.db.entity.ProductEntity;
-import com.mike.springforgraphql.db.entity.ProductPriceHistoryEntity;
-import com.mike.springforgraphql.db.repository.ProductCustomRepository;
-import com.mike.springforgraphql.db.repository.ProductPriceHistoryRepository;
-import com.mike.springforgraphql.db.repository.ProductRepository;
+import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
+import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
+import net.mikelythgoe.springforgraphql.db.entity.ProductPriceHistoryEntity;
+import net.mikelythgoe.springforgraphql.db.repository.ProductCustomRepository;
+import net.mikelythgoe.springforgraphql.db.repository.ProductPriceHistoryRepository;
+import net.mikelythgoe.springforgraphql.db.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

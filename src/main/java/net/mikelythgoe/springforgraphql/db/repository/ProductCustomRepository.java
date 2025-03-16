@@ -1,8 +1,8 @@
-package com.mike.springforgraphql.db.repository;
+package net.mikelythgoe.springforgraphql.db.repository;
 
-import com.mike.springforgraphql.api.input.ProductSearchCriteriaInput;
-import com.mike.springforgraphql.db.entity.ProductEntity;
-import com.mike.springforgraphql.db.entity.ProductEntity_;
+import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
+import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
+import net.mikelythgoe.springforgraphql.db.entity.ProductEntity_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
