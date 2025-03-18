@@ -1,11 +1,8 @@
-package net.mikelythgoe.springforgraphql;
+package net.mikelythgoe.springforgraphql.db.repository;
 
 import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
 import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
 import net.mikelythgoe.springforgraphql.db.entity.ProductPriceHistoryEntity;
-import net.mikelythgoe.springforgraphql.db.repository.ProductCustomRepository;
-import net.mikelythgoe.springforgraphql.db.repository.ProductPriceHistoryRepository;
-import net.mikelythgoe.springforgraphql.db.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @Transactional
 @SpringBootTest
-class ProductEntityRepositoryTests {
+class ProductRepositoryTests {
 
     @Autowired
     ProductRepository productRepository;

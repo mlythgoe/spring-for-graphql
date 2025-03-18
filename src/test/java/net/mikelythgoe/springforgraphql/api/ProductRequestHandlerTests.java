@@ -1,6 +1,5 @@
-package net.mikelythgoe.springforgraphql;
+package net.mikelythgoe.springforgraphql.api;
 
-import net.mikelythgoe.springforgraphql.api.ProductRequestHandler;
 import net.mikelythgoe.springforgraphql.api.input.ProductInput;
 import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
 import net.mikelythgoe.springforgraphql.api.response.Product;
