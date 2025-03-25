@@ -7,7 +7,8 @@ import net.mikelythgoe.springforgraphql.api.response.ProductPriceHistory;
 import net.mikelythgoe.springforgraphql.db.entity.ProductEntity;
 import net.mikelythgoe.springforgraphql.db.entity.ProductPriceHistoryEntity;
 import net.mikelythgoe.springforgraphql.db.service.ProductService;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.graphql.data.method.annotation.*;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-@Slf4j
 @Controller
 public class ProductRequestHandler {
 
@@ -28,6 +28,8 @@ public class ProductRequestHandler {
     private final ProductService productService;
 
     private final Random rn;
+
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     public ProductRequestHandler(ProductService productService) {
 
