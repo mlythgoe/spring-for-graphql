@@ -59,7 +59,7 @@ subscription {
 }
 ```
 
-The code has a subscription endpoint that generates new (random) prices for a product every 10 seconds. 
+The code has a subscription endpoint that generates new (random) prices for a product every second. 
 
 ## GraphQL Resources
 
