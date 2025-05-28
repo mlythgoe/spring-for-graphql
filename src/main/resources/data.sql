@@ -1,47 +1,51 @@
 INSERT INTO Product
+    (id, title, description, price)
 VALUES (1, 'TV', 'Big old TV', 9999);
 
 INSERT INTO Product
+    (id, title, description, price)
 VALUES (2, 'Phone', 'Trimphone - ooh, fancy', 11);
 
 INSERT INTO Product
+    (id, title, description, price)
 VALUES (3, 'Microwave', 'Goes PING!!!!', 444);
 
-INSERT INTO ProductPriceHistory
-VALUES (1, 3, '2020-01-01 01:01:01', 111);
-
-INSERT INTO ProductPriceHistory
-VALUES (2, 3, '2021-01-01 02:02:02', 222);
-
-INSERT INTO ProductPriceHistory
-VALUES (3, 3, '2022-01-01 03:03:03', 333);
+INSERT INTO Product
+    (id, title, description, price)
+VALUES (4, 'Product44', 'Pageable Product', 444);
 
 INSERT INTO Product
-VALUES (4, 'Product4', 'Pageable Product', 444);
+    (id, title, description, price)
+VALUES (5, 'Product55', 'Pageable Product', 555);
 
 INSERT INTO Product
-VALUES (5, 'Product4', 'Pageable Product', 555);
+    (id, title, description, price)
+VALUES (6, 'Product66', 'Pageable Product', 666);
 
 INSERT INTO Product
-VALUES (6, 'Product4', 'Pageable Product', 666);
+    (id, title, description, price)
+VALUES (7, 'Product77', 'Pageable Product', 777);
 
 INSERT INTO Product
-VALUES (7, 'Product4', 'Pageable Product', 777);
+    (id, title, description, price)
+VALUES (8, 'Product88', 'Pageable Product', 888);
 
 INSERT INTO Product
-VALUES (8, 'Product4', 'Pageable Product', 888);
+    (id, title, description, price)
+VALUES (9, 'Product99', 'Pageable Product', 999);
 
 INSERT INTO Product
-VALUES (9, 'Product4', 'Pageable Product', 999);
+    (id, title, description, price)
+VALUES (10, 'Product1010', 'Pageable Product', 1010);
 
 INSERT INTO Product
-VALUES (10, 'Product4', 'Pageable Product', 1010);
+    (id, title, description, price)
+VALUES (11, 'Product1111', 'Pageable Product', 1111);
 
 INSERT INTO Product
-VALUES (11, 'Product4', 'Pageable Product', 1111);
+    (id, title, description, price)
+VALUES (12, 'Product1212', 'Pageable Product', 1212);
 
 INSERT INTO Product
-VALUES (12, 'Product4', 'Pageable Product', 1212);
-
-INSERT INTO Product
-VALUES (13, 'Product4', 'Pageable Product', 1313);
+    (id, title, description, price)
+VALUES (13, 'Product1313', 'Pageable Product', 1313);
