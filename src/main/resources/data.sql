@@ -2,13 +2,13 @@ INSERT INTO Product
     (id, title, description, price)
 VALUES (1, 'TV', 'Big old TV', 111);
 
-INSERT INTO productpricehistory
-    (id, product_id, start_date, price)
-VALUES (1, 1, TIMESTAMP '2000-01-01 00:00:00', 1111);
+    INSERT INTO productpricehistory
+        (id, product_id, start_date, price)
+    VALUES (1, 1, TIMESTAMP '2000-01-01 00:00:00', 1111);
 
-INSERT INTO productpricehistory
-(id, product_id, start_date, price)
-VALUES (2, 1, TIMESTAMP '2001-01-01 00:00:00', 1112);
+    INSERT INTO productpricehistory
+    (id, product_id, start_date, price)
+    VALUES (2, 1, TIMESTAMP '2001-01-01 00:00:00', 1112);
 
 INSERT INTO Product
     (id, title, description, price)
@@ -26,21 +26,21 @@ INSERT INTO Product
     (id, title, description, price)
 VALUES (5, 'Product55', 'Pageable Product', 555);
 
-INSERT INTO productpricehistory
-(id, product_id, start_date, price)
-VALUES (3, 5, TIMESTAMP '2000-01-01 00:00:00', 5551);
+    INSERT INTO productpricehistory
+    (id, product_id, start_date, price)
+    VALUES (3, 5, TIMESTAMP '2000-01-01 00:00:00', 5551);
 
-INSERT INTO productpricehistory
-(id, product_id, start_date, price)
-VALUES (4, 5, TIMESTAMP '2001-01-01 00:00:00', 5552);
+    INSERT INTO productpricehistory
+    (id, product_id, start_date, price)
+    VALUES (4, 5, TIMESTAMP '2001-01-01 00:00:00', 5552);
 
-INSERT INTO productpricehistory
-(id, product_id, start_date, price)
-VALUES (5, 5, TIMESTAMP '2002-01-01 00:00:00', 5553);
+    INSERT INTO productpricehistory
+    (id, product_id, start_date, price)
+    VALUES (5, 5, TIMESTAMP '2002-01-01 00:00:00', 5553);
 
-INSERT INTO productpricehistory
-(id, product_id, start_date, price)
-VALUES (6, 5, TIMESTAMP '2003-01-01 00:00:00', 5554);
+    INSERT INTO productpricehistory
+    (id, product_id, start_date, price)
+    VALUES (6, 5, TIMESTAMP '2003-01-01 00:00:00', 5554);
 
 INSERT INTO Product
     (id, title, description, price)

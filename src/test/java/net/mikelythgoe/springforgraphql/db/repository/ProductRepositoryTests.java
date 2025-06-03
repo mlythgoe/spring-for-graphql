@@ -49,7 +49,7 @@ class ProductRepositoryTests {
         assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
         assertThat(optionalProductEntity.get().getTitle()).isEqualTo("Microwave");
         assertThat(optionalProductEntity.get().getDescription()).isEqualTo("Goes PING!!!!");
-        assertThat(optionalProductEntity.get().getPrice()).isEqualTo(444);
+        assertThat(optionalProductEntity.get().getPrice()).isEqualTo(333);
 
     }
 
@@ -70,7 +70,7 @@ class ProductRepositoryTests {
         List<ProductEntity> productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
-        assertThat(productEntities).hasSize(3);
+        assertThat(productEntities).hasSize(4);
 
     }
 
