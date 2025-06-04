@@ -181,11 +181,11 @@ public class ProductRequestHandler {
 
     // A DataFetcher provides the logic to fetch the data for a query or for any schema field.
     // The Spring Boot starter for GraphQL has auto-configurations that automates this registration.
-    // For the type of 'ProductPriceHistory'
-    // when the 'startDate' field is being resolved, use this to render the result
+    // This method gets called when the ProductPriceHistory response is returning the startDate field.
+    // It 'renders' (transforms) the field value.
     // The @SchemaMapping annotation maps a handler method to a field in the GraphQL schema
-    // and declares it to be the DataFetcher for that field.
-    // The annotation can specify the parent type name, and the field name
+    // and declares the method to be the DataFetcher for that field.
+    // The annotation specifies the parent type name and the field name
     @SchemaMapping(typeName = "ProductPriceHistory")
     public String startDate(ProductPriceHistory productPriceHistory) {
 
@@ -196,7 +196,7 @@ public class ProductRequestHandler {
     @SubscriptionMapping("notifyProductPriceChange")
     public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
 
-        // A flux is the publisher of data
+        // Flux is the publisher of data
         return Flux.fromStream(
                 Stream.generate(() -> {
 
@@ -207,7 +207,7 @@ public class ProductRequestHandler {
                     }
 
                     return new ProductPriceHistory(productId, new Date(),
-                            (int) (rn.nextInt(10) + 1 + productId));
+                            rn.nextInt(1000));
                 }));
 
     }
