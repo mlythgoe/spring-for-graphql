@@ -29,6 +29,11 @@ spring:
     console:
       enabled: 'true'
 
+  sql:
+    init:
+      schema-locations: classpath:database/schema.sql
+      data-locations: classpath:database/data.sql
+
 logging:
   level:
     org:
@@ -41,3 +46,4 @@ logging:
     com:
       mike:
         springforgraphql: debug
+
