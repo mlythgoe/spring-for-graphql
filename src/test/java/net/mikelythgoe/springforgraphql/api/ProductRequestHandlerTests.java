@@ -58,7 +58,7 @@ class ProductRequestHandlerTests {
 
         List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
-        assertThat(products).hasSize(3);
+        assertThat(products).hasSize(4);
 
     }
 
