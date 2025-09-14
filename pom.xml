@@ -18,6 +18,7 @@
     <properties>
         <java.version>24</java.version>
         <maven.compiler.proc>full</maven.compiler.proc>
+        <hypersistence-utils.version>3.11.0</hypersistence-utils.version>
     </properties>
 
     <dependencies>
@@ -43,8 +44,25 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.projectreactor.netty</groupId>
+            <artifactId>reactor-netty</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
+        </dependency>
+
+        <!-- Dependency that allows the use of a time-based UUID -->
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-63</artifactId>
+            <version>${hypersistence-utils.version}</version>
         </dependency>
 
         <dependency>
