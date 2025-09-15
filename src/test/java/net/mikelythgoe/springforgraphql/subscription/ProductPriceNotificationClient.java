@@ -1,4 +1,4 @@
-package net.mikelythgoe.springforgraphql.cliclient;
+package net.mikelythgoe.springforgraphql.subscription;
 
 import net.mikelythgoe.springforgraphql.api.response.ProductPriceHistory;
 import org.slf4j.Logger;
