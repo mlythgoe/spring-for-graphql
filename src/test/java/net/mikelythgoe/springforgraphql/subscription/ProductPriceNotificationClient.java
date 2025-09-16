@@ -78,7 +78,7 @@ public class ProductPriceNotificationClient {
                     var responseFieldValue = responseField.getValue();
                     assert responseFieldValue != null;
 
-                    var id = Long.valueOf(((LinkedHashMap<?, ?>) responseFieldValue).get("id").toString());
+                    var id = String.valueOf(((LinkedHashMap<?, ?>) responseFieldValue).get("id").toString());
 
                     String startDateString = (String) ((LinkedHashMap<?, ?>) responseFieldValue).get("startDate");
 

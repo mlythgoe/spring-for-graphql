@@ -1,5 +1,5 @@
 package net.mikelythgoe.springforgraphql.api.input;
 
-public record ProductPriceHistoryInput(Long id,
+public record ProductPriceHistoryInput(String id,
                                        String startDate,
                                        int price) {}

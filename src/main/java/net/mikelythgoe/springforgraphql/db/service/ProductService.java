@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -41,7 +42,7 @@ public class ProductService {
             newProductEntity = new ProductEntity(productInput.title(),
                     productInput.desc(), productInput.price());
         } else {
-            newProductEntity = new ProductEntity(productInput.id(), productInput.title(),
+            newProductEntity = new ProductEntity(UUID.fromString(productInput.id()), productInput.title(),
                     productInput.desc(), productInput.price());
         }
 
@@ -50,9 +51,19 @@ public class ProductService {
             for (ProductPriceHistoryInput productPriceHistoryInput : productInput.productPriceHistoryInputList()) {
 
                 Timestamp startDateAsSqlTimestamp = Timestamp.valueOf(productPriceHistoryInput.startDate());
-                newProductEntity.getProductPriceHistories().add(
-                        new ProductPriceHistoryEntity(productPriceHistoryInput.id(), startDateAsSqlTimestamp,
-                                productPriceHistoryInput.price(), newProductEntity));
+
+                if (productPriceHistoryInput.id() == null) {
+                    newProductEntity.getProductPriceHistories().add(
+                            new ProductPriceHistoryEntity(
+                                    startDateAsSqlTimestamp,
+                                    productPriceHistoryInput.price(), newProductEntity));
+                } else {
+                    newProductEntity.getProductPriceHistories().add(
+                            new ProductPriceHistoryEntity(UUID.fromString(productPriceHistoryInput.id()),
+                                    startDateAsSqlTimestamp,
+                                    productPriceHistoryInput.price(), newProductEntity));
+                }
+
             }
 
         }
@@ -65,7 +76,7 @@ public class ProductService {
 
     }
 
-    public ProductEntity findProduct(Long id) {
+    public ProductEntity findProduct(UUID id) {
 
         return productRepository.findById(id).orElse(null);
 
@@ -87,7 +98,7 @@ public class ProductService {
 
     }
 
-    public Long deleteProduct(Long id) {
+    public UUID deleteProduct(UUID id) {
 
         if (productRepository.existsById(id)) {
 

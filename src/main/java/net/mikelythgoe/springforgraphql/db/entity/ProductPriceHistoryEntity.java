@@ -1,15 +1,18 @@
 package net.mikelythgoe.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
+
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "productpricehistory")
 public class ProductPriceHistoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private UUID id;
 
     @Column(name = "startDate")
     private java.sql.Timestamp startDate;
@@ -31,14 +34,14 @@ public class ProductPriceHistoryEntity {
 
     }
 
-    public ProductPriceHistoryEntity(Long id, Timestamp startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistoryEntity(UUID id, Timestamp startDate, int price, ProductEntity productEntity) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

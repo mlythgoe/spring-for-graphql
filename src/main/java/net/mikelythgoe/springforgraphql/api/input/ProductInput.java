@@ -2,7 +2,7 @@ package net.mikelythgoe.springforgraphql.api.input;
 
 import java.util.List;
 
-public record ProductInput(Long id,
+public record ProductInput(String id,
                            String title,
                            String desc,
                            Integer price,

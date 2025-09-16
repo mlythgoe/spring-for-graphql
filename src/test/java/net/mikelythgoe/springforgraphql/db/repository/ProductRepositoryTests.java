@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Fail.fail;
@@ -41,12 +42,13 @@ class ProductRepositoryTests {
     @Test
     void testFindProductUsingIdThatExists() {
 
-        Long productId = 3L;
+        String productId = "01994ebf-796c-78e7-a092-ee42145d4c7a";
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(
+                UUID.fromString(productId));
 
         assertThat(optionalProductEntity).isPresent();
-        assertThat(optionalProductEntity.get().getId()).isEqualTo(productId);
+        assertThat(optionalProductEntity.get().getId().toString()).isEqualTo(productId);
         assertThat(optionalProductEntity.get().getTitle()).isEqualTo("Microwave");
         assertThat(optionalProductEntity.get().getDescription()).isEqualTo("Goes PING!!!!");
         assertThat(optionalProductEntity.get().getPrice()).isEqualTo(333);
@@ -56,7 +58,10 @@ class ProductRepositoryTests {
     @Test
     void testFindProductUsingIdThatDoesNotExist() {
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(99999999L);
+        String productId = "01994ebf-796c-78da-953f-16bee52e57ca";
+
+        Optional<ProductEntity> optionalProductEntity = productRepository.findById(
+                UUID.fromString(productId));
 
         assertThat(optionalProductEntity).isEmpty();
 
@@ -90,7 +95,7 @@ class ProductRepositoryTests {
     @Test
     void testSaveProductUsingIdThatDoesExist() {
 
-        Long productId = 1L;
+        UUID productId = UUID.fromString("01994ebf-796c-7b66-b495-0d2a187a0c57");
 
         long countBefore = productRepository.count();
 
@@ -152,7 +157,7 @@ class ProductRepositoryTests {
 
         long countBefore = productRepository.count();
 
-        productRepository.deleteById(1L);
+        productRepository.deleteById(UUID.fromString("01994ebf-796c-74eb-b603-b24c5cc1e265"));
 
         long countAfter = productRepository.count();
 
@@ -166,7 +171,7 @@ class ProductRepositoryTests {
         long countBefore = productRepository.count();
 
         assertDoesNotThrow(
-                () -> productRepository.deleteById(99999999L));
+                () -> productRepository.deleteById(UUID.fromString("01994ebf-796c-7aea-8f55-37a92c66e626")));
 
         long countAfter = productRepository.count();
 

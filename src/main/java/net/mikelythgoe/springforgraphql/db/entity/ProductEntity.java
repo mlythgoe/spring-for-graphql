@@ -2,17 +2,19 @@ package net.mikelythgoe.springforgraphql.db.entity;
 
 import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "product")
 public class ProductEntity {
 
     @Id
-    @Tsid
-    private Long id;
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    private UUID id;
 
     @Column(name = "title")
     private String title;
@@ -36,7 +38,7 @@ public class ProductEntity {
         productPriceHistories = new ArrayList<>();
     }
 
-    public ProductEntity(Long id, String title, String description, Integer price) {
+    public ProductEntity(UUID id, String title, String description, Integer price) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -45,7 +47,7 @@ public class ProductEntity {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
