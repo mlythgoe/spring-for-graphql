@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Controller
@@ -42,11 +43,11 @@ public class ProductRequestHandler {
     }
 
     @QueryMapping("getProduct") // value (i.e. "getProduct") must match GraphQL schema operation
-    public Product findProduct(@Argument Long id) {
+    public Product findProduct(@Argument String id) {
 
         log.debug("Find Product for id {}", id);
 
-        var productEntity = productService.findProduct(id);
+        var productEntity = productService.findProduct(UUID.fromString(id));
 
         if (productEntity == null) {
 
@@ -128,23 +129,25 @@ public class ProductRequestHandler {
 
     @MutationMapping("deleteProduct") // value (i.e. "deleteProduct") must match GraphQL schema
     // operation
-    public Long deleteProduct(@Argument Long id) {
+    public String deleteProduct(@Argument String id) {
 
         log.debug("Delete Product for Id {}", id);
 
-        var deletedId = productService.deleteProduct(id);
+        var deletedId = productService.deleteProduct(UUID.fromString(id));
 
         if (deletedId == null) {
 
             log.debug("Product for id {} did not exist so could not be deleted", id);
 
+            return null;
+
         } else {
 
             log.debug("Product for id {} deleted", id);
 
-        }
+            return deletedId.toString();
 
-        return deletedId;
+        }
 
     }
 
@@ -174,7 +177,7 @@ public class ProductRequestHandler {
     }
 
     @SubscriptionMapping("notifyProductPriceChange")
-    public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument Long productId) {
+    public Flux<ProductPriceHistory> notifyProductPriceChange(@Argument String productId) {
 
         // Flux is the publisher of data
         return Flux.fromStream(
@@ -194,14 +197,14 @@ public class ProductRequestHandler {
 
     private Product convertProductEntityToProduct(ProductEntity productEntity) {
 
-        var product = new Product(productEntity.getId(), productEntity.getTitle(),
+        var product = new Product(productEntity.getId().toString(), productEntity.getTitle(),
                 productEntity.getDescription(), productEntity.getPrice(), new ArrayList<>());
 
         for (ProductPriceHistoryEntity productPriceHistoryEntity : productEntity.getProductPriceHistories()) {
 
             product.productPriceHistories().add(
                     new ProductPriceHistory(
-                            productPriceHistoryEntity.getId(), productPriceHistoryEntity.getStartDate(),
+                            productPriceHistoryEntity.getId().toString(), productPriceHistoryEntity.getStartDate(),
                             productPriceHistoryEntity.getPrice()));
 
         }
