@@ -3,13 +3,10 @@ package net.mikelythgoe.springforgraphql.api;
 import net.mikelythgoe.springforgraphql.api.input.ProductInput;
 import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
 import net.mikelythgoe.springforgraphql.api.response.Product;
-import net.mikelythgoe.springforgraphql.api.response.ProductPriceHistory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,17 +132,18 @@ class ProductRequestHandlerTests {
 
     }
 
-//    @Test
-//    void testNotifyProductPriceChang() {
-//
-//        Flux<ProductPriceHistory> productPriceHistoryStream = productRequestHandler.notifyProductPriceChange(1L);
-//
-//        Mono<ProductPriceHistory> productPriceHistory = productPriceHistoryStream.next();
-//
-//        assertThat(productPriceHistory).isNotNull();
-//
-//        System.out.println(productPriceHistory);
-//
-//    }
+    // @Test
+    // void testNotifyProductPriceChang() {
+    //
+    // Flux<ProductPriceHistory> productPriceHistoryStream =
+    // productRequestHandler.notifyProductPriceChange(1L);
+    //
+    // Mono<ProductPriceHistory> productPriceHistory = productPriceHistoryStream.next();
+    //
+    // assertThat(productPriceHistory).isNotNull();
+    //
+    // System.out.println(productPriceHistory);
+    //
+    // }
 
 }

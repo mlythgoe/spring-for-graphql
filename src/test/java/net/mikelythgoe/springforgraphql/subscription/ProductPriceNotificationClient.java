@@ -99,7 +99,6 @@ public class ProductPriceNotificationClient {
                 .doOnComplete(() -> logger.info("Subscription completed"));
     }
 
-
     /**
      * Subscribe and print responses to the console
      */
@@ -117,8 +116,7 @@ public class ProductPriceNotificationClient {
                             System.err.println("Subscription error: " + error.getMessage());
                             logger.error("Detailed error: ", error);
                         },
-                        () -> System.out.println("Subscription completed")
-                );
+                        () -> System.out.println("Subscription completed"));
     }
 
     /**
@@ -168,8 +166,7 @@ public class ProductPriceNotificationClient {
                             error -> {
                                 System.err.println("Connection error: " + error.getMessage());
                                 latch.countDown();
-                            }
-                    );
+                            });
 
             // Wait for shutdown
             latch.await();
@@ -179,6 +176,5 @@ public class ProductPriceNotificationClient {
             e.printStackTrace();
         }
     }
-
 
 }

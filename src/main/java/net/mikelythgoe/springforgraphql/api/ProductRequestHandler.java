@@ -153,7 +153,8 @@ public class ProductRequestHandler {
 
     // A DataFetcher provides the logic to fetch the data for a query or for any schema field.
     // The Spring Boot starter for GraphQL has autoconfiguration that automates this registration.
-    // This method gets called when the ProductPriceHistory response is returning the startDate field.
+    // This method gets called when the ProductPriceHistory response is returning the startDate
+    // field.
     // It 'renders' (transforms) the field value.
     // The @SchemaMapping annotation maps a handler method to a field in the GraphQL schema
     // and declares the method to be the DataFetcher for that field.
@@ -167,12 +168,13 @@ public class ProductRequestHandler {
 
     }
 
-    // Pointless method that just provides another example of schema mapping to refine response data.
+    // Pointless method that just provides another example of schema mapping to refine response
+    // data.
     // This method changes the 'desc' property value of the 'Product' type
     @SchemaMapping(typeName = "Product")
     public String desc(Product product) {
 
-        return product.desc() +" Verified";
+        return product.desc() + " Verified";
 
     }
 

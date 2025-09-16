@@ -1,6 +1,5 @@
 package net.mikelythgoe.springforgraphql.db.entity;
 
-import io.hypersistence.utils.hibernate.id.Tsid;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
