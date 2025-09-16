@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS Product;
 
 CREATE TABLE product
 (
-    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+    id UUID PRIMARY KEY,
     title       VARCHAR(50) NOT NULL,
     description VARCHAR(50) NOT NULL,
     price       INTEGER     NOT NULL
@@ -11,7 +11,7 @@ CREATE TABLE product
 
 CREATE TABLE productpricehistory
 (
-    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+    id UUID PRIMARY KEY,
     product_id UUID    NOT NULL,
     start_date TIMESTAMP NOT NULL,
     price      INTEGER   NOT NULL,
