@@ -1,7 +1,7 @@
 package net.mikelythgoe.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -11,7 +11,8 @@ import java.util.UUID;
 public class ProductPriceHistoryEntity {
 
     @Id
-    @UuidGenerator(style = UuidGenerator.Style.TIME)
+    @GeneratedValue(generator = "uuidv7")
+    @GenericGenerator(name = "uuidv7", strategy = "net.mikelythgoe.springforgraphql.db.idgenerator.UuidV7Generator")
     private UUID id;
 
     @Column(name = "startDate")
