@@ -220,8 +220,7 @@ public class ProductRequestHandler {
 
         for (ProductEntity productEntity : productEntities) {
 
-            var apiProduct = convertProductEntityToProduct(productEntity);
-            apiProducts.add(apiProduct);
+            apiProducts.add(convertProductEntityToProduct(productEntity));
 
         }
 
