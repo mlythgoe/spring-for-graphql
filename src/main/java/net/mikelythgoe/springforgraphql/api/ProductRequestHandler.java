@@ -216,11 +216,11 @@ public class ProductRequestHandler {
 
     private List<Product> convertProductEntityListToProductList(List<ProductEntity> productEntities) {
 
-        List<Product> apiProducts = new ArrayList<>();
+        var apiProducts = new ArrayList<Product>();
 
         for (ProductEntity productEntity : productEntities) {
 
-            Product apiProduct = convertProductEntityToProduct(productEntity);
+            var apiProduct = convertProductEntityToProduct(productEntity);
             apiProducts.add(apiProduct);
 
         }

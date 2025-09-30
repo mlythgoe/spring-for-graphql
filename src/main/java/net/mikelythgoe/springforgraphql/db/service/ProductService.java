@@ -90,11 +90,7 @@ public class ProductService {
 
     public List<ProductEntity> searchProducts(ProductSearchCriteriaInput productSearchCriteriaInput) {
 
-        List<ProductEntity> productEntities;
-
-        productEntities = productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
-
-        return productEntities;
+        return productCustomRepository.findUsingProductSearchCriteria(productSearchCriteriaInput);
 
     }
 
