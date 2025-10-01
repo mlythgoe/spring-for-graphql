@@ -85,9 +85,7 @@ public class ProductRequestHandler {
 
         log.debug("Search for Products using criteria {}", productSearchCriteriaInput);
 
-        List<ProductEntity> productEntities;
-
-        productEntities = productService.searchProducts(productSearchCriteriaInput);
+        var productEntities = productService.searchProducts(productSearchCriteriaInput);
 
         if (productEntities == null) {
             log.debug("No Products found for search criteria {}", productSearchCriteriaInput);
@@ -186,7 +184,7 @@ public class ProductRequestHandler {
                 Stream.generate(() -> {
 
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }

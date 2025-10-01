@@ -68,7 +68,7 @@ public class ProductService {
 
         }
 
-        ProductEntity savedProductEntity = productRepository.save(newProductEntity);
+        var savedProductEntity = productRepository.save(newProductEntity);
 
         productPriceHistoryRepository.saveAll(newProductEntity.getProductPriceHistories());
 

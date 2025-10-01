@@ -2,14 +2,12 @@ package net.mikelythgoe.springforgraphql.api;
 
 import net.mikelythgoe.springforgraphql.api.input.ProductInput;
 import net.mikelythgoe.springforgraphql.api.input.ProductSearchCriteriaInput;
-import net.mikelythgoe.springforgraphql.api.response.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +22,7 @@ class ProductRequestHandlerTests {
     @Test
     void testFindAllProducts() {
 
-        List<Product> products = productRequestHandler.findAllProducts();
+        var products = productRequestHandler.findAllProducts();
 
         assertThat(products).isNotNull().hasSize(13);
 
@@ -33,7 +31,7 @@ class ProductRequestHandlerTests {
     @Test
     void testFindOneProductUsingIdThatExists() {
 
-        Product product = productRequestHandler.findProduct("01994ebf-796c-74eb-b603-b24c5cc1e265");
+        var product = productRequestHandler.findProduct("01994ebf-796c-74eb-b603-b24c5cc1e265");
 
         assertThat(product).isNotNull();
         assertThat(product.id()).isEqualTo("01994ebf-796c-74eb-b603-b24c5cc1e265");
@@ -43,7 +41,7 @@ class ProductRequestHandlerTests {
     @Test
     void testFindOneProductUsingIdThatDoesNotExist() {
 
-        Product product = productRequestHandler.findProduct("01994eec-a6cf-7b03-844c-6bbc7bec0609");
+        var product = productRequestHandler.findProduct("01994eec-a6cf-7b03-844c-6bbc7bec0609");
 
         assertThat(product).isNull();
 
@@ -52,9 +50,9 @@ class ProductRequestHandlerTests {
     @Test
     void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
+        var productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
+        var products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).hasSize(4);
 
@@ -63,10 +61,10 @@ class ProductRequestHandlerTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
+        var productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
                 null);
 
-        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
+        var products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).hasSize(1);
 
@@ -75,11 +73,11 @@ class ProductRequestHandlerTests {
     @Test
     void testFindUsingProductSearchCriteriaForProductThatDoesNotExist() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("ProductThatDoesNotExist", null,
+        var productSearchCriteriaInput = new ProductSearchCriteriaInput("ProductThatDoesNotExist", null,
                 null,
                 null);
 
-        List<Product> products = productRequestHandler.searchProducts(productSearchCriteriaInput);
+        var products = productRequestHandler.searchProducts(productSearchCriteriaInput);
 
         assertThat(products).isEmpty();
 
@@ -88,11 +86,11 @@ class ProductRequestHandlerTests {
     @Test
     void testSaveProductUsingIdThatDoesExist() {
 
-        String productId = "01994ebf-796c-7d3f-9851-fda7646e831a";
-        ProductInput productInput = new ProductInput(productId, "testTitle", "testDescription", 9999,
+        var productId = "01994ebf-796c-7d3f-9851-fda7646e831a";
+        var productInput = new ProductInput(productId, "testTitle", "testDescription", 9999,
                 new ArrayList<>());
 
-        Product product = productRequestHandler.saveProduct(productInput);
+        var product = productRequestHandler.saveProduct(productInput);
 
         assertThat(product.id()).isNotNull();
         assertThat(product.id()).isEqualTo(productId);
@@ -102,9 +100,9 @@ class ProductRequestHandlerTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        ProductInput productInput = new ProductInput(null, "testTitle", "testDescription", 9999, new ArrayList<>());
+        var productInput = new ProductInput(null, "testTitle", "testDescription", 9999, new ArrayList<>());
 
-        Product product = productRequestHandler.saveProduct(productInput);
+        var product = productRequestHandler.saveProduct(productInput);
 
         assertThat(product.id()).isNotNull();
 
@@ -113,9 +111,9 @@ class ProductRequestHandlerTests {
     @Test
     void testDeleteProductThatExists() {
 
-        String idToDelete = "01994ebf-796c-7b66-b495-0d2a187a0c57";
+        var idToDelete = "01994ebf-796c-7b66-b495-0d2a187a0c57";
 
-        String deletedId = productRequestHandler.deleteProduct(idToDelete);
+        var deletedId = productRequestHandler.deleteProduct(idToDelete);
 
         assertThat(deletedId).isEqualTo(idToDelete);
 
@@ -124,26 +122,12 @@ class ProductRequestHandlerTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        String idToDelete = UUID.randomUUID().toString();
+        var idToDelete = UUID.randomUUID().toString();
 
-        String deletedId = productRequestHandler.deleteProduct(idToDelete);
+        var deletedId = productRequestHandler.deleteProduct(idToDelete);
 
         assertThat(deletedId).isNull();
 
     }
-
-    // @Test
-    // void testNotifyProductPriceChang() {
-    //
-    // Flux<ProductPriceHistory> productPriceHistoryStream =
-    // productRequestHandler.notifyProductPriceChange(1L);
-    //
-    // Mono<ProductPriceHistory> productPriceHistory = productPriceHistoryStream.next();
-    //
-    // assertThat(productPriceHistory).isNotNull();
-    //
-    // System.out.println(productPriceHistory);
-    //
-    // }
 
 }

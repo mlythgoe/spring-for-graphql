@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +31,7 @@ class ProductRepositoryTests {
     @Test
     void testFindAllProducts() {
 
-        List<ProductEntity> productEntityEntities = productRepository.findAll();
+        var productEntityEntities = productRepository.findAll();
 
         assertThat(productEntityEntities).isNotNull().hasSize(13);
 
@@ -42,9 +40,9 @@ class ProductRepositoryTests {
     @Test
     void testFindProductUsingIdThatExists() {
 
-        String productId = "01994ebf-796c-78e7-a092-ee42145d4c7a";
+        var productId = "01994ebf-796c-78e7-a092-ee42145d4c7a";
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(
+        var optionalProductEntity = productRepository.findById(
                 UUID.fromString(productId));
 
         assertThat(optionalProductEntity).isPresent();
@@ -58,9 +56,9 @@ class ProductRepositoryTests {
     @Test
     void testFindProductUsingIdThatDoesNotExist() {
 
-        String productId = "01994ebf-796c-78da-953f-16bee52e57ca";
+        var productId = "01994ebf-796c-78da-953f-16bee52e57ca";
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(
+        var optionalProductEntity = productRepository.findById(
                 UUID.fromString(productId));
 
         assertThat(optionalProductEntity).isEmpty();
@@ -70,9 +68,9 @@ class ProductRepositoryTests {
     @Test
     void testFindUsingProductSearchCriteriaForBetweenLowerPriceAndUpperPrice() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
+        var productSearchCriteriaInput = new ProductSearchCriteriaInput(null, null, 1, 500);
 
-        List<ProductEntity> productEntities = productCustomRepository
+        var productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities).hasSize(4);
@@ -82,10 +80,10 @@ class ProductRepositoryTests {
     @Test
     void testFindUsingProductSearchCriteriaForTitle() {
 
-        ProductSearchCriteriaInput productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
+        var productSearchCriteriaInput = new ProductSearchCriteriaInput("Phone", null, null,
                 null);
 
-        List<ProductEntity> productEntities = productCustomRepository
+        var productEntities = productCustomRepository
                 .findUsingProductSearchCriteria(productSearchCriteriaInput);
 
         assertThat(productEntities).hasSize(1);
@@ -95,11 +93,11 @@ class ProductRepositoryTests {
     @Test
     void testSaveProductUsingIdThatDoesExist() {
 
-        UUID productId = UUID.fromString("01994ebf-796c-7b66-b495-0d2a187a0c57");
+        var productId = UUID.fromString("01994ebf-796c-7b66-b495-0d2a187a0c57");
 
-        long countBefore = productRepository.count();
+        var countBefore = productRepository.count();
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
+        var optionalProductEntity = productRepository.findById(productId);
 
         if (optionalProductEntity.isPresent()) {
 
@@ -116,7 +114,7 @@ class ProductRepositoryTests {
 
         }
 
-        long countAfter = productRepository.count();
+        var countAfter = productRepository.count();
 
         assertThat(countBefore).isEqualTo(countAfter);
 
@@ -125,15 +123,15 @@ class ProductRepositoryTests {
     @Test
     void testSaveProductThatDoesNotExist() {
 
-        long countBefore = productRepository.count();
+        var countBefore = productRepository.count();
 
-        ProductEntity productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
+        var productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
-        ProductPriceHistoryEntity productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
+        var productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
                 new Timestamp(System.currentTimeMillis()), 14, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity1);
 
-        ProductPriceHistoryEntity productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
+        var productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
                 new Timestamp(System.currentTimeMillis()), 20, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity2);
 
@@ -141,11 +139,11 @@ class ProductRepositoryTests {
 
         assertThat(productEntity.getId()).isNotNull();
 
-        long countAfter = productRepository.count();
+        var countAfter = productRepository.count();
 
         assertThat(countBefore + 1).isEqualTo(countAfter);
 
-        Optional<ProductEntity> getProductEntity = productRepository.findById(productEntity.getId());
+        var getProductEntity = productRepository.findById(productEntity.getId());
 
         assertThat(getProductEntity).isPresent();
         assertThat(getProductEntity.get().getProductPriceHistories()).hasSize(2);
@@ -155,11 +153,11 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatExists() {
 
-        long countBefore = productRepository.count();
+        var countBefore = productRepository.count();
 
         productRepository.deleteById(UUID.fromString("01994ebf-796c-74eb-b603-b24c5cc1e265"));
 
-        long countAfter = productRepository.count();
+        var countAfter = productRepository.count();
 
         assertThat(countBefore - 1).isEqualTo(countAfter);
 
@@ -168,12 +166,12 @@ class ProductRepositoryTests {
     @Test
     void testDeleteProductThatDoesNotExist() {
 
-        long countBefore = productRepository.count();
+        var countBefore = productRepository.count();
 
         assertDoesNotThrow(
                 () -> productRepository.deleteById(UUID.fromString("01994ebf-796c-7aea-8f55-37a92c66e626")));
 
-        long countAfter = productRepository.count();
+        var countAfter = productRepository.count();
 
         assertThat(countBefore).isEqualTo(countAfter);
 
