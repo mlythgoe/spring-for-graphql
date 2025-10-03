@@ -46,20 +46,19 @@ public class ProductPriceNotificationClient {
     /**
      * Subscribe to product price changes for a specific product
      */
-    public Flux<ProductPriceHistory> subscribeToProductPriceChanges(Long productId) {
+    public Flux<ProductPriceHistory> subscribeToProductPriceChanges(String productId) {
         if (graphQlClient == null) {
             return Flux.error(new IllegalStateException("Client not connected. Call connect() first."));
         }
 
         String subscription = """
-                subscription NotifyProductPriceChange {
-                    notifyProductPriceChange(productId: 1) {
+                subscription NotifyProductPriceChange($productId: ID) {
+                    notifyProductPriceChange(productId: $productId) {
                         id
                         startDate
                         price
                     }
                 }
-                
                 """;
 
         return graphQlClient
@@ -76,9 +75,12 @@ public class ProductPriceNotificationClient {
                     var responseField = response.field("notifyProductPriceChange");
 
                     var responseFieldValue = responseField.getValue();
-                    assert responseFieldValue != null;
+                    if (responseFieldValue == null) {
+                        sink.error(new RuntimeException("No data in subscription response"));
+                        return;
+                    }
 
-                    var id = String.valueOf(((LinkedHashMap<?, ?>) responseFieldValue).get("id").toString());
+                    var id = String.valueOf(((LinkedHashMap<?, ?>) responseFieldValue).get("id"));
 
                     String startDateString = (String) ((LinkedHashMap<?, ?>) responseFieldValue).get("startDate");
 
@@ -102,13 +104,13 @@ public class ProductPriceNotificationClient {
     /**
      * Subscribe and print responses to the console
      */
-    public Disposable subscribeAndPrint(Long productId) {
+    public Disposable subscribeAndPrint(String productId) {
         return subscribeToProductPriceChanges(productId)
                 .subscribe(
                         priceHistory -> {
                             System.out.println("\n=== PRICE CHANGE NOTIFICATION ===");
-                            System.out.printf("Product ID: %d%n", priceHistory.id());
-                            System.out.printf("Product StartDate: %s%n", priceHistory.startDate());
+                            System.out.printf("Product ID: %s%n", priceHistory.id());
+                            System.out.printf("Product StartDate: %s%n", simpleDateFormat.format(priceHistory.startDate()));
                             System.out.printf("Product Price: %d%n", priceHistory.price());
                             System.out.println("================================\n");
                         },
@@ -132,7 +134,7 @@ public class ProductPriceNotificationClient {
     // Example usage with proper connection handling
     public static void main(String[] args) {
         String endpoint = "ws://localhost:8080/graphql";
-        Long productId = 1L;
+        String productId = "01994ebf-796c-74eb-b603-b24c5cc1e265";
 
         ProductPriceNotificationClient client = new ProductPriceNotificationClient();
         CountDownLatch latch = new CountDownLatch(1);
