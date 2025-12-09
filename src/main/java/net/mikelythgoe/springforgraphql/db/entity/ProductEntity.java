@@ -1,7 +1,6 @@
 package net.mikelythgoe.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "product")
-public class ProductEntity {
-
-    @Id
-    @GeneratedValue(generator = "uuidv7")
-    @GenericGenerator(name = "uuidv7", strategy = "net.mikelythgoe.springforgraphql.db.idgenerator.UuidV7Generator")
-    private UUID id;
+public class ProductEntity extends BaseEntity{
 
     @Column(name = "title")
     private String title;
