@@ -1,9 +1,9 @@
 package net.mikelythgoe.springforgraphql.api.response;
 
-import java.util.Date;
+import java.time.Instant;
 
 public record ProductPriceHistory(String id,
-                                  Date startDate,
+                                  Instant startDate,
                                   int price) {
 
 }

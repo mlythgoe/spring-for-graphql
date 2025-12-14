@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -94,7 +95,7 @@ public class ProductPriceNotificationClient {
 
                     var price = (Integer) ((LinkedHashMap<?, ?>) responseFieldValue).get("price");
 
-                    sink.next(new ProductPriceHistory(id, startDate, price));
+                    sink.next(new ProductPriceHistory(id, startDate.toInstant(), price));
                 })
                 .doOnNext(priceHistory -> logger.info("Received price change: {}", priceHistory))
                 .doOnError(error -> logger.error("Subscription error: ", error))
@@ -110,7 +111,7 @@ public class ProductPriceNotificationClient {
                         priceHistory -> {
                             System.out.println("\n=== PRICE CHANGE NOTIFICATION ===");
                             System.out.printf("Product ID: %s%n", priceHistory.id());
-                            System.out.printf("Product StartDate: %s%n", simpleDateFormat.format(priceHistory.startDate()));
+                            System.out.printf("Product StartDate: %s%n", simpleDateFormat.format(Date.from(priceHistory.startDate())));
                             System.out.printf("Product Price: %d%n", priceHistory.price());
                             System.out.println("================================\n");
                         },

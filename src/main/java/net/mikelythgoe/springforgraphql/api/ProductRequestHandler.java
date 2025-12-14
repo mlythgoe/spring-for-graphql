@@ -15,6 +15,7 @@ import reactor.core.publisher.Flux;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -162,7 +163,7 @@ public class ProductRequestHandler {
     @SchemaMapping(typeName = "ProductPriceHistory")
     public String startDate(ProductPriceHistory productPriceHistory) {
 
-        return simpleDateFormat.format(productPriceHistory.startDate());
+        return simpleDateFormat.format(Date.from(productPriceHistory.startDate()));
 
     }
 
@@ -189,7 +190,7 @@ public class ProductRequestHandler {
                         throw new RuntimeException(e);
                     }
 
-                    return new ProductPriceHistory(productId, new Date(),
+                    return new ProductPriceHistory(productId, Instant.now(),
                             rn.nextInt(1000));
                 }));
 

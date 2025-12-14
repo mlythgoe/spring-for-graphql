@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -128,11 +128,11 @@ class ProductRepositoryTests {
         var productEntity = new ProductEntity(null, "testTitle", "testDescription", 9999);
 
         var productPriceHistoryEntity1 = new ProductPriceHistoryEntity(
-                new Timestamp(System.currentTimeMillis()), 14, productEntity);
+                Instant.now(), 14, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity1);
 
         var productPriceHistoryEntity2 = new ProductPriceHistoryEntity(
-                new Timestamp(System.currentTimeMillis()), 20, productEntity);
+                Instant.now(), 20, productEntity);
         productEntity.getProductPriceHistories().add(productPriceHistoryEntity2);
 
         productRepository.save(productEntity);

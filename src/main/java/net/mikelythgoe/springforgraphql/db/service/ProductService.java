@@ -11,7 +11,12 @@ import net.mikelythgoe.springforgraphql.db.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,17 +55,17 @@ public class ProductService {
 
             for (ProductPriceHistoryInput productPriceHistoryInput : productInput.productPriceHistoryInputList()) {
 
-                Timestamp startDateAsSqlTimestamp = Timestamp.valueOf(productPriceHistoryInput.startDate());
+                Instant startDateInstant = parseToInstant(productPriceHistoryInput.startDate());
 
                 if (productPriceHistoryInput.id() == null) {
                     newProductEntity.getProductPriceHistories().add(
                             new ProductPriceHistoryEntity(
-                                    startDateAsSqlTimestamp,
+                                    startDateInstant,
                                     productPriceHistoryInput.price(), newProductEntity));
                 } else {
                     newProductEntity.getProductPriceHistories().add(
                             new ProductPriceHistoryEntity(UUID.fromString(productPriceHistoryInput.id()),
-                                    startDateAsSqlTimestamp,
+                                    startDateInstant,
                                     productPriceHistoryInput.price(), newProductEntity));
                 }
 
@@ -105,5 +110,38 @@ public class ProductService {
 
         return null;
 
+    }
+
+    private Instant parseToInstant(String input) {
+        if (input == null || input.isBlank()) return null;
+
+        // Try ISO_INSTANT first (e.g., 2020-01-01T00:00:00Z)
+        try {
+            return Instant.parse(input);
+        } catch (DateTimeParseException ignored) {
+        }
+
+        // Try date-time without zone: yyyy-MM-dd HH:mm:ss
+        try {
+            var dt = LocalDateTime.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            return dt.toInstant(ZoneOffset.UTC);
+        } catch (DateTimeParseException ignored) {
+        }
+
+        // Try date-only: yyyy-MM-dd (assume start of day UTC)
+        try {
+            var d = LocalDate.parse(input, DateTimeFormatter.ISO_LOCAL_DATE);
+            return d.atStartOfDay().toInstant(ZoneOffset.UTC);
+        } catch (DateTimeParseException ignored) {
+        }
+
+        // Fallback: try a more lenient parse by replacing 'T' with space
+        try {
+            String normalized = input.replace('T', ' ');
+            var dt = LocalDateTime.parse(normalized, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            return dt.toInstant(ZoneOffset.UTC);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Unparseable date: " + input, e);
+        }
     }
 }

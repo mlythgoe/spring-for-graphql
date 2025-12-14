@@ -2,15 +2,15 @@ package net.mikelythgoe.springforgraphql.db.entity;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Table(name = "productpricehistory")
 public class ProductPriceHistoryEntity extends BaseEntity{
 
-    @Column(name = "startDate")
-    private java.sql.Timestamp startDate;
+    @Column(name = "start_date")
+    private Instant startDate;
 
     @Column(name = "price")
     private int price;
@@ -22,14 +22,14 @@ public class ProductPriceHistoryEntity extends BaseEntity{
     public ProductPriceHistoryEntity() {
     }
 
-    public ProductPriceHistoryEntity(Timestamp startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistoryEntity(Instant startDate, int price, ProductEntity productEntity) {
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
 
     }
 
-    public ProductPriceHistoryEntity(UUID id, Timestamp startDate, int price, ProductEntity productEntity) {
+    public ProductPriceHistoryEntity(UUID id, Instant startDate, int price, ProductEntity productEntity) {
         this.id = id;
         this.startDate = startDate;
         this.price = price;
@@ -40,7 +40,7 @@ public class ProductPriceHistoryEntity extends BaseEntity{
         return id;
     }
 
-    public Timestamp getStartDate() {
+    public Instant getStartDate() {
         return startDate;
     }
 

@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "product")
-public class ProductEntity extends BaseEntity{
+public class ProductEntity extends BaseEntity {
 
     @Column(name = "title")
     private String title;
