@@ -113,7 +113,8 @@ public class ProductService {
     }
 
     private Instant parseToInstant(String input) {
-        if (input == null || input.isBlank()) return null;
+        if (input == null || input.isBlank())
+            return null;
 
         // Try ISO_INSTANT first (e.g., 2020-01-01T00:00:00Z)
         try {

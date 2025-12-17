@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "productpricehistory")
-public class ProductPriceHistoryEntity extends BaseEntity{
+public class ProductPriceHistoryEntity extends BaseEntity {
 
     @Column(name = "start_date")
     private Instant startDate;
@@ -34,10 +34,6 @@ public class ProductPriceHistoryEntity extends BaseEntity{
         this.startDate = startDate;
         this.price = price;
         this.productEntity = productEntity;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public Instant getStartDate() {

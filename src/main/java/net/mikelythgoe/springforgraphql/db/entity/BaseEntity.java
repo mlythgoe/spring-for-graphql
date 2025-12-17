@@ -1,5 +1,6 @@
 package net.mikelythgoe.springforgraphql.db.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import net.mikelythgoe.springforgraphql.db.idgenerator.UuidV7Generator;
@@ -46,8 +47,8 @@ public abstract class BaseEntity {
     }
 
     /**
-     * Custom annotation to replace the deprecated @GenericGenerator.
-     * This encapsulates the configuration for the UUIDv7 generator.
+     * Custom annotation to replace the deprecated @GenericGenerator. This encapsulates the
+     * configuration for the UUIDv7 generator.
      */
     @IdGeneratorType(UuidV7Generator.class)
     @Retention(RUNTIME)
