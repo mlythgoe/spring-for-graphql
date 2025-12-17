@@ -41,10 +41,6 @@ public class ProductEntity extends BaseEntity {
 
     }
 
-    public UUID getId() {
-        return id;
-    }
-
     public String getTitle() {
         return title;
     }
