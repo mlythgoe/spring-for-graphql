@@ -1,0 +1,15 @@
+{
+  "workspace": {
+    "id": "4ea60e48-320c-472b-835b-70b39c968073"
+  },
+  "entities": {
+    "environments": [],
+    "flows": [],
+    "globals": [],
+    "mocks": [],
+    "specs": [],
+    "collections": [
+      "../SpringForGraphQL.postman_collection.json"
+    ]
+  }
+}
