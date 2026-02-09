@@ -7,12 +7,12 @@ meta {
 post {
   url: http://localhost:8080/graphql
   body: graphql
-  auth: none
+  auth: inherit
 }
 
 body:graphql {
   query {
-    getProduct(id:3){
+    getProduct(id:"01994ebf-796c-74eb-b603-b24c5cc1e265"){
       __typename
       id
       desc
@@ -26,4 +26,9 @@ body:graphql {
       }
     }
   }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
 }

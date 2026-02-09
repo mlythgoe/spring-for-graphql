@@ -7,13 +7,13 @@ meta {
 post {
   url: http://localhost:8080/graphql
   body: graphql
-  auth: none
+  auth: inherit
 }
 
 body:graphql {
   mutation {
     saveProduct(
-      productInput: { id: 13, title: "Title133", desc: "Desc", price: 88888 }
+      productInput: { title: "Title133", desc: "Desc", price: 88888 }
     ) {
       id
       desc
@@ -22,4 +22,9 @@ body:graphql {
     }
   }
   
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
 }

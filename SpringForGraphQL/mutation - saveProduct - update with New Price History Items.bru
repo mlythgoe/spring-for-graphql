@@ -7,19 +7,19 @@ meta {
 post {
   url: http://localhost:8080/graphql
   body: graphql
-  auth: none
+  auth: inherit
 }
 
 body:graphql {
   mutation {
     saveProduct(
       productInput: {
-        id: 20
+        id: "019c43b5-40e3-7097-9ed2-236b3f3c0234"
         title: "Title"
         desc: "Desc"
         price: 9999
         productPriceHistoryInputList: [
-          { id: "12", startDate: "2020-01-01", price: 999 }
+          { id: "019c43b4-c512-744c-9fcd-4ec49e78b9f8", startDate: "2020-01-01", price: 999 }
           { startDate: "2000-01-01", price: 99999 }
         ]
       }
@@ -36,4 +36,9 @@ body:graphql {
     }
   }
   
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
 }

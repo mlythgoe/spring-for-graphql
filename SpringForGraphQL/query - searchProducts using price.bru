@@ -7,7 +7,7 @@ meta {
 post {
   url: http://localhost:8080/graphql
   body: graphql
-  auth: none
+  auth: inherit
 }
 
 body:graphql {
@@ -19,4 +19,8 @@ body:graphql {
       price
     }
   }
+}
+
+settings {
+  encodeUrl: true
 }

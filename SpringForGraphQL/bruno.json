@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "SpringForGraphQL",
+  "name": "spring-for-graphql",
   "type": "collection",
   "ignore": [
     "node_modules",

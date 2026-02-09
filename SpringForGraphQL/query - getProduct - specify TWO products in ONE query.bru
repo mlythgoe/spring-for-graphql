@@ -7,12 +7,12 @@ meta {
 post {
   url: http://localhost:8080/graphql
   body: graphql
-  auth: none
+  auth: inherit
 }
 
 body:graphql {
   query {
-        prod1: getProduct(id:1){
+        prod1: getProduct(id:"019c43ae-bbd8-7fdd-b3f8-9e328eadad3f"){
           id
           desc
           title
@@ -23,7 +23,7 @@ body:graphql {
               price
           }
     }
-    prod3: getProduct(id:3){
+    prod3: getProduct(id:"01994ebf-796c-74eb-b603-b24c5cc1e265"){
           id
           desc
           title
@@ -35,4 +35,9 @@ body:graphql {
           }
     }
   }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
 }
